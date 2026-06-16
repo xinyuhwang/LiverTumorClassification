@@ -1,11 +1,11 @@
 # LiverTumorClassification
 
-MCT-LTDiag — Multi-phase CT Liver-Tumor Diagnosis
+## MCT-LTDiag — Multi-phase CT Liver-Tumor Diagnosis
 
 A two-stage deep learning pipeline for liver segmentation and tumor detection in multi-phase abdominal CT scans, implemented in PyTorch and designed to run in Google Colab.
 
 
-Overview
+## Overview
 
 MCT-LTDiag segments the liver from multi-phase contrast-enhanced CT volumes (Stage 1), then uses those liver masks as a spatial prior for tumor detection and classification (Stage 2). The current repository contains Stage 1 (v5).
 
