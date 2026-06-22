@@ -1,0 +1,9 @@
+{
+  "elapsed_seconds": 1.3683217079378664,
+  "phase": "p01",
+  "round": "r01",
+  "run_id": "p01-r01-environment-smoke-20260622-153022-074a3a2",
+  "status": "SUCCESS",
+  "task": "environment-smoke",
+  "updated_at": "2026-06-22T22:30:24.328247+00:00"
+}

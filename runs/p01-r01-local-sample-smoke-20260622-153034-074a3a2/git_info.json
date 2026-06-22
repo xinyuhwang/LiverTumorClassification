@@ -1,0 +1,9 @@
+{
+  "branch": "codex/script-experiment-workflow",
+  "commit": "074a3a2f6fc87d3111482287a5e71c5005193da9",
+  "dirty": true,
+  "remote": "git@github.com:xinyuhwang/LiverTumorClassification.git",
+  "root": "/Users/yz/Desktop/Projects/LiverTumorClassification",
+  "short_commit": "074a3a2",
+  "status": "M README.md\n?? .gitignore\n?? analyze_run.py\n?? configs/\n?? docs/\n?? download_dataset.py\n?? environment.yml\n?? explore_dataset.py\n?? pyproject.toml\n?? runs/\n?? scripts/\n?? smoke_test.py\n?? src/"
+}

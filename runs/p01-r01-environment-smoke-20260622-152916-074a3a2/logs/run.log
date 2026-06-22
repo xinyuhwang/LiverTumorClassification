@@ -1,0 +1,15 @@
+RUN_ID=p01-r01-environment-smoke-20260622-152916-074a3a2
+RUN_DIR=/Users/yz/Desktop/Projects/LiverTumorClassification/runs/p01-r01-environment-smoke-20260622-152916-074a3a2
+import numpy        OK  2.0.2
+import pandas       OK  2.3.3
+import scipy        OK  1.17.1
+import skimage      OK  0.26.0
+import sklearn      OK  1.9.0
+import nibabel      OK  5.4.2
+/Users/yz/.matplotlib is not a writable directory
+Matplotlib created a temporary cache directory at /var/folders/c1/ffjxhd594ybdg1jbycrpdkch0000gn/T/matplotlib-tp4q2l2t because there was an issue with the default path ({configdir}); it is highly recommended to set the MPLCONFIGDIR environment variable to a writable directory, in particular to speed up the import of Matplotlib and to better support multiprocessing.
+import matplotlib   OK  3.11.0
+import yaml         OK  6.0.3
+import requests     OK  2.34.2
+import tqdm         OK  4.68.3
+Run failed after 25.3s: Sample data validation failed: [{'severity': 'error', 'code': 'affine_mismatch_nc', 'message': 'Affine differs from PVP'}, {'severity': 'error', 'code': 'affine_mismatch_art', 'message': 'Affine differs from PVP'}]

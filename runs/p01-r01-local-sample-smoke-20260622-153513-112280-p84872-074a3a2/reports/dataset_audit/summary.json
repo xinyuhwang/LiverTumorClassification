@@ -1,0 +1,37 @@
+{
+  "audited_discovered_case_count": 1,
+  "case_count": 1,
+  "cases_with_errors": 0,
+  "cases_with_warnings": 1,
+  "dataset_root": "/Users/yz/Desktop/Projects/LiverTumorClassification/data/mct-ltdiag_sample",
+  "metadata_case_count": 517,
+  "metadata_completeness_checked": false,
+  "spacing": {
+    "x": {
+      "max": 0.55859375,
+      "median": 0.55859375,
+      "min": 0.55859375
+    },
+    "y": {
+      "max": 0.55859375,
+      "median": 0.55859375,
+      "min": 0.55859375
+    },
+    "z": {
+      "max": 5.0,
+      "median": 5.0,
+      "min": 5.0
+    }
+  },
+  "total_discovered_case_count": 1,
+  "total_errors": 0,
+  "total_warnings": 2,
+  "tumor_type_counts": {
+    "ICC": 1
+  },
+  "tumor_volume_mm3": {
+    "max": 48593.5213470459,
+    "median": 48593.5213470459,
+    "min": 48593.5213470459
+  }
+}

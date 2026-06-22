@@ -1,0 +1,9 @@
+{
+  "elapsed_seconds": 2.4828191669657826,
+  "phase": "p01",
+  "round": "r03",
+  "run_id": "p01-r03-dataset-download-20260622-153945-530141-p86060-074a3a2",
+  "status": "SUCCESS",
+  "task": "dataset-download",
+  "updated_at": "2026-06-22T22:39:48.013351+00:00"
+}

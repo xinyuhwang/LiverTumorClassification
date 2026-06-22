@@ -1,0 +1,6 @@
+RUN_ID=p01-r01-local-sample-smoke-20260622-153034-074a3a2
+RUN_DIR=/Users/yz/Desktop/Projects/LiverTumorClassification/runs/p01-r01-local-sample-smoke-20260622-153034-074a3a2
+Validating cases:   0%|          | 0/1 [00:00<?, ?it/s]Validating cases: 100%|██████████| 1/1 [00:00<00:00,  1.16it/s]Validating cases: 100%|██████████| 1/1 [00:00<00:00,  1.16it/s]
+Matplotlib is building the font cache; this may take a moment.
+Dataset audit summary: {'dataset_root': '/Users/yz/Desktop/Projects/LiverTumorClassification/data/mct-ltdiag_sample', 'case_count': 1, 'tumor_type_counts': {'ICC': 1}, 'cases_with_errors': 0, 'cases_with_warnings': 1, 'total_errors': 0, 'total_warnings': 2, 'spacing': {'x': {'min': 0.55859375, 'median': 0.55859375, 'max': 0.55859375}, 'y': {'min': 0.55859375, 'median': 0.55859375, 'max': 0.55859375}, 'z': {'min': 5.0, 'median': 5.0, 'max': 5.0}}, 'tumor_volume_mm3': {'min': 48593.5213470459, 'median': 48593.5213470459, 'max': 48593.5213470459}}
+Run completed successfully in 11.7s

@@ -1,0 +1,59 @@
+{
+  "artifacts": [
+    {
+      "exists": true,
+      "kind": "dataset_audit",
+      "metadata": {},
+      "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/runs/p01-r01-local-sample-smoke-20260622-153034-074a3a2/reports/dataset_audit/case_details.json",
+      "server_only": false,
+      "sha256": "05dd7691661df8f375297cc58f78c13a93829ee319df040a6addd6c9affb78f1",
+      "size_bytes": 9243
+    },
+    {
+      "exists": true,
+      "kind": "dataset_audit",
+      "metadata": {},
+      "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/runs/p01-r01-local-sample-smoke-20260622-153034-074a3a2/reports/dataset_audit/cases.csv",
+      "server_only": false,
+      "sha256": "27d0810f8692fd5881186440bf9862b087535e937896a76f797d7607aa42ae57",
+      "size_bytes": 606
+    },
+    {
+      "exists": true,
+      "kind": "dataset_audit",
+      "metadata": {},
+      "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/runs/p01-r01-local-sample-smoke-20260622-153034-074a3a2/reports/dataset_audit/issues.csv",
+      "server_only": false,
+      "sha256": "4e7a9f861513b87316f6054826fe86cbb6bd9d61893a7976c658e9e6fc19a897",
+      "size_bytes": 285
+    },
+    {
+      "exists": true,
+      "kind": "dataset_audit",
+      "metadata": {},
+      "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/runs/p01-r01-local-sample-smoke-20260622-153034-074a3a2/reports/dataset_audit/report.md",
+      "server_only": false,
+      "sha256": "44eac6ae9810f8854675a8674f2a100aa5b34c65baf62a977672e17279d56061",
+      "size_bytes": 415
+    },
+    {
+      "exists": true,
+      "kind": "dataset_audit",
+      "metadata": {},
+      "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/runs/p01-r01-local-sample-smoke-20260622-153034-074a3a2/reports/dataset_audit/summary.json",
+      "server_only": false,
+      "sha256": "d1370c469bfb346f16df42acf794baf97b4514b0e905278f7c3586ad704f7f11",
+      "size_bytes": 660
+    },
+    {
+      "exists": true,
+      "kind": "dataset_qc_image",
+      "metadata": {},
+      "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/runs/p01-r01-local-sample-smoke-20260622-153034-074a3a2/reports/dataset_audit/qc/230906d12.png",
+      "server_only": false,
+      "sha256": "62e150d739ce69356b8fa03b9b93b9e05e7e7d25c2b92ce13bc49993b82bd30b",
+      "size_bytes": 455952
+    }
+  ],
+  "run_id": "p01-r01-local-sample-smoke-20260622-153034-074a3a2"
+}

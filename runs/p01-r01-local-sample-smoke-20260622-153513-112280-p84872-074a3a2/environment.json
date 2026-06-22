@@ -1,0 +1,40 @@
+{
+  "captured_at": "2026-06-22T22:35:13.113921+00:00",
+  "conda_default_env": null,
+  "conda_list": {
+    "command": [
+      "conda",
+      "list",
+      "--json"
+    ],
+    "error": "[Errno 2] No such file or directory: 'conda'"
+  },
+  "conda_prefix": null,
+  "cuda_visible_devices": null,
+  "cwd": "/Users/yz/Desktop/Projects/LiverTumorClassification",
+  "executable": "/Users/yz/Desktop/Projects/LiverTumorClassification/.venv/bin/python",
+  "hostname": "Yus-MacBook-Pro.local",
+  "machine": "arm64",
+  "nvidia_smi": {
+    "command": [
+      "nvidia-smi"
+    ],
+    "error": "[Errno 2] No such file or directory: 'nvidia-smi'"
+  },
+  "pip_freeze": {
+    "command": [
+      "/Users/yz/Desktop/Projects/LiverTumorClassification/.venv/bin/python",
+      "-m",
+      "pip",
+      "freeze"
+    ],
+    "returncode": 1,
+    "stderr": "/Users/yz/Desktop/Projects/LiverTumorClassification/.venv/bin/python: No module named pip",
+    "stdout": ""
+  },
+  "platform": "macOS-26.4-arm64-arm-64bit",
+  "python": "3.11.14 (main, Dec  5 2025, 21:28:33) [Clang 21.1.4 ]",
+  "torch": {
+    "installed": false
+  }
+}

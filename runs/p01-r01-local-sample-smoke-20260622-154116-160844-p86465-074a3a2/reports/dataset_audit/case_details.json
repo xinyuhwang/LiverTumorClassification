@@ -1,0 +1,436 @@
+[
+  {
+    "case_dir": "/Users/yz/Desktop/Projects/LiverTumorClassification/data/mct-ltdiag_sample/230906d12",
+    "case_id": "230906d12",
+    "error_count": 0,
+    "issue_count": 2,
+    "issues": [
+      {
+        "code": "affine_mismatch_nc",
+        "message": "Affine differs from PVP; translation=[0.0, 0.0, 3.9] mm, voxel_shift=[-0.0, -0.0, 0.78]",
+        "severity": "warning"
+      },
+      {
+        "code": "affine_mismatch_art",
+        "message": "Affine differs from PVP; translation=[0.0, 0.0, 3.9] mm, voxel_shift=[-0.0, -0.0, 0.78]",
+        "severity": "warning"
+      }
+    ],
+    "masks": {
+      "liver": {
+        "exists": true,
+        "foreground_voxels": 741400,
+        "geometry": {
+          "affine": [
+            [
+              -0.558594,
+              0.0,
+              0.0,
+              143.720703
+            ],
+            [
+              0.0,
+              -0.558594,
+              0.0,
+              272.720703
+            ],
+            [
+              0.0,
+              0.0,
+              5.0,
+              -480.399994
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "L",
+            "P",
+            "S"
+          ],
+          "shape": [
+            512,
+            512,
+            43
+          ],
+          "spacing": [
+            0.55859375,
+            0.55859375,
+            5.0
+          ]
+        },
+        "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/data/mct-ltdiag_sample/230906d12/liver_mask_pvp.nii.gz",
+        "unique_values": [
+          0.0,
+          1.0
+        ],
+        "volume_mm3": 1156684.0057373047
+      },
+      "tumor": {
+        "connected_components": 3,
+        "exists": true,
+        "foreground_voxels": 31147,
+        "geometry": {
+          "affine": [
+            [
+              -0.558594,
+              0.0,
+              0.0,
+              143.720703
+            ],
+            [
+              0.0,
+              -0.558594,
+              0.0,
+              272.720703
+            ],
+            [
+              0.0,
+              0.0,
+              5.0,
+              -480.399994
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "L",
+            "P",
+            "S"
+          ],
+          "shape": [
+            512,
+            512,
+            43
+          ],
+          "spacing": [
+            0.55859375,
+            0.55859375,
+            5.0
+          ]
+        },
+        "outside_liver_fraction": 0.0,
+        "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/data/mct-ltdiag_sample/230906d12/mask_pvp.nii.gz",
+        "unique_values": [
+          0.0,
+          1.0
+        ],
+        "volume_mm3": 48593.5213470459,
+        "voxels_outside_liver": 0
+      }
+    },
+    "phases": {
+      "art": {
+        "affine_difference": {
+          "max_linear_abs": 0.0,
+          "translation_mm": [
+            0.0,
+            0.0,
+            3.899994
+          ],
+          "translation_voxels": [
+            -0.0,
+            -0.0,
+            0.779999
+          ]
+        },
+        "exists": true,
+        "geometry": {
+          "affine": [
+            [
+              -0.558594,
+              -0.0,
+              0.0,
+              143.720703
+            ],
+            [
+              -0.0,
+              -0.558594,
+              0.0,
+              272.720703
+            ],
+            [
+              0.0,
+              0.0,
+              5.0,
+              -476.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "L",
+            "P",
+            "S"
+          ],
+          "shape": [
+            512,
+            512,
+            43
+          ],
+          "spacing": [
+            0.55859375,
+            0.55859375,
+            5.0
+          ]
+        },
+        "intensity": {
+          "finite_voxels": 11272192,
+          "max": 1955.0,
+          "mean": -508.2623596191406,
+          "median": -827.0,
+          "min": -1024.0,
+          "nonfinite_voxels": 0,
+          "p01": -1013.0,
+          "p99": 481.0,
+          "std": 513.7238159179688
+        },
+        "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/data/mct-ltdiag_sample/230906d12/NIFTI/art.nii.gz"
+      },
+      "delay": {
+        "exists": true,
+        "geometry": {
+          "affine": [
+            [
+              -0.558594,
+              -0.0,
+              0.0,
+              143.720703
+            ],
+            [
+              -0.0,
+              -0.558594,
+              0.0,
+              272.720703
+            ],
+            [
+              0.0,
+              0.0,
+              5.0,
+              -480.399994
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "L",
+            "P",
+            "S"
+          ],
+          "shape": [
+            512,
+            512,
+            43
+          ],
+          "spacing": [
+            0.55859375,
+            0.55859375,
+            5.0
+          ]
+        },
+        "intensity": {
+          "finite_voxels": 11272192,
+          "max": 3071.0,
+          "mean": -492.2048034667969,
+          "median": -807.0,
+          "min": -1024.0,
+          "nonfinite_voxels": 0,
+          "p01": -1014.0,
+          "p99": 495.0,
+          "std": 518.4481811523438
+        },
+        "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/data/mct-ltdiag_sample/230906d12/NIFTI/delay.nii.gz"
+      },
+      "nc": {
+        "affine_difference": {
+          "max_linear_abs": 0.0,
+          "translation_mm": [
+            0.0,
+            0.0,
+            3.899994
+          ],
+          "translation_voxels": [
+            -0.0,
+            -0.0,
+            0.779999
+          ]
+        },
+        "exists": true,
+        "geometry": {
+          "affine": [
+            [
+              -0.558594,
+              -0.0,
+              0.0,
+              143.720703
+            ],
+            [
+              -0.0,
+              -0.558594,
+              0.0,
+              272.720703
+            ],
+            [
+              0.0,
+              0.0,
+              5.0,
+              -476.5
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "L",
+            "P",
+            "S"
+          ],
+          "shape": [
+            512,
+            512,
+            43
+          ],
+          "spacing": [
+            0.55859375,
+            0.55859375,
+            5.0
+          ]
+        },
+        "intensity": {
+          "finite_voxels": 11272192,
+          "max": 1918.0,
+          "mean": -524.8447875976562,
+          "median": -849.0,
+          "min": -1024.0,
+          "nonfinite_voxels": 0,
+          "p01": -1011.0,
+          "p99": 474.0,
+          "std": 497.4403076171875
+        },
+        "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/data/mct-ltdiag_sample/230906d12/NIFTI/nc.nii.gz"
+      },
+      "pvp": {
+        "exists": true,
+        "geometry": {
+          "affine": [
+            [
+              -0.558594,
+              -0.0,
+              0.0,
+              143.720703
+            ],
+            [
+              -0.0,
+              -0.558594,
+              0.0,
+              272.720703
+            ],
+            [
+              0.0,
+              0.0,
+              5.0,
+              -480.399994
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "L",
+            "P",
+            "S"
+          ],
+          "shape": [
+            512,
+            512,
+            43
+          ],
+          "spacing": [
+            0.55859375,
+            0.55859375,
+            5.0
+          ]
+        },
+        "intensity": {
+          "finite_voxels": 11272192,
+          "max": 1931.0,
+          "mean": -488.40283203125,
+          "median": -803.0,
+          "min": -1024.0,
+          "nonfinite_voxels": 0,
+          "p01": -1014.0,
+          "p99": 491.0,
+          "std": 521.3325805664062
+        },
+        "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/data/mct-ltdiag_sample/230906d12/NIFTI/pvp.nii.gz"
+      }
+    },
+    "reference_geometry": {
+      "affine": [
+        [
+          -0.558594,
+          -0.0,
+          0.0,
+          143.720703
+        ],
+        [
+          -0.0,
+          -0.558594,
+          0.0,
+          272.720703
+        ],
+        [
+          0.0,
+          0.0,
+          5.0,
+          -480.399994
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "orientation": [
+        "L",
+        "P",
+        "S"
+      ],
+      "shape": [
+        512,
+        512,
+        43
+      ],
+      "spacing": [
+        0.55859375,
+        0.55859375,
+        5.0
+      ]
+    },
+    "tumor_type": "ICC",
+    "warning_count": 2
+  }
+]

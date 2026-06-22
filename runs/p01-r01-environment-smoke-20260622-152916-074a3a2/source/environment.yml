@@ -1,0 +1,26 @@
+name: liver-tumor-seg
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip>=24
+  - numpy>=1.26,<2.1
+  - pandas>=2.1,<3
+  - scipy>=1.12,<2
+  - scikit-image>=0.22,<1
+  - scikit-learn>=1.4,<2
+  - nibabel>=5.2,<6
+  - matplotlib>=3.8,<4
+  - pyyaml>=6,<7
+  - requests>=2.31,<3
+  - tqdm>=4.66,<5
+  - psutil>=5.9,<7
+  - pillow>=10,<12
+  - pytest>=8,<9
+  - pip:
+      # nnU-Net currently documents a 3D AMP regression with torch 2.9.
+      # Keep Phase 1 on the last known-good major version.
+      - torch==2.8.0
+      - torchvision==0.23.0
+      - -e .

@@ -1,0 +1,22 @@
+experiment:
+  phase: p01
+  round: r03
+  task: dataset-download
+  runs_root: runs
+  seed: 42
+
+dataset:
+  root: ${MCT_DATA_ROOT}
+  persistent_id: doi:10.7910/DVN/S3RW15
+  token_env: DATAVERSE_API_TOKEN
+  base_url: https://dataverse.harvard.edu
+
+download:
+  metadata_only: false
+  include_regex: null
+  max_files: null
+  extract: true
+  delete_archives: false
+  free_space_multiplier: 2.2
+  timeout_seconds: 180
+  chunk_size_mb: 8

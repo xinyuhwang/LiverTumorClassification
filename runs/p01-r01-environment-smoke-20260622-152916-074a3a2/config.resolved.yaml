@@ -1,0 +1,16 @@
+experiment:
+  phase: p01
+  round: r01
+  task: local-sample-smoke
+  runs_root: runs
+  seed: 42
+dataset:
+  root: data/mct-ltdiag_sample
+  load_intensities: true
+  qc_cases_per_type: 1
+  max_cases: 1
+split:
+  protocol: none
+  seed: 42
+_meta:
+  config_path: /Users/yz/Desktop/Projects/LiverTumorClassification/configs/phase1_local_sample.yaml

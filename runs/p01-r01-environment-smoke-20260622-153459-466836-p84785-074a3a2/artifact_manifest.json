@@ -1,0 +1,14 @@
+{
+  "artifacts": [
+    {
+      "exists": true,
+      "kind": "smoke_test",
+      "metadata": {},
+      "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/runs/p01-r01-environment-smoke-20260622-153459-466836-p84785-074a3a2/reports/smoke_test.json",
+      "server_only": false,
+      "sha256": "965abafeed6ca353b040b4193fec6bfecbff775d7dce36dd52c97d8dd3cb9e43",
+      "size_bytes": 8436
+    }
+  ],
+  "run_id": "p01-r01-environment-smoke-20260622-153459-466836-p84785-074a3a2"
+}

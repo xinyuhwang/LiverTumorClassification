@@ -1,0 +1,4 @@
+RUN_ID=p01-r03-dataset-download-20260622-153548-917465-p85154-074a3a2
+RUN_DIR=/Users/yz/Desktop/Projects/LiverTumorClassification/runs/p01-r03-dataset-download-20260622-153548-917465-p85154-074a3a2
+Selected 520 / 520 Dataverse files
+Run completed successfully in 3.7s

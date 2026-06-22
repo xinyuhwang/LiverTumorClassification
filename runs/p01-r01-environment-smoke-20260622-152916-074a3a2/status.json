@@ -1,0 +1,11 @@
+{
+  "elapsed_seconds": 25.297202249988914,
+  "error": "Sample data validation failed: [{'severity': 'error', 'code': 'affine_mismatch_nc', 'message': 'Affine differs from PVP'}, {'severity': 'error', 'code': 'affine_mismatch_art', 'message': 'Affine differs from PVP'}]",
+  "error_type": "RuntimeError",
+  "phase": "p01",
+  "round": "r01",
+  "run_id": "p01-r01-environment-smoke-20260622-152916-074a3a2",
+  "status": "FAILED",
+  "task": "environment-smoke",
+  "updated_at": "2026-06-22T22:29:41.722654+00:00"
+}

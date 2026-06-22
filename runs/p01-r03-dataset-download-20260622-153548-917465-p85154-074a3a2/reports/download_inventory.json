@@ -1,0 +1,4696 @@
+{
+  "created_at": 1782167752.58569,
+  "dataset": {
+    "all_file_count": 520,
+    "persistent_id": "doi:10.7910/DVN/S3RW15",
+    "selected_bytes": 180122305793,
+    "selected_file_count": 520,
+    "version": 3,
+    "version_minor": 1
+  },
+  "files": {},
+  "persistent_id": "doi:10.7910/DVN/S3RW15",
+  "selected_files": [
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049472,
+      "filename": "230218a1.tar",
+      "restricted": false,
+      "size_bytes": 406149120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049471,
+      "filename": "230218a10.tar",
+      "restricted": false,
+      "size_bytes": 400834560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049469,
+      "filename": "230218a2.tar",
+      "restricted": false,
+      "size_bytes": 347699200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049466,
+      "filename": "230218a3.tar",
+      "restricted": false,
+      "size_bytes": 309555200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049467,
+      "filename": "230218a4.tar",
+      "restricted": false,
+      "size_bytes": 428871680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049470,
+      "filename": "230218a5.tar",
+      "restricted": false,
+      "size_bytes": 415713280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049465,
+      "filename": "230218a6.tar",
+      "restricted": false,
+      "size_bytes": 355727360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049468,
+      "filename": "230218a7.tar",
+      "restricted": false,
+      "size_bytes": 339179520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049473,
+      "filename": "230218a8.tar",
+      "restricted": false,
+      "size_bytes": 309504000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049483,
+      "filename": "230218a9.tar",
+      "restricted": false,
+      "size_bytes": 290048000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049477,
+      "filename": "230218b1.tar",
+      "restricted": false,
+      "size_bytes": 348641280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049475,
+      "filename": "230218b10.tar",
+      "restricted": false,
+      "size_bytes": 278917120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049476,
+      "filename": "230218b2.tar",
+      "restricted": false,
+      "size_bytes": 284180480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049485,
+      "filename": "230218b3.tar",
+      "restricted": false,
+      "size_bytes": 489738240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049474,
+      "filename": "230218b4.tar",
+      "restricted": false,
+      "size_bytes": 285163520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049487,
+      "filename": "230218b5.tar",
+      "restricted": false,
+      "size_bytes": 385894400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049486,
+      "filename": "230218b6.tar",
+      "restricted": false,
+      "size_bytes": 288358400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049491,
+      "filename": "230218b7.tar",
+      "restricted": false,
+      "size_bytes": 482058240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049488,
+      "filename": "230218b8.tar",
+      "restricted": false,
+      "size_bytes": 279203840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049490,
+      "filename": "230218b9.tar",
+      "restricted": false,
+      "size_bytes": 371118080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049484,
+      "filename": "230218c1.tar",
+      "restricted": false,
+      "size_bytes": 231137280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049489,
+      "filename": "230218c10.tar",
+      "restricted": false,
+      "size_bytes": 290007040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049496,
+      "filename": "230218c3.tar",
+      "restricted": false,
+      "size_bytes": 322662400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049495,
+      "filename": "230218c4.tar",
+      "restricted": false,
+      "size_bytes": 297553920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049494,
+      "filename": "230218c5.tar",
+      "restricted": false,
+      "size_bytes": 337838080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049492,
+      "filename": "230218c6.tar",
+      "restricted": false,
+      "size_bytes": 260218880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049497,
+      "filename": "230218c7.tar",
+      "restricted": false,
+      "size_bytes": 281026560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049508,
+      "filename": "230218c8.tar",
+      "restricted": false,
+      "size_bytes": 297011200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049505,
+      "filename": "230312a1.tar",
+      "restricted": false,
+      "size_bytes": 290662400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049502,
+      "filename": "230312a10.tar",
+      "restricted": false,
+      "size_bytes": 260874240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049503,
+      "filename": "230312a11.tar",
+      "restricted": false,
+      "size_bytes": 273131520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049504,
+      "filename": "230312a12.tar",
+      "restricted": false,
+      "size_bytes": 282449920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049500,
+      "filename": "230312a13.tar",
+      "restricted": false,
+      "size_bytes": 248555520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049507,
+      "filename": "230312a14.tar",
+      "restricted": false,
+      "size_bytes": 362014720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049501,
+      "filename": "230312a15.tar",
+      "restricted": false,
+      "size_bytes": 373657600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049511,
+      "filename": "230312a2.tar",
+      "restricted": false,
+      "size_bytes": 289628160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049506,
+      "filename": "230312a3.tar",
+      "restricted": false,
+      "size_bytes": 272947200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049512,
+      "filename": "230312a4.tar",
+      "restricted": false,
+      "size_bytes": 293427200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049513,
+      "filename": "230312a5.tar",
+      "restricted": false,
+      "size_bytes": 391690240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049510,
+      "filename": "230312a6.tar",
+      "restricted": false,
+      "size_bytes": 294563840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049514,
+      "filename": "230312a7.tar",
+      "restricted": false,
+      "size_bytes": 396134400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049509,
+      "filename": "230312a8.tar",
+      "restricted": false,
+      "size_bytes": 257546240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049515,
+      "filename": "230312a9.tar",
+      "restricted": false,
+      "size_bytes": 314572800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049517,
+      "filename": "230408a1.tar",
+      "restricted": false,
+      "size_bytes": 403097600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049519,
+      "filename": "230408a11.tar",
+      "restricted": false,
+      "size_bytes": 265922560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049518,
+      "filename": "230408a12.tar",
+      "restricted": false,
+      "size_bytes": 301475840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049520,
+      "filename": "230408a13.tar",
+      "restricted": false,
+      "size_bytes": 252037120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049516,
+      "filename": "230408a3.tar",
+      "restricted": false,
+      "size_bytes": 250030080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049523,
+      "filename": "230408a4.tar",
+      "restricted": false,
+      "size_bytes": 281907200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049521,
+      "filename": "230408a5.tar",
+      "restricted": false,
+      "size_bytes": 381173760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049525,
+      "filename": "230408a6.tar",
+      "restricted": false,
+      "size_bytes": 342681600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049529,
+      "filename": "230408a7.tar",
+      "restricted": false,
+      "size_bytes": 424878080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049528,
+      "filename": "230408a8.tar",
+      "restricted": false,
+      "size_bytes": 401469440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049526,
+      "filename": "230408a9.tar",
+      "restricted": false,
+      "size_bytes": 299448320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049527,
+      "filename": "230525a1.tar",
+      "restricted": false,
+      "size_bytes": 266127360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049524,
+      "filename": "230525a2.tar",
+      "restricted": false,
+      "size_bytes": 287600640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049530,
+      "filename": "230525a3.tar",
+      "restricted": false,
+      "size_bytes": 274350080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049532,
+      "filename": "230525a4.tar",
+      "restricted": false,
+      "size_bytes": 406999040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049536,
+      "filename": "230525a5.tar",
+      "restricted": false,
+      "size_bytes": 508241920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049534,
+      "filename": "230525b1.tar",
+      "restricted": false,
+      "size_bytes": 358297600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049537,
+      "filename": "230525b10.tar",
+      "restricted": false,
+      "size_bytes": 529315840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049539,
+      "filename": "230525b2.tar",
+      "restricted": false,
+      "size_bytes": 378224640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049531,
+      "filename": "230525b3.tar",
+      "restricted": false,
+      "size_bytes": 288849920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049533,
+      "filename": "230525b4.tar",
+      "restricted": false,
+      "size_bytes": 233687040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049538,
+      "filename": "230525b5.tar",
+      "restricted": false,
+      "size_bytes": 330874880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049540,
+      "filename": "230525b6.tar",
+      "restricted": false,
+      "size_bytes": 397373440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049535,
+      "filename": "230525b7.tar",
+      "restricted": false,
+      "size_bytes": 292874240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049541,
+      "filename": "230525b8.tar",
+      "restricted": false,
+      "size_bytes": 349552640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049545,
+      "filename": "230525b9.tar",
+      "restricted": false,
+      "size_bytes": 305192960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049542,
+      "filename": "230525c1.tar",
+      "restricted": false,
+      "size_bytes": 356782080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049544,
+      "filename": "230525c10.tar",
+      "restricted": false,
+      "size_bytes": 278179840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049543,
+      "filename": "230525c2.tar",
+      "restricted": false,
+      "size_bytes": 306216960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049548,
+      "filename": "230525c3.tar",
+      "restricted": false,
+      "size_bytes": 363571200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049546,
+      "filename": "230525c4.tar",
+      "restricted": false,
+      "size_bytes": 396513280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049549,
+      "filename": "230525c5.tar",
+      "restricted": false,
+      "size_bytes": 268994560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049552,
+      "filename": "230525c7.tar",
+      "restricted": false,
+      "size_bytes": 256634880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049550,
+      "filename": "230525c8.tar",
+      "restricted": false,
+      "size_bytes": 356874240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049551,
+      "filename": "230525c9.tar",
+      "restricted": false,
+      "size_bytes": 304537600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049557,
+      "filename": "230525d1.tar",
+      "restricted": false,
+      "size_bytes": 323256320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049559,
+      "filename": "230525d10.tar",
+      "restricted": false,
+      "size_bytes": 502528000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049554,
+      "filename": "230525d2.tar",
+      "restricted": false,
+      "size_bytes": 292270080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049555,
+      "filename": "230525d3.tar",
+      "restricted": false,
+      "size_bytes": 234700800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049558,
+      "filename": "230525d4.tar",
+      "restricted": false,
+      "size_bytes": 315023360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049556,
+      "filename": "230525d5.tar",
+      "restricted": false,
+      "size_bytes": 211066880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049553,
+      "filename": "230525d6.tar",
+      "restricted": false,
+      "size_bytes": 235581440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049561,
+      "filename": "230525d7.tar",
+      "restricted": false,
+      "size_bytes": 321320960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049562,
+      "filename": "230525d8.tar",
+      "restricted": false,
+      "size_bytes": 318709760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049560,
+      "filename": "230525d9.tar",
+      "restricted": false,
+      "size_bytes": 286924800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049564,
+      "filename": "230816b01.tar",
+      "restricted": false,
+      "size_bytes": 322611200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049565,
+      "filename": "230816b02.tar",
+      "restricted": false,
+      "size_bytes": 387481600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049567,
+      "filename": "230816b03.tar",
+      "restricted": false,
+      "size_bytes": 362936320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049563,
+      "filename": "230816b04.tar",
+      "restricted": false,
+      "size_bytes": 302684160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049566,
+      "filename": "230816b05.tar",
+      "restricted": false,
+      "size_bytes": 248872960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049568,
+      "filename": "230816b06.tar",
+      "restricted": false,
+      "size_bytes": 335616000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049569,
+      "filename": "230816b07.tar",
+      "restricted": false,
+      "size_bytes": 312084480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049571,
+      "filename": "230816b08.tar",
+      "restricted": false,
+      "size_bytes": 311541760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049570,
+      "filename": "230816b09.tar",
+      "restricted": false,
+      "size_bytes": 268154880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049576,
+      "filename": "230816b10.tar",
+      "restricted": false,
+      "size_bytes": 358830080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049572,
+      "filename": "230816b11.tar",
+      "restricted": false,
+      "size_bytes": 343142400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049579,
+      "filename": "230816b12.tar",
+      "restricted": false,
+      "size_bytes": 532408320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049574,
+      "filename": "230816b13.tar",
+      "restricted": false,
+      "size_bytes": 321044480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049575,
+      "filename": "230816b14.tar",
+      "restricted": false,
+      "size_bytes": 315381760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049580,
+      "filename": "230816b15.tar",
+      "restricted": false,
+      "size_bytes": 419194880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049578,
+      "filename": "230906d01.tar",
+      "restricted": false,
+      "size_bytes": 322457600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049573,
+      "filename": "230906d02.tar",
+      "restricted": false,
+      "size_bytes": 166707200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049577,
+      "filename": "230906d03.tar",
+      "restricted": false,
+      "size_bytes": 224921600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049583,
+      "filename": "230906d04.tar",
+      "restricted": false,
+      "size_bytes": 373739520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049594,
+      "filename": "230906d05.tar",
+      "restricted": false,
+      "size_bytes": 481843200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049584,
+      "filename": "230906d06.tar",
+      "restricted": false,
+      "size_bytes": 402647040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049581,
+      "filename": "230906d07.tar",
+      "restricted": false,
+      "size_bytes": 187207680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049590,
+      "filename": "230906d08.tar",
+      "restricted": false,
+      "size_bytes": 232673280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049592,
+      "filename": "230906d09.tar",
+      "restricted": false,
+      "size_bytes": 368670720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049591,
+      "filename": "230906d10.tar",
+      "restricted": false,
+      "size_bytes": 187985920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049593,
+      "filename": "230906d11.tar",
+      "restricted": false,
+      "size_bytes": 283596800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049582,
+      "filename": "230906d12.tar",
+      "restricted": false,
+      "size_bytes": 141946880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049599,
+      "filename": "230906d13.tar",
+      "restricted": false,
+      "size_bytes": 384808960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049595,
+      "filename": "230906d14.tar",
+      "restricted": false,
+      "size_bytes": 431738880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049600,
+      "filename": "230906d15.tar",
+      "restricted": false,
+      "size_bytes": 476641280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049596,
+      "filename": "231025c01.tar",
+      "restricted": false,
+      "size_bytes": 374046720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049607,
+      "filename": "231025c02.tar",
+      "restricted": false,
+      "size_bytes": 431134720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049598,
+      "filename": "231025c03.tar",
+      "restricted": false,
+      "size_bytes": 382801920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049606,
+      "filename": "231025c04.tar",
+      "restricted": false,
+      "size_bytes": 291317760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049597,
+      "filename": "231025c05.tar",
+      "restricted": false,
+      "size_bytes": 285716480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049608,
+      "filename": "231025c06.tar",
+      "restricted": false,
+      "size_bytes": 267028480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049610,
+      "filename": "231025c07.tar",
+      "restricted": false,
+      "size_bytes": 289658880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049612,
+      "filename": "231025c08.tar",
+      "restricted": false,
+      "size_bytes": 390400000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049609,
+      "filename": "231025c09.tar",
+      "restricted": false,
+      "size_bytes": 299827200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049613,
+      "filename": "231025c10.tar",
+      "restricted": false,
+      "size_bytes": 384819200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049614,
+      "filename": "231025c11.tar",
+      "restricted": false,
+      "size_bytes": 323850240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049611,
+      "filename": "231025c12.tar",
+      "restricted": false,
+      "size_bytes": 363765760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049617,
+      "filename": "231025c13.tar",
+      "restricted": false,
+      "size_bytes": 424427520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049616,
+      "filename": "231025c14.tar",
+      "restricted": false,
+      "size_bytes": 365854720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049615,
+      "filename": "231025c15.tar",
+      "restricted": false,
+      "size_bytes": 280125440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049622,
+      "filename": "231025c16.tar",
+      "restricted": false,
+      "size_bytes": 373780480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049620,
+      "filename": "231025c17.tar",
+      "restricted": false,
+      "size_bytes": 358563840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049618,
+      "filename": "231025c18.tar",
+      "restricted": false,
+      "size_bytes": 279572480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049619,
+      "filename": "231025c19.tar",
+      "restricted": false,
+      "size_bytes": 339066880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049621,
+      "filename": "231025c20.tar",
+      "restricted": false,
+      "size_bytes": 249272320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049625,
+      "filename": "231025c21.tar",
+      "restricted": false,
+      "size_bytes": 267806720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049624,
+      "filename": "231025c22.tar",
+      "restricted": false,
+      "size_bytes": 290662400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049623,
+      "filename": "231025c23.tar",
+      "restricted": false,
+      "size_bytes": 284221440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049629,
+      "filename": "231025c24.tar",
+      "restricted": false,
+      "size_bytes": 305397760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049630,
+      "filename": "231025c25.tar",
+      "restricted": false,
+      "size_bytes": 302868480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049627,
+      "filename": "231025c26.tar",
+      "restricted": false,
+      "size_bytes": 331827200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049635,
+      "filename": "231025c27.tar",
+      "restricted": false,
+      "size_bytes": 465008640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049633,
+      "filename": "231025c28.tar",
+      "restricted": false,
+      "size_bytes": 329431040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049628,
+      "filename": "231025c29.tar",
+      "restricted": false,
+      "size_bytes": 279951360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049626,
+      "filename": "231025c30.tar",
+      "restricted": false,
+      "size_bytes": 280186880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049636,
+      "filename": "231025c31.tar",
+      "restricted": false,
+      "size_bytes": 340510720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049634,
+      "filename": "231025c32.tar",
+      "restricted": false,
+      "size_bytes": 294952960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049637,
+      "filename": "231025c33.tar",
+      "restricted": false,
+      "size_bytes": 320368640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049641,
+      "filename": "231025c34.tar",
+      "restricted": false,
+      "size_bytes": 350914560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049639,
+      "filename": "231025c35.tar",
+      "restricted": false,
+      "size_bytes": 440832000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049638,
+      "filename": "231109b01.tar",
+      "restricted": false,
+      "size_bytes": 464568320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049640,
+      "filename": "231109b02.tar",
+      "restricted": false,
+      "size_bytes": 273725440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049642,
+      "filename": "231109b03.tar",
+      "restricted": false,
+      "size_bytes": 431923200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049644,
+      "filename": "231109b04.tar",
+      "restricted": false,
+      "size_bytes": 369438720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049643,
+      "filename": "231109b05.tar",
+      "restricted": false,
+      "size_bytes": 425748480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049645,
+      "filename": "231109b06.tar",
+      "restricted": false,
+      "size_bytes": 307077120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049649,
+      "filename": "231109b07.tar",
+      "restricted": false,
+      "size_bytes": 288716800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049648,
+      "filename": "231109b08.tar",
+      "restricted": false,
+      "size_bytes": 332564480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049646,
+      "filename": "231109b09.tar",
+      "restricted": false,
+      "size_bytes": 337827840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049647,
+      "filename": "231109b10.tar",
+      "restricted": false,
+      "size_bytes": 278517760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049651,
+      "filename": "231109b11.tar",
+      "restricted": false,
+      "size_bytes": 298547200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049656,
+      "filename": "231109b12.tar",
+      "restricted": false,
+      "size_bytes": 401909760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049650,
+      "filename": "231109b13.tar",
+      "restricted": false,
+      "size_bytes": 291491840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049653,
+      "filename": "231109b14.tar",
+      "restricted": false,
+      "size_bytes": 328970240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049655,
+      "filename": "231109b15.tar",
+      "restricted": false,
+      "size_bytes": 403179520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049654,
+      "filename": "231109b16.tar",
+      "restricted": false,
+      "size_bytes": 269885440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049652,
+      "filename": "231109b17.tar",
+      "restricted": false,
+      "size_bytes": 247336960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049658,
+      "filename": "231109b18.tar",
+      "restricted": false,
+      "size_bytes": 328448000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049660,
+      "filename": "231109b19.tar",
+      "restricted": false,
+      "size_bytes": 310753280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049657,
+      "filename": "231206d01.tar",
+      "restricted": false,
+      "size_bytes": 226529280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049664,
+      "filename": "231206d02.tar",
+      "restricted": false,
+      "size_bytes": 327280640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049662,
+      "filename": "231206d03.tar",
+      "restricted": false,
+      "size_bytes": 438046720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049659,
+      "filename": "231206d04.tar",
+      "restricted": false,
+      "size_bytes": 198072320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049668,
+      "filename": "231206d05.tar",
+      "restricted": false,
+      "size_bytes": 476344320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049661,
+      "filename": "231206d06.tar",
+      "restricted": false,
+      "size_bytes": 183142400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049673,
+      "filename": "231206d07.tar",
+      "restricted": false,
+      "size_bytes": 471265280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049666,
+      "filename": "231206d08.tar",
+      "restricted": false,
+      "size_bytes": 374681600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049665,
+      "filename": "231206d09.tar",
+      "restricted": false,
+      "size_bytes": 453601280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049663,
+      "filename": "231206d10.tar",
+      "restricted": false,
+      "size_bytes": 180899840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049670,
+      "filename": "231206d12.tar",
+      "restricted": false,
+      "size_bytes": 408473600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049667,
+      "filename": "231206d13.tar",
+      "restricted": false,
+      "size_bytes": 158760960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049674,
+      "filename": "231206d14.tar",
+      "restricted": false,
+      "size_bytes": 459345920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049672,
+      "filename": "231206d15.tar",
+      "restricted": false,
+      "size_bytes": 213739520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049676,
+      "filename": "231206d16.tar",
+      "restricted": false,
+      "size_bytes": 415324160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049669,
+      "filename": "231206d18.tar",
+      "restricted": false,
+      "size_bytes": 207984640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049671,
+      "filename": "231206d19.tar",
+      "restricted": false,
+      "size_bytes": 193259520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049679,
+      "filename": "231206d20.tar",
+      "restricted": false,
+      "size_bytes": 433326080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049678,
+      "filename": "240112d11.tar",
+      "restricted": false,
+      "size_bytes": 400926720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049682,
+      "filename": "240112d17.tar",
+      "restricted": false,
+      "size_bytes": 469043200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049683,
+      "filename": "240112d21.tar",
+      "restricted": false,
+      "size_bytes": 452884480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049675,
+      "filename": "240112d23.tar",
+      "restricted": false,
+      "size_bytes": 202516480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049680,
+      "filename": "240112d24.tar",
+      "restricted": false,
+      "size_bytes": 430848000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049692,
+      "filename": "240112d25.tar",
+      "restricted": false,
+      "size_bytes": 538388480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049677,
+      "filename": "240112d26.tar",
+      "restricted": false,
+      "size_bytes": 178493440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049681,
+      "filename": "240112d27.tar",
+      "restricted": false,
+      "size_bytes": 182568960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049696,
+      "filename": "240112d28.tar",
+      "restricted": false,
+      "size_bytes": 422645760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049684,
+      "filename": "240112d29.tar",
+      "restricted": false,
+      "size_bytes": 185200640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049693,
+      "filename": "240112d30.tar",
+      "restricted": false,
+      "size_bytes": 198225920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049698,
+      "filename": "240112d31.tar",
+      "restricted": false,
+      "size_bytes": 346972160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049691,
+      "filename": "240112d32.tar",
+      "restricted": false,
+      "size_bytes": 206254080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049695,
+      "filename": "240112d33.tar",
+      "restricted": false,
+      "size_bytes": 218859520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049694,
+      "filename": "240112d34.tar",
+      "restricted": false,
+      "size_bytes": 212070400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049697,
+      "filename": "240112d35.tar",
+      "restricted": false,
+      "size_bytes": 227747840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049701,
+      "filename": "240112d36.tar",
+      "restricted": false,
+      "size_bytes": 500838400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049704,
+      "filename": "240112d37.tar",
+      "restricted": false,
+      "size_bytes": 559861760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049708,
+      "filename": "240112d38.tar",
+      "restricted": false,
+      "size_bytes": 521246720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049703,
+      "filename": "240112d39.tar",
+      "restricted": false,
+      "size_bytes": 353474560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049700,
+      "filename": "240112d40.tar",
+      "restricted": false,
+      "size_bytes": 206807040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049699,
+      "filename": "240112d41.tar",
+      "restricted": false,
+      "size_bytes": 180807680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049707,
+      "filename": "240112d42.tar",
+      "restricted": false,
+      "size_bytes": 484679680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049702,
+      "filename": "240112d43.tar",
+      "restricted": false,
+      "size_bytes": 293294080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049711,
+      "filename": "240112d44.tar",
+      "restricted": false,
+      "size_bytes": 450744320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049705,
+      "filename": "240122d22.tar",
+      "restricted": false,
+      "size_bytes": 376197120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049710,
+      "filename": "240122d45.tar",
+      "restricted": false,
+      "size_bytes": 354416640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049706,
+      "filename": "240122d46.tar",
+      "restricted": false,
+      "size_bytes": 206223360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049712,
+      "filename": "240122d47.tar",
+      "restricted": false,
+      "size_bytes": 296663040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049709,
+      "filename": "240122d48.tar",
+      "restricted": false,
+      "size_bytes": 173404160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049718,
+      "filename": "240122d49.tar",
+      "restricted": false,
+      "size_bytes": 359823360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049713,
+      "filename": "240122d50.tar",
+      "restricted": false,
+      "size_bytes": 361164800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049715,
+      "filename": "240122d51.tar",
+      "restricted": false,
+      "size_bytes": 312616960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049714,
+      "filename": "240122d52.tar",
+      "restricted": false,
+      "size_bytes": 299714560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049717,
+      "filename": "240122d53.tar",
+      "restricted": false,
+      "size_bytes": 200960000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049719,
+      "filename": "240122d54.tar",
+      "restricted": false,
+      "size_bytes": 313937920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049716,
+      "filename": "240122d55.tar",
+      "restricted": false,
+      "size_bytes": 185405440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049723,
+      "filename": "240122d56.tar",
+      "restricted": false,
+      "size_bytes": 371148800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049721,
+      "filename": "240122d57.tar",
+      "restricted": false,
+      "size_bytes": 393932800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049729,
+      "filename": "240122d58.tar",
+      "restricted": false,
+      "size_bytes": 436705280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049720,
+      "filename": "240122d59.tar",
+      "restricted": false,
+      "size_bytes": 214128640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049726,
+      "filename": "240122d60.tar",
+      "restricted": false,
+      "size_bytes": 489461760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049722,
+      "filename": "240122d61.tar",
+      "restricted": false,
+      "size_bytes": 181329920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049725,
+      "filename": "240122d62.tar",
+      "restricted": false,
+      "size_bytes": 395192320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049728,
+      "filename": "240122d63.tar",
+      "restricted": false,
+      "size_bytes": 334172160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049724,
+      "filename": "240122d64.tar",
+      "restricted": false,
+      "size_bytes": 319447040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049727,
+      "filename": "240122d65.tar",
+      "restricted": false,
+      "size_bytes": 158535680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049737,
+      "filename": "240122d66.tar",
+      "restricted": false,
+      "size_bytes": 515061760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049731,
+      "filename": "240122d67.tar",
+      "restricted": false,
+      "size_bytes": 273612800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049734,
+      "filename": "240122d68.tar",
+      "restricted": false,
+      "size_bytes": 177827840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049733,
+      "filename": "240122d69.tar",
+      "restricted": false,
+      "size_bytes": 145971200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049732,
+      "filename": "240122d70.tar",
+      "restricted": false,
+      "size_bytes": 188344320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049735,
+      "filename": "240122d71.tar",
+      "restricted": false,
+      "size_bytes": 401704960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049730,
+      "filename": "240122d72.tar",
+      "restricted": false,
+      "size_bytes": 186296320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049741,
+      "filename": "240122d73.tar",
+      "restricted": false,
+      "size_bytes": 397281280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049740,
+      "filename": "240122d74.tar",
+      "restricted": false,
+      "size_bytes": 320092160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049736,
+      "filename": "240122d75.tar",
+      "restricted": false,
+      "size_bytes": 183367680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049739,
+      "filename": "240229c01.tar",
+      "restricted": false,
+      "size_bytes": 327239680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049742,
+      "filename": "240229c02.tar",
+      "restricted": false,
+      "size_bytes": 375808000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049738,
+      "filename": "240229c03.tar",
+      "restricted": false,
+      "size_bytes": 300247040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049745,
+      "filename": "240229c04.tar",
+      "restricted": false,
+      "size_bytes": 374763520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049749,
+      "filename": "240229c05.tar",
+      "restricted": false,
+      "size_bytes": 281661440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049748,
+      "filename": "240229c06.tar",
+      "restricted": false,
+      "size_bytes": 322590720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049747,
+      "filename": "240229c07.tar",
+      "restricted": false,
+      "size_bytes": 375838720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049743,
+      "filename": "240229c08.tar",
+      "restricted": false,
+      "size_bytes": 252825600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049751,
+      "filename": "240229c09.tar",
+      "restricted": false,
+      "size_bytes": 309032960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049746,
+      "filename": "240229c10.tar",
+      "restricted": false,
+      "size_bytes": 312791040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049750,
+      "filename": "240229c11.tar",
+      "restricted": false,
+      "size_bytes": 306421760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049753,
+      "filename": "240229c12.tar",
+      "restricted": false,
+      "size_bytes": 444958720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049752,
+      "filename": "240229c13.tar",
+      "restricted": false,
+      "size_bytes": 289003520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049760,
+      "filename": "240229c14.tar",
+      "restricted": false,
+      "size_bytes": 400578560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049756,
+      "filename": "240229c15.tar",
+      "restricted": false,
+      "size_bytes": 354754560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049759,
+      "filename": "240229c16.tar",
+      "restricted": false,
+      "size_bytes": 325181440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049758,
+      "filename": "240229c17.tar",
+      "restricted": false,
+      "size_bytes": 276285440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049754,
+      "filename": "240229c18.tar",
+      "restricted": false,
+      "size_bytes": 301834240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049755,
+      "filename": "240229c19.tar",
+      "restricted": false,
+      "size_bytes": 312760320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049763,
+      "filename": "240229c20.tar",
+      "restricted": false,
+      "size_bytes": 488908800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049765,
+      "filename": "240229c22.tar",
+      "restricted": false,
+      "size_bytes": 283473920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049766,
+      "filename": "240229c23.tar",
+      "restricted": false,
+      "size_bytes": 285440000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049764,
+      "filename": "240229c24.tar",
+      "restricted": false,
+      "size_bytes": 308582400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049761,
+      "filename": "240229c25.tar",
+      "restricted": false,
+      "size_bytes": 266475520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049769,
+      "filename": "240229c26.tar",
+      "restricted": false,
+      "size_bytes": 274472960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049767,
+      "filename": "240229c27.tar",
+      "restricted": false,
+      "size_bytes": 435578880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049762,
+      "filename": "240229c28.tar",
+      "restricted": false,
+      "size_bytes": 279398400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049768,
+      "filename": "240229c29.tar",
+      "restricted": false,
+      "size_bytes": 286771200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049771,
+      "filename": "240229c30.tar",
+      "restricted": false,
+      "size_bytes": 276039680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049774,
+      "filename": "240229c31.tar",
+      "restricted": false,
+      "size_bytes": 304322560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049772,
+      "filename": "240229c32.tar",
+      "restricted": false,
+      "size_bytes": 303708160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049770,
+      "filename": "240229c33.tar",
+      "restricted": false,
+      "size_bytes": 280688640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049773,
+      "filename": "240229c34.tar",
+      "restricted": false,
+      "size_bytes": 274114560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049776,
+      "filename": "240229c35.tar",
+      "restricted": false,
+      "size_bytes": 324423680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049775,
+      "filename": "240229c36.tar",
+      "restricted": false,
+      "size_bytes": 280309760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049777,
+      "filename": "240229c37.tar",
+      "restricted": false,
+      "size_bytes": 331581440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049829,
+      "filename": "240229c38.tar",
+      "restricted": false,
+      "size_bytes": 336619520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049830,
+      "filename": "240229c39.tar",
+      "restricted": false,
+      "size_bytes": 278896640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049827,
+      "filename": "240229c40.tar",
+      "restricted": false,
+      "size_bytes": 298014720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049828,
+      "filename": "240229c41.tar",
+      "restricted": false,
+      "size_bytes": 320010240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049778,
+      "filename": "240229c43.tar",
+      "restricted": false,
+      "size_bytes": 280965120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049837,
+      "filename": "240229c44.tar",
+      "restricted": false,
+      "size_bytes": 327843840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049836,
+      "filename": "240229c45.tar",
+      "restricted": false,
+      "size_bytes": 304680960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049834,
+      "filename": "240229c47.tar",
+      "restricted": false,
+      "size_bytes": 192614400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049833,
+      "filename": "240504a06.tar",
+      "restricted": false,
+      "size_bytes": 269148160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049832,
+      "filename": "240504a07.tar",
+      "restricted": false,
+      "size_bytes": 258938880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050381,
+      "filename": "240504a08.tar",
+      "restricted": false,
+      "size_bytes": 386652160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049938,
+      "filename": "240504a09.tar",
+      "restricted": false,
+      "size_bytes": 235171840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050412,
+      "filename": "240504a10.tar",
+      "restricted": false,
+      "size_bytes": 436766720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049922,
+      "filename": "240504a11.tar",
+      "restricted": false,
+      "size_bytes": 360325120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049868,
+      "filename": "240504a12.tar",
+      "restricted": false,
+      "size_bytes": 257730560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050436,
+      "filename": "240504a13.tar",
+      "restricted": false,
+      "size_bytes": 396615680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050180,
+      "filename": "240504a14.tar",
+      "restricted": false,
+      "size_bytes": 294287360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050269,
+      "filename": "240504a15.tar",
+      "restricted": false,
+      "size_bytes": 281384960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050383,
+      "filename": "240504b01.tar",
+      "restricted": false,
+      "size_bytes": 287692800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050185,
+      "filename": "240504b02.tar",
+      "restricted": false,
+      "size_bytes": 291604480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050140,
+      "filename": "240504b03.tar",
+      "restricted": false,
+      "size_bytes": 339793920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050198,
+      "filename": "240504b04.tar",
+      "restricted": false,
+      "size_bytes": 317286400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050214,
+      "filename": "240504b05.tar",
+      "restricted": false,
+      "size_bytes": 279910400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050427,
+      "filename": "240504b06.tar",
+      "restricted": false,
+      "size_bytes": 429568000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050341,
+      "filename": "240504b07.tar",
+      "restricted": false,
+      "size_bytes": 501360640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049985,
+      "filename": "240504b08.tar",
+      "restricted": false,
+      "size_bytes": 279859200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050146,
+      "filename": "240504b09.tar",
+      "restricted": false,
+      "size_bytes": 347320320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050135,
+      "filename": "240504b10.tar",
+      "restricted": false,
+      "size_bytes": 321546240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049927,
+      "filename": "240504b11.tar",
+      "restricted": false,
+      "size_bytes": 442030080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050029,
+      "filename": "240504b12.tar",
+      "restricted": false,
+      "size_bytes": 277821440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049969,
+      "filename": "240504b13.tar",
+      "restricted": false,
+      "size_bytes": 379883520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050081,
+      "filename": "240504b14.tar",
+      "restricted": false,
+      "size_bytes": 356802560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050262,
+      "filename": "240504b15.tar",
+      "restricted": false,
+      "size_bytes": 484321280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050034,
+      "filename": "240504b16.tar",
+      "restricted": false,
+      "size_bytes": 295331840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050400,
+      "filename": "240504b17.tar",
+      "restricted": false,
+      "size_bytes": 336363520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049932,
+      "filename": "240504b18.tar",
+      "restricted": false,
+      "size_bytes": 585943040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050045,
+      "filename": "240504b19.tar",
+      "restricted": false,
+      "size_bytes": 274370560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050273,
+      "filename": "240504b20.tar",
+      "restricted": false,
+      "size_bytes": 312289280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050266,
+      "filename": "240504b21.tar",
+      "restricted": false,
+      "size_bytes": 435281920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050244,
+      "filename": "240504b22.tar",
+      "restricted": false,
+      "size_bytes": 287713280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050036,
+      "filename": "240504b23.tar",
+      "restricted": false,
+      "size_bytes": 433254400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050207,
+      "filename": "240504b24.tar",
+      "restricted": false,
+      "size_bytes": 449024000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050332,
+      "filename": "240504b25.tar",
+      "restricted": false,
+      "size_bytes": 282275840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050310,
+      "filename": "240504b26.tar",
+      "restricted": false,
+      "size_bytes": 429649920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050399,
+      "filename": "240504b27.tar",
+      "restricted": false,
+      "size_bytes": 293201920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049890,
+      "filename": "240504b28.tar",
+      "restricted": false,
+      "size_bytes": 452259840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049993,
+      "filename": "240504b29.tar",
+      "restricted": false,
+      "size_bytes": 363253760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050245,
+      "filename": "240504b30.tar",
+      "restricted": false,
+      "size_bytes": 453232640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050215,
+      "filename": "240504b31.tar",
+      "restricted": false,
+      "size_bytes": 304865280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050181,
+      "filename": "240504b32.tar",
+      "restricted": false,
+      "size_bytes": 278753280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049960,
+      "filename": "240504b33.tar",
+      "restricted": false,
+      "size_bytes": 281364480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050424,
+      "filename": "240504b34.tar",
+      "restricted": false,
+      "size_bytes": 431298560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050114,
+      "filename": "240504b36.tar",
+      "restricted": false,
+      "size_bytes": 323112960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050190,
+      "filename": "240504b37.tar",
+      "restricted": false,
+      "size_bytes": 320378880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050300,
+      "filename": "240504b38.tar",
+      "restricted": false,
+      "size_bytes": 400875520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050411,
+      "filename": "240504b39.tar",
+      "restricted": false,
+      "size_bytes": 342599680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050394,
+      "filename": "240504b40.tar",
+      "restricted": false,
+      "size_bytes": 437196800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050358,
+      "filename": "240504b41.tar",
+      "restricted": false,
+      "size_bytes": 422369280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050085,
+      "filename": "240504b42.tar",
+      "restricted": false,
+      "size_bytes": 281722880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050154,
+      "filename": "240504b43.tar",
+      "restricted": false,
+      "size_bytes": 275763200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049943,
+      "filename": "240504b44.tar",
+      "restricted": false,
+      "size_bytes": 279633920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050128,
+      "filename": "240504b45.tar",
+      "restricted": false,
+      "size_bytes": 307834880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050354,
+      "filename": "240504b46.tar",
+      "restricted": false,
+      "size_bytes": 310681600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050191,
+      "filename": "240504b47.tar",
+      "restricted": false,
+      "size_bytes": 317214720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050285,
+      "filename": "240504b48.tar",
+      "restricted": false,
+      "size_bytes": 447016960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050260,
+      "filename": "240504b49.tar",
+      "restricted": false,
+      "size_bytes": 419246080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050037,
+      "filename": "240504b50.tar",
+      "restricted": false,
+      "size_bytes": 463974400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050388,
+      "filename": "240504e01.tar",
+      "restricted": false,
+      "size_bytes": 413644800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050040,
+      "filename": "240504e02.tar",
+      "restricted": false,
+      "size_bytes": 464271360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050023,
+      "filename": "240504e03.tar",
+      "restricted": false,
+      "size_bytes": 436838400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050346,
+      "filename": "240504e04.tar",
+      "restricted": false,
+      "size_bytes": 416532480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049999,
+      "filename": "240504e05.tar",
+      "restricted": false,
+      "size_bytes": 375183360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050109,
+      "filename": "240504e06.tar",
+      "restricted": false,
+      "size_bytes": 431902720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049901,
+      "filename": "240504e07.tar",
+      "restricted": false,
+      "size_bytes": 450181120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050041,
+      "filename": "240504e08.tar",
+      "restricted": false,
+      "size_bytes": 452270080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050068,
+      "filename": "240504e09.tar",
+      "restricted": false,
+      "size_bytes": 323051520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050089,
+      "filename": "240504e10.tar",
+      "restricted": false,
+      "size_bytes": 473794560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050278,
+      "filename": "240504e11.tar",
+      "restricted": false,
+      "size_bytes": 370892800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050133,
+      "filename": "240504e12.tar",
+      "restricted": false,
+      "size_bytes": 352348160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049955,
+      "filename": "240504e13.tar",
+      "restricted": false,
+      "size_bytes": 316139520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050106,
+      "filename": "240504e14.tar",
+      "restricted": false,
+      "size_bytes": 393564160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050284,
+      "filename": "240504e15.tar",
+      "restricted": false,
+      "size_bytes": 450181120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050390,
+      "filename": "240504e16.tar",
+      "restricted": false,
+      "size_bytes": 466442240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050061,
+      "filename": "240504e17.tar",
+      "restricted": false,
+      "size_bytes": 448358400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050216,
+      "filename": "240504e18.tar",
+      "restricted": false,
+      "size_bytes": 387010560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049983,
+      "filename": "240504e19.tar",
+      "restricted": false,
+      "size_bytes": 327761920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050084,
+      "filename": "240504e20.tar",
+      "restricted": false,
+      "size_bytes": 360304640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049882,
+      "filename": "240504e21.tar",
+      "restricted": false,
+      "size_bytes": 364165120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050080,
+      "filename": "240504e22.tar",
+      "restricted": false,
+      "size_bytes": 439203840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050225,
+      "filename": "240504e23.tar",
+      "restricted": false,
+      "size_bytes": 361994240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050349,
+      "filename": "240504e24.tar",
+      "restricted": false,
+      "size_bytes": 406650880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050208,
+      "filename": "240504e25.tar",
+      "restricted": false,
+      "size_bytes": 434944000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050095,
+      "filename": "240504e26.tar",
+      "restricted": false,
+      "size_bytes": 418119680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050336,
+      "filename": "240504e27.tar",
+      "restricted": false,
+      "size_bytes": 425758720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050131,
+      "filename": "240504e28.tar",
+      "restricted": false,
+      "size_bytes": 472811520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049903,
+      "filename": "240504e29.tar",
+      "restricted": false,
+      "size_bytes": 371763200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050113,
+      "filename": "240504e30.tar",
+      "restricted": false,
+      "size_bytes": 376627200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050024,
+      "filename": "240504e31.tar",
+      "restricted": false,
+      "size_bytes": 406958080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050169,
+      "filename": "240504e32.tar",
+      "restricted": false,
+      "size_bytes": 351569920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050055,
+      "filename": "240504e33.tar",
+      "restricted": false,
+      "size_bytes": 424581120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050124,
+      "filename": "240504e34.tar",
+      "restricted": false,
+      "size_bytes": 435077120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050212,
+      "filename": "240504e35.tar",
+      "restricted": false,
+      "size_bytes": 370401280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049881,
+      "filename": "240504e36.tar",
+      "restricted": false,
+      "size_bytes": 475095040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050188,
+      "filename": "240504e38.tar",
+      "restricted": false,
+      "size_bytes": 484208640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050347,
+      "filename": "240504e39.tar",
+      "restricted": false,
+      "size_bytes": 279808000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050196,
+      "filename": "240504e40.tar",
+      "restricted": false,
+      "size_bytes": 412467200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050019,
+      "filename": "240504e41.tar",
+      "restricted": false,
+      "size_bytes": 395335680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049948,
+      "filename": "240504e42.tar",
+      "restricted": false,
+      "size_bytes": 532828160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050192,
+      "filename": "240504e43.tar",
+      "restricted": false,
+      "size_bytes": 423342080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050186,
+      "filename": "240504e44.tar",
+      "restricted": false,
+      "size_bytes": 414279680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050421,
+      "filename": "240504e45.tar",
+      "restricted": false,
+      "size_bytes": 432465920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050075,
+      "filename": "240504e46.tar",
+      "restricted": false,
+      "size_bytes": 438056960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050012,
+      "filename": "240504e47.tar",
+      "restricted": false,
+      "size_bytes": 281845760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050160,
+      "filename": "240504e48.tar",
+      "restricted": false,
+      "size_bytes": 399902720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050035,
+      "filename": "240504e49.tar",
+      "restricted": false,
+      "size_bytes": 413143040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050155,
+      "filename": "240504e50.tar",
+      "restricted": false,
+      "size_bytes": 438937600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050237,
+      "filename": "240620a01.tar",
+      "restricted": false,
+      "size_bytes": 454625280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050246,
+      "filename": "240620a02.tar",
+      "restricted": false,
+      "size_bytes": 417771520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049914,
+      "filename": "240620a03.tar",
+      "restricted": false,
+      "size_bytes": 244869120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050130,
+      "filename": "240620a04.tar",
+      "restricted": false,
+      "size_bytes": 393687040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050329,
+      "filename": "240620a05.tar",
+      "restricted": false,
+      "size_bytes": 367175680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050413,
+      "filename": "240620a06.tar",
+      "restricted": false,
+      "size_bytes": 376555520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049892,
+      "filename": "240620a07.tar",
+      "restricted": false,
+      "size_bytes": 270837760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049928,
+      "filename": "240620a08.tar",
+      "restricted": false,
+      "size_bytes": 321372160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050397,
+      "filename": "240620a09.tar",
+      "restricted": false,
+      "size_bytes": 306810880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049980,
+      "filename": "240620a10.tar",
+      "restricted": false,
+      "size_bytes": 393236480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050359,
+      "filename": "240620a11.tar",
+      "restricted": false,
+      "size_bytes": 393195520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050312,
+      "filename": "240620a12.tar",
+      "restricted": false,
+      "size_bytes": 218634240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049959,
+      "filename": "240620a13.tar",
+      "restricted": false,
+      "size_bytes": 278179840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050286,
+      "filename": "240620a14.tar",
+      "restricted": false,
+      "size_bytes": 412426240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049918,
+      "filename": "240620a15.tar",
+      "restricted": false,
+      "size_bytes": 296253440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050016,
+      "filename": "240620a16.tar",
+      "restricted": false,
+      "size_bytes": 293867520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050021,
+      "filename": "240620a17.tar",
+      "restricted": false,
+      "size_bytes": 303677440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050337,
+      "filename": "240620a18.tar",
+      "restricted": false,
+      "size_bytes": 287467520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050074,
+      "filename": "240620a19.tar",
+      "restricted": false,
+      "size_bytes": 416051200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050044,
+      "filename": "240620a20.tar",
+      "restricted": false,
+      "size_bytes": 481116160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050144,
+      "filename": "240620a21.tar",
+      "restricted": false,
+      "size_bytes": 321505280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050339,
+      "filename": "240620a22.tar",
+      "restricted": false,
+      "size_bytes": 330229760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050111,
+      "filename": "240620a23.tar",
+      "restricted": false,
+      "size_bytes": 384645120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049946,
+      "filename": "240620a24.tar",
+      "restricted": false,
+      "size_bytes": 400138240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050120,
+      "filename": "240620a25.tar",
+      "restricted": false,
+      "size_bytes": 366059520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049921,
+      "filename": "240620a26.tar",
+      "restricted": false,
+      "size_bytes": 452648960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050209,
+      "filename": "240620a27.tar",
+      "restricted": false,
+      "size_bytes": 416798720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050057,
+      "filename": "240620a28.tar",
+      "restricted": false,
+      "size_bytes": 433489920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049904,
+      "filename": "240620a29.tar",
+      "restricted": false,
+      "size_bytes": 257198080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050067,
+      "filename": "240620a30.tar",
+      "restricted": false,
+      "size_bytes": 374599680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050357,
+      "filename": "240620a31.tar",
+      "restricted": false,
+      "size_bytes": 396881920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050163,
+      "filename": "240620a32.tar",
+      "restricted": false,
+      "size_bytes": 312227840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049875,
+      "filename": "240620a33.tar",
+      "restricted": false,
+      "size_bytes": 270110720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050384,
+      "filename": "240620a34.tar",
+      "restricted": false,
+      "size_bytes": 360878080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050292,
+      "filename": "240620a35.tar",
+      "restricted": false,
+      "size_bytes": 391086080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050053,
+      "filename": "240620a36.tar",
+      "restricted": false,
+      "size_bytes": 379033600
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050011,
+      "filename": "240620a37.tar",
+      "restricted": false,
+      "size_bytes": 294584320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050087,
+      "filename": "240620a38.tar",
+      "restricted": false,
+      "size_bytes": 376616960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050433,
+      "filename": "240620a39.tar",
+      "restricted": false,
+      "size_bytes": 413388800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050217,
+      "filename": "240620a40.tar",
+      "restricted": false,
+      "size_bytes": 272660480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049891,
+      "filename": "240620a41.tar",
+      "restricted": false,
+      "size_bytes": 327260160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049902,
+      "filename": "240620a42.tar",
+      "restricted": false,
+      "size_bytes": 271759360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050335,
+      "filename": "240620a43.tar",
+      "restricted": false,
+      "size_bytes": 304015360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050259,
+      "filename": "240620a44.tar",
+      "restricted": false,
+      "size_bytes": 325724160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050291,
+      "filename": "240620a45.tar",
+      "restricted": false,
+      "size_bytes": 427622400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050122,
+      "filename": "240620a46.tar",
+      "restricted": false,
+      "size_bytes": 272005120
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050064,
+      "filename": "240620a47.tar",
+      "restricted": false,
+      "size_bytes": 324208640
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050077,
+      "filename": "240620a48.tar",
+      "restricted": false,
+      "size_bytes": 342272000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050408,
+      "filename": "240620a49.tar",
+      "restricted": false,
+      "size_bytes": 352122880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049945,
+      "filename": "240620a50.tar",
+      "restricted": false,
+      "size_bytes": 396257280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050121,
+      "filename": "240620a51.tar",
+      "restricted": false,
+      "size_bytes": 301455360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050315,
+      "filename": "240620a52.tar",
+      "restricted": false,
+      "size_bytes": 452270080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050391,
+      "filename": "240620a53.tar",
+      "restricted": false,
+      "size_bytes": 381071360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049965,
+      "filename": "240620a54.tar",
+      "restricted": false,
+      "size_bytes": 394506240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049885,
+      "filename": "240620a55.tar",
+      "restricted": false,
+      "size_bytes": 317480960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050248,
+      "filename": "240620a57.tar",
+      "restricted": false,
+      "size_bytes": 356802560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050271,
+      "filename": "240620a58.tar",
+      "restricted": false,
+      "size_bytes": 423424000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049916,
+      "filename": "240620a59.tar",
+      "restricted": false,
+      "size_bytes": 248934400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049970,
+      "filename": "240620a60.tar",
+      "restricted": false,
+      "size_bytes": 376995840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050344,
+      "filename": "240620a61.tar",
+      "restricted": false,
+      "size_bytes": 483143680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049991,
+      "filename": "240620a62.tar",
+      "restricted": false,
+      "size_bytes": 395601920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050299,
+      "filename": "240620a63.tar",
+      "restricted": false,
+      "size_bytes": 284579840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049989,
+      "filename": "240620a64.tar",
+      "restricted": false,
+      "size_bytes": 341268480
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050380,
+      "filename": "240620a65.tar",
+      "restricted": false,
+      "size_bytes": 435148800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049987,
+      "filename": "240722e100.tar",
+      "restricted": false,
+      "size_bytes": 444968960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049876,
+      "filename": "240722e101.tar",
+      "restricted": false,
+      "size_bytes": 347228160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050195,
+      "filename": "240722e102.tar",
+      "restricted": false,
+      "size_bytes": 445245440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050022,
+      "filename": "240722e103.tar",
+      "restricted": false,
+      "size_bytes": 335308800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050324,
+      "filename": "240722e104.tar",
+      "restricted": false,
+      "size_bytes": 468019200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050430,
+      "filename": "240722e51.tar",
+      "restricted": false,
+      "size_bytes": 473702400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049873,
+      "filename": "240722e52.tar",
+      "restricted": false,
+      "size_bytes": 343848960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050261,
+      "filename": "240722e53.tar",
+      "restricted": false,
+      "size_bytes": 393820160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049967,
+      "filename": "240722e54.tar",
+      "restricted": false,
+      "size_bytes": 426280960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050407,
+      "filename": "240722e55.tar",
+      "restricted": false,
+      "size_bytes": 455884800
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050157,
+      "filename": "240722e56.tar",
+      "restricted": false,
+      "size_bytes": 410716160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050423,
+      "filename": "240722e57.tar",
+      "restricted": false,
+      "size_bytes": 424099840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049964,
+      "filename": "240722e58.tar",
+      "restricted": false,
+      "size_bytes": 382054400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050387,
+      "filename": "240722e59.tar",
+      "restricted": false,
+      "size_bytes": 423567360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050253,
+      "filename": "240722e60.tar",
+      "restricted": false,
+      "size_bytes": 422574080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049939,
+      "filename": "240722e61.tar",
+      "restricted": false,
+      "size_bytes": 383784960
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050297,
+      "filename": "240722e62.tar",
+      "restricted": false,
+      "size_bytes": 402104320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049887,
+      "filename": "240722e63.tar",
+      "restricted": false,
+      "size_bytes": 454205440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049866,
+      "filename": "240722e64.tar",
+      "restricted": false,
+      "size_bytes": 396380160
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050096,
+      "filename": "240722e65.tar",
+      "restricted": false,
+      "size_bytes": 429250560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050251,
+      "filename": "240722e66.tar",
+      "restricted": false,
+      "size_bytes": 456120320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049917,
+      "filename": "240722e67.tar",
+      "restricted": false,
+      "size_bytes": 343101440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050211,
+      "filename": "240722e68.tar",
+      "restricted": false,
+      "size_bytes": 412262400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050138,
+      "filename": "240722e69.tar",
+      "restricted": false,
+      "size_bytes": 362106880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050378,
+      "filename": "240722e70.tar",
+      "restricted": false,
+      "size_bytes": 411279360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050164,
+      "filename": "240722e71.tar",
+      "restricted": false,
+      "size_bytes": 380067840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050426,
+      "filename": "240722e72.tar",
+      "restricted": false,
+      "size_bytes": 450723840
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050156,
+      "filename": "240722e73.tar",
+      "restricted": false,
+      "size_bytes": 358983680
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050276,
+      "filename": "240722e74.tar",
+      "restricted": false,
+      "size_bytes": 291840000
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050031,
+      "filename": "240722e75.tar",
+      "restricted": false,
+      "size_bytes": 379115520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049889,
+      "filename": "240722e76.tar",
+      "restricted": false,
+      "size_bytes": 416983040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050375,
+      "filename": "240722e77.tar",
+      "restricted": false,
+      "size_bytes": 434606080
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050018,
+      "filename": "240722e78.tar",
+      "restricted": false,
+      "size_bytes": 374558720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050073,
+      "filename": "240722e79.tar",
+      "restricted": false,
+      "size_bytes": 435435520
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050220,
+      "filename": "240722e80.tar",
+      "restricted": false,
+      "size_bytes": 407070720
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050420,
+      "filename": "240722e81.tar",
+      "restricted": false,
+      "size_bytes": 437391360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050393,
+      "filename": "240722e82.tar",
+      "restricted": false,
+      "size_bytes": 397434880
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050221,
+      "filename": "240722e83.tar",
+      "restricted": false,
+      "size_bytes": 472309760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050432,
+      "filename": "240722e84.tar",
+      "restricted": false,
+      "size_bytes": 449382400
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050052,
+      "filename": "240722e85.tar",
+      "restricted": false,
+      "size_bytes": 493066240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050350,
+      "filename": "240722e86.tar",
+      "restricted": false,
+      "size_bytes": 380661760
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050010,
+      "filename": "240722e87.tar",
+      "restricted": false,
+      "size_bytes": 429199360
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050110,
+      "filename": "240722e88.tar",
+      "restricted": false,
+      "size_bytes": 437729280
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050422,
+      "filename": "240722e89.tar",
+      "restricted": false,
+      "size_bytes": 396984320
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12049963,
+      "filename": "240722e90.tar",
+      "restricted": false,
+      "size_bytes": 444610560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050239,
+      "filename": "240722e91.tar",
+      "restricted": false,
+      "size_bytes": 470097920
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050417,
+      "filename": "240722e92.tar",
+      "restricted": false,
+      "size_bytes": 463298560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050356,
+      "filename": "240722e93.tar",
+      "restricted": false,
+      "size_bytes": 442327040
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050115,
+      "filename": "240722e94.tar",
+      "restricted": false,
+      "size_bytes": 522250240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050189,
+      "filename": "240722e95.tar",
+      "restricted": false,
+      "size_bytes": 370493440
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050069,
+      "filename": "240722e96.tar",
+      "restricted": false,
+      "size_bytes": 424714240
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050361,
+      "filename": "240722e97.tar",
+      "restricted": false,
+      "size_bytes": 398131200
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050025,
+      "filename": "240722e98.tar",
+      "restricted": false,
+      "size_bytes": 351938560
+    },
+    {
+      "content_type": "application/x-tar",
+      "description": "",
+      "directory_label": null,
+      "file_id": 12050256,
+      "filename": "240722e99.tar",
+      "restricted": false,
+      "size_bytes": 422666240
+    },
+    {
+      "content_type": "application/x-ipynb+json",
+      "description": null,
+      "directory_label": null,
+      "file_id": 12556773,
+      "filename": "MCT_LTDiag_download.ipynb",
+      "restricted": false,
+      "size_bytes": 5106
+    },
+    {
+      "content_type": "text/tab-separated-values",
+      "description": null,
+      "directory_label": null,
+      "file_id": 12556771,
+      "filename": "meta_info_patient.tab",
+      "restricted": false,
+      "size_bytes": 22163
+    },
+    {
+      "content_type": "text/tab-separated-values",
+      "description": null,
+      "directory_label": null,
+      "file_id": 12556772,
+      "filename": "meta_info_tumor.tab",
+      "restricted": false,
+      "size_bytes": 33404
+    }
+  ],
+  "updated_at": 1782167752.5894852
+}

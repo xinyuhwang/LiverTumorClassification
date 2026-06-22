@@ -1,0 +1,1 @@
+/Users/yz/Desktop/Projects/LiverTumorClassification/.venv/bin/python download_dataset.py --config configs/phase1_server_download.yaml --set dataset.root=/tmp/mct-ltdiag-metadata-check --metadata-only

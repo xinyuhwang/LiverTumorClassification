@@ -1,0 +1,83 @@
+# Local/private project notes and secrets
+*.local.md
+.env
+.env.*
+!.env.example
+secrets/
+*.token
+
+# Python, tooling, and Conda environments
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+.conda/
+
+# Editors and operating-system metadata
+.DS_Store
+.idea/
+.vscode/
+
+# Local datasets, extracted archives, and preprocessing caches
+data/
+datasets/
+raw_data/
+derived_data/
+cache/
+caches/
+preprocessed/
+*.nii
+*.nii.gz
+*.nrrd
+*.mha
+*.mhd
+*.dcm
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.7z
+*.part
+
+# Large model files and serialized training state (no Git LFS for now)
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.pb
+*.tflite
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+*.joblib
+*.bin
+checkpoints/
+weights/
+models_cache/
+
+# Large run artifacts. Compact logs, metrics, plots, manifests, configs, and
+# source snapshots under runs/ remain trackable.
+runs/**/checkpoints/
+runs/**/predictions/
+runs/**/large_artifacts/
+runs/**/tensorboard/
+runs/**/wandb/
+runs/**/*.npz
+runs/**/*.npy
+runs/**/*.nii
+runs/**/*.nii.gz
+
+# Generic training-service caches
+wandb/
+lightning_logs/
+mlruns/
+.cache/

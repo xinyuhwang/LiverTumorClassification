@@ -1,0 +1,23 @@
+{
+  "artifacts": [
+    {
+      "exists": true,
+      "kind": "download_inventory",
+      "metadata": {},
+      "path": "/Users/yz/Desktop/Projects/LiverTumorClassification/runs/p01-r03-dataset-download-20260622-153548-917465-p85154-074a3a2/reports/download_inventory.json",
+      "server_only": false,
+      "sha256": "d7c76ac307e52d1da702e23aeb2e94c85826d52f4a5e79ad60e5c95944c3f83e",
+      "size_bytes": 120456
+    },
+    {
+      "exists": true,
+      "kind": "server_dataset_inventory",
+      "metadata": {},
+      "path": "/private/tmp/mct-ltdiag-metadata-check/download_inventory.json",
+      "server_only": true,
+      "sha256": "d7c76ac307e52d1da702e23aeb2e94c85826d52f4a5e79ad60e5c95944c3f83e",
+      "size_bytes": 120456
+    }
+  ],
+  "run_id": "p01-r03-dataset-download-20260622-153548-917465-p85154-074a3a2"
+}
