@@ -1,0 +1,22 @@
+experiment:
+  phase: p01
+  round: r04
+  task: full-dataset-audit
+  runs_root: runs
+  seed: 42
+
+dataset:
+  root: ${MCT_DATA_ROOT}
+  load_intensities: true
+  qc_cases_per_type: 2
+  max_cases: null
+
+# Keep disabled until the first full audit has no validation errors and the
+# distribution report has been reviewed locally.
+split:
+  protocol: none
+  seed: 42
+  n_folds: 5
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
