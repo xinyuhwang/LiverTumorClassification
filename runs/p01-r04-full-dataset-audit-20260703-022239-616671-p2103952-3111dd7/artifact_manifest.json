@@ -1,0 +1,140 @@
+{
+  "artifacts": [
+    {
+      "exists": true,
+      "kind": "dataset_audit",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/case_details.json",
+      "server_only": false,
+      "sha256": "b569e3b1e014bfef1a68fec947482056ed50c15e1cefdaf0432789f9b39c6135",
+      "size_bytes": 4308467
+    },
+    {
+      "exists": true,
+      "kind": "dataset_audit",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/cases.csv",
+      "server_only": false,
+      "sha256": "65233ca6a857cc329777d26b97e689793e7531f259aa0533e15e0fe8be63be11",
+      "size_bytes": 176715
+    },
+    {
+      "exists": true,
+      "kind": "dataset_audit",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/issues.csv",
+      "server_only": false,
+      "sha256": "97e9d23f71f602be75f2256a5e12d6a385b987990fbba9f70e2c12268c22545d",
+      "size_bytes": 49023
+    },
+    {
+      "exists": true,
+      "kind": "dataset_audit",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/report.md",
+      "server_only": false,
+      "sha256": "871a9c50c846fda59aa29c75676558ff234e1d1e4321e828c62e5e516ae1f05a",
+      "size_bytes": 521
+    },
+    {
+      "exists": true,
+      "kind": "dataset_audit",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/summary.json",
+      "server_only": false,
+      "sha256": "b35d71c22915aa3a797d77468caa28b8bc73ad0a9d9d6c344ed6d6d992e3ddcb",
+      "size_bytes": 866
+    },
+    {
+      "exists": true,
+      "kind": "dataset_qc_image",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/qc/230218a1.png",
+      "server_only": false,
+      "sha256": "db28492ba0750a1df3aa7a6fc3078868a962e544bf130106b83f34173a7671a9",
+      "size_bytes": 476902
+    },
+    {
+      "exists": true,
+      "kind": "dataset_qc_image",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/qc/230218a10.png",
+      "server_only": false,
+      "sha256": "06d564deddd463214d83ce6d37e761eb000f3064964c4678bb1369a05d21d100",
+      "size_bytes": 412746
+    },
+    {
+      "exists": true,
+      "kind": "dataset_qc_image",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/qc/230218b1.png",
+      "server_only": false,
+      "sha256": "315adcfdf2014229728a0ef8f45c819cffc538a068f82ea5d7bc6f15109b678f",
+      "size_bytes": 469871
+    },
+    {
+      "exists": true,
+      "kind": "dataset_qc_image",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/qc/230218b10.png",
+      "server_only": false,
+      "sha256": "847bbea1fc17314e590fbc76d09273674503dfeb9bac1bcb2c848c98bf702c31",
+      "size_bytes": 538126
+    },
+    {
+      "exists": true,
+      "kind": "dataset_qc_image",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/qc/230218c1.png",
+      "server_only": false,
+      "sha256": "4a71f63d65cc04306979d83037826ee5f07c34eaeb7e2f9a9e578a9539798664",
+      "size_bytes": 419717
+    },
+    {
+      "exists": true,
+      "kind": "dataset_qc_image",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/qc/230218c10.png",
+      "server_only": false,
+      "sha256": "364f20454cc3e3f71e0994054b569d2fbfcb1f4338cc8a21382975a2e6c1f706",
+      "size_bytes": 433884
+    },
+    {
+      "exists": true,
+      "kind": "dataset_qc_image",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/qc/230525d1.png",
+      "server_only": false,
+      "sha256": "12ebffb4fdbd49a9fa7a6ce22f29a6494bbd4aeea2cf12e01620390a7ddfa8b9",
+      "size_bytes": 679109
+    },
+    {
+      "exists": true,
+      "kind": "dataset_qc_image",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/qc/230525d10.png",
+      "server_only": false,
+      "sha256": "3876cae19173ae1efcae4ab0b3ccf50a5440170fe07ae710f28f46b9cbc02232",
+      "size_bytes": 685678
+    },
+    {
+      "exists": true,
+      "kind": "dataset_qc_image",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/qc/240504e01.png",
+      "server_only": false,
+      "sha256": "af3517025234d19f70ee8e72d02db39f0af5de5820902a0bdcb8f62979313bba",
+      "size_bytes": 540884
+    },
+    {
+      "exists": true,
+      "kind": "dataset_qc_image",
+      "metadata": {},
+      "path": "/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7/reports/dataset_audit/qc/240504e02.png",
+      "server_only": false,
+      "sha256": "4dd618fbe2105ac0924163a7f2a2d4831ce1f8051d256afe8239bcb47b16c7dc",
+      "size_bytes": 485170
+    }
+  ],
+  "run_id": "p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7"
+}

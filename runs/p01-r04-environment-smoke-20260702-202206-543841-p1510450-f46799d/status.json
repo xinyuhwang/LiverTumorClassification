@@ -1,0 +1,11 @@
+{
+  "elapsed_seconds": 15.847264330019243,
+  "error": "CUDA is required but torch.cuda.is_available() is false",
+  "error_type": "RuntimeError",
+  "phase": "p01",
+  "round": "r04",
+  "run_id": "p01-r04-environment-smoke-20260702-202206-543841-p1510450-f46799d",
+  "status": "FAILED",
+  "task": "environment-smoke",
+  "updated_at": "2026-07-03T00:22:22.432416+00:00"
+}

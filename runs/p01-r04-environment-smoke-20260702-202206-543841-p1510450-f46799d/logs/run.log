@@ -1,0 +1,14 @@
+RUN_ID=p01-r04-environment-smoke-20260702-202206-543841-p1510450-f46799d
+RUN_DIR=/projects/insightx-lab/zhang.yu/LiverTumorClassification/runs/p01-r04-environment-smoke-20260702-202206-543841-p1510450-f46799d
+import numpy        OK  2.0.2
+import pandas       OK  2.3.3
+import scipy        OK  1.17.1
+import skimage      OK  0.26.0
+import sklearn      OK  1.9.0
+import nibabel      OK  5.4.2
+import matplotlib   OK  3.11.0
+import yaml         OK  6.0.3
+import requests     OK  2.34.2
+import tqdm         OK  4.68.3
+CUDA available: False
+Run failed after 15.8s: CUDA is required but torch.cuda.is_available() is false

@@ -1,0 +1,41 @@
+{
+  "audited_discovered_case_count": 517,
+  "case_count": 517,
+  "cases_with_errors": 11,
+  "cases_with_warnings": 450,
+  "dataset_root": "/projects/insightx-lab/Liver_Data",
+  "metadata_case_count": 517,
+  "metadata_completeness_checked": true,
+  "spacing": {
+    "x": {
+      "max": 0.9765620231628418,
+      "median": 0.734375,
+      "min": 0.55859375
+    },
+    "y": {
+      "max": 0.9765620231628418,
+      "median": 0.734375,
+      "min": 0.55859375
+    },
+    "z": {
+      "max": 5.0,
+      "median": 5.0,
+      "min": 4.999821662902832
+    }
+  },
+  "total_discovered_case_count": 517,
+  "total_errors": 22,
+  "total_warnings": 459,
+  "tumor_type_counts": {
+    "BCLM": 115,
+    "CRLM": 103,
+    "HCC": 103,
+    "HH": 96,
+    "ICC": 100
+  },
+  "tumor_volume_mm3": {
+    "max": 5172777.639009476,
+    "median": 44231.4949798584,
+    "min": 580.126953125
+  }
+}

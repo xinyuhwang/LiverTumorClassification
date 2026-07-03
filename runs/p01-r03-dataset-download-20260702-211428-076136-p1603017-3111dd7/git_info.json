@@ -1,0 +1,9 @@
+{
+  "branch": "setup/data-and-env",
+  "commit": "3111dd76d3079b05156ae276a555280bd7dab9c5",
+  "dirty": true,
+  "remote": "git@github.com:xinyuhwang/LiverTumorClassification.git",
+  "root": "/projects/insightx-lab/zhang.yu/LiverTumorClassification",
+  "short_commit": "3111dd7",
+  "status": "?? runs/p01-r04-environment-smoke-20260702-202206-543841-p1510450-f46799d/"
+}

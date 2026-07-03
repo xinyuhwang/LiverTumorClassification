@@ -1,0 +1,1 @@
+/projects/insightx-lab/zhang.yu/envs/liver-tumor-seg/bin/python smoke_test.py --config configs/phase1_server_audit.yaml --require-cuda --skip-data

@@ -1,0 +1,9 @@
+{
+  "elapsed_seconds": 3550.482921254006,
+  "phase": "p01",
+  "round": "r04",
+  "run_id": "p01-r04-full-dataset-audit-20260703-022239-616671-p2103952-3111dd7",
+  "status": "SUCCESS",
+  "task": "full-dataset-audit",
+  "updated_at": "2026-07-03T07:21:50.131972+00:00"
+}
