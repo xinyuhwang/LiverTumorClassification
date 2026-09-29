@@ -24,6 +24,8 @@ def main():
     m["flags"] = m["flags"].fillna("")
     flag_counts = (m["flags"].str.split().explode().dropna()
                    .loc[lambda s: s != ""].value_counts().to_dict())
+    m["resampled"] = m.get("resampled", pd.Series("", index=m.index)).fillna("")
+    air_cols = [c for c in m.columns if c.startswith("liver_air_frac_")]
     liver_out = m[(m["liver_ml"] < LIVER_ML_RANGE[0]) | (m["liver_ml"] > LIVER_ML_RANGE[1])]
     tumor_out = m[m["tumor_in_liver"] < 0.99]
     q = [0.0, 0.05, 0.5, 0.95, 1.0]
@@ -35,6 +37,13 @@ def main():
         "tumor_ml_quantiles": m["tumor_ml"].quantile(q).round(2).to_dict(),
         "tumor_in_liver_quantiles": m["tumor_in_liver"].quantile(q).round(4).to_dict(),
         "max_origin_shift_mm_quantiles": m["max_origin_shift_mm"].quantile(q).round(2).to_dict(),
+        "n_cases_resampled": int((m["resampled"] != "").sum()),
+        "resampled_cases": m.loc[m["resampled"] != "", ["case_id", "resampled"]]
+                             .to_dict(orient="records"),
+        "liver_air_frac_quantiles": {c.removeprefix("liver_air_frac_"):
+                                     m[c].quantile(q).round(4).to_dict() for c in air_cols},
+        "liver_air_frac_gt_10pct": {c.removeprefix("liver_air_frac_"): int((m[c] > 0.10).sum())
+                                    for c in air_cols},
         "liver_volume_outliers": liver_out[["case_id", "liver_ml"]].to_dict(orient="records"),
         "tumor_outside_liver_lt_99pct": tumor_out[["case_id", "tumor_in_liver"]]
                                            .to_dict(orient="records"),
