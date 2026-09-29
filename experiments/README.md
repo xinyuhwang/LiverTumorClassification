@@ -24,13 +24,13 @@ experiments/
 3. **Record the commit.** Every job log prints `git commit: <hash>`; copy it into the version README.
 4. **Results come from AICR**, via `cluster/pull_results.sh`, and only small files are tracked (JSON/CSV). Checkpoints stay on AICR under `$HERALD_STORE/results`.
 5. **Finished versions are never edited.** If something was wrong, add a new version and say so.
-6. **Same evaluation for everyone.** Shared split (`common/mct_ltdiag_split.csv`), per-case test metrics, and, once E02 lands, bootstrap 95% CIs.
+6. **Same evaluation for everyone.** Shared split (`common/mct_ltdiag_split.csv`), per-case test metrics, and bootstrap 95% CIs plus a paired comparison against the previous version from `common/evaluate.py` (see E02).
 
 ## Index
 
 | Exp | Question | Versions | Status | Headline |
 |---|---|---|---|---|
-| [E01](E01_liver_labels/) | Are the liver labels correct, and how good is Stage 1 with correct ones? | v0, v1 | v1 ready to run on AICR | v0 liver labels were the tumor mask |
-| E02 | Evaluation harness: CIs, paired tests, compute | — | Planned | |
+| [E01](E01_liver_labels/) | Are the liver labels correct, and how good is Stage 1 with correct ones? | v0, v1 | v1 data QA done; training queued on AICR | v0 liver labels were the tumor mask; official masks leave >10% of the tumor out in 126 cases |
+| [E02](E02_evaluation/) | Evaluation harness: CIs, paired tests, compute | v1 | v1 done; v2–v3 planned | `common/evaluate.py`: bootstrap CIs + paired tests, 9 tests pass |
 | E03 | Stage 3 pooling / aggregation (mask-weighted, area-weighted, ABMIL) | — | Planned | |
 | E04 | Joint segment + classify model | — | Planned | |
