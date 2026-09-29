@@ -1,0 +1,17 @@
+# Append to ~/.ssh/config on your laptop, replacing AICR_USERNAME
+# (format: <institution username>_<institution code>, e.g. jsmith_neu).
+# The three id_ed25519_aicr* files come from https://ood.aicr.ai and expire;
+# download a fresh certificate when ssh starts refusing the key.
+
+Host aicr
+    HostName login.aicr.ai
+    User AICR_USERNAME
+    IdentityFile ~/.ssh/id_ed25519_aicr
+    CertificateFile ~/.ssh/id_ed25519_aicr-cert.pub
+
+# Data-transfer node: use for rsync/scp and the dataset download, not login.aicr.ai
+Host aicr-dtn
+    HostName dtn0001.aicr.ai
+    User AICR_USERNAME
+    IdentityFile ~/.ssh/id_ed25519_aicr
+    CertificateFile ~/.ssh/id_ed25519_aicr-cert.pub

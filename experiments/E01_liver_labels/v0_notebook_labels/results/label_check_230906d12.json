@@ -1,0 +1,32 @@
+{
+ "case_id": "230906d12",
+ "source": "Harvard Dataverse doi:10.7910/DVN/S3RW15 v3.1, 230906d12.tar",
+ "archive_members": [
+  "NIFTI/nc.nii.gz",
+  "NIFTI/art.nii.gz",
+  "NIFTI/pvp.nii.gz",
+  "NIFTI/delay.nii.gz",
+  "mask_pvp.nii.gz",
+  "liver_mask_pvp.nii.gz",
+  "DICOM/..."
+ ],
+ "mask_pvp": {
+  "labels": [
+   0,
+   1
+  ],
+  "voxels": 31147,
+  "ml": 48.59
+ },
+ "liver_mask_pvp": {
+  "labels": [
+   0,
+   1
+  ],
+  "voxels": 741400,
+  "ml": 1156.68
+ },
+ "tumor_voxels_inside_liver_fraction": 1.0,
+ "notebook_liver_label_equals_tumor_label": true,
+ "checked": "2026-09-29"
+}

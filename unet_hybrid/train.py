@@ -23,6 +23,8 @@ from sklearn.metrics import (accuracy_score, classification_report,
 # ── local imports ─────────────────────────────────────────────────────────────
 import datasets as DS
 import models   as M
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # repo root
+from common.splits import load_splits, BAD_CASES, DEFAULT_SPLITS_CSV
 # ── reproducibility ───────────────────────────────────────────────────────────
 SEED = 42
 random.seed(SEED); np.random.seed(SEED); torch.manual_seed(SEED)
@@ -35,7 +37,7 @@ def parse_args():
     p.add_argument("--data_dir",   default="/scratch/teh.c/mct_training/mct_local")
     p.add_argument("--ckpt_dir",   default="/scratch/teh.c/mct_training/checkpoints")
     p.add_argument("--log_dir",    default="/scratch/teh.c/mct_training/logs")
-    p.add_argument("--splits_csv", default="/scratch/teh.c/mct_training/mct_ltdiag_splits.csv")
+    p.add_argument("--splits_csv", default=DEFAULT_SPLITS_CSV)
     p.add_argument("--max_cases",  type=int, default=None,
                    help="Cap dataset size (debug / smoke test)")
     p.add_argument("--smoke_test", action="store_true",
@@ -384,44 +386,6 @@ def run_cls_stage(train_ids, val_ids, test_ids, labels_df,
     print(f"\nStage 3 complete — best val acc: {best_acc:.4f} | "
           f"test acc: {test_acc:.4f}")
     return test_acc
-
-
-# ── Splits ────────────────────────────────────────────────────────────────────
-
-# 4 cases with unexpected NIfTI axis ordering — exclude from all splits
-BAD_CASES = {'231109b01', '240504b27', '240504e30', '240504e48'}
-
-
-def load_splits(splits_csv):
-    """Return (train_ids, val_ids, test_ids, labels_df) from the splits CSV.
-    labels_df has columns case_id, type. Shared with stage3_paper.py."""
-    splits_df  = pd.read_csv(splits_csv)
-    # normalise column names (strip whitespace)
-    splits_df.columns = splits_df.columns.str.strip()
-
-    # Expected columns: case_id, type, [age_bin], split
-    id_col    = "ID"     if "ID"     in splits_df.columns else splits_df.columns[0]
-    split_col = "split"  if "split"  in splits_df.columns else splits_df.columns[-1]
-    type_col  = "type"   if "type"   in splits_df.columns else splits_df.columns[1]
-
-    n_dup = splits_df[id_col].duplicated().sum()
-    if n_dup:
-        print(f"  WARNING: dropping {n_dup} duplicate case row(s) from splits")
-        splits_df = splits_df.drop_duplicates(subset=id_col, keep="first")
-
-    def ids(split):
-        return [i for i in splits_df[splits_df[split_col] == split][id_col]
-                                    .astype(str).tolist()
-                if i not in BAD_CASES]
-
-    train_ids, val_ids, test_ids = ids("train"), ids("val"), ids("test")
-    labels_df = splits_df[[id_col, type_col]].rename(
-        columns={id_col: "case_id", type_col: "type"})
-    labels_df["case_id"] = labels_df["case_id"].astype(str)
-
-    print(f"Splits — train: {len(train_ids)}, val: {len(val_ids)}, "
-          f"test: {len(test_ids)}")
-    return train_ids, val_ids, test_ids, labels_df
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────

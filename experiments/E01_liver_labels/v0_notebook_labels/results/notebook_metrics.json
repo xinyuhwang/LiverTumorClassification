@@ -1,0 +1,14 @@
+{
+ "source": "ds2net/notebooks/segmentation_classification.ipynb, cell 0 saved outputs (commit f77e286)",
+ "note": "liver and tumor channels agree to 3-4 decimals at every checkpoint -> same label",
+ "val_dice_liver_vs_tumor": {
+  "epoch_3":  [0.5131, 0.5273], "epoch_6":  [0.5729, 0.5810], "epoch_9":  [0.6591, 0.6598],
+  "epoch_12": [0.6863, 0.6853], "epoch_15": [0.6980, 0.6982], "epoch_18": [0.7180, 0.7182],
+  "epoch_24": [0.7236, 0.7239], "epoch_36": [0.7296, 0.7295], "epoch_50": [0.7314, 0.7314]
+ },
+ "test_slice_level": {
+  "liver": {"Dice": 0.6855, "IoU": 0.5932, "Precision": 0.7576, "Recall": 0.7278, "F1": 0.7307, "MAE": 0.0058},
+  "tumor": {"Dice": 0.6854, "IoU": 0.5932, "Precision": 0.7580, "Recall": 0.7270, "F1": 0.7305, "MAE": 0.0058}
+ },
+ "test_per_case_tumor_tta": {"Dice": 0.3750, "IoU": 0.2763, "Precision": 0.3052, "Recall": 0.7307, "n": 78}
+}

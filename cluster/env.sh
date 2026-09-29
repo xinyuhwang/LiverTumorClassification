@@ -1,0 +1,33 @@
+# cluster/env.sh — shared settings for every AICR job. Source it:
+#   source cluster/env.sh
+# Edit the three values marked EDIT once, after your first login.
+
+# EDIT: Slurm account (list yours with: sacctmgr show user $USER withassoc format=user,account -p)
+export HERALD_ACCOUNT="${HERALD_ACCOUNT:-CHANGE_ME}"
+
+# EDIT: long-lived project storage (snapshotted). Raw data, prepared data, final results.
+#       /work/<institution>/<groupname>/ — ask your PI / group for the path.
+export HERALD_STORE="${HERALD_STORE:-/work/CHANGE_ME/herald}"
+
+# Fast scratch (10 TiB, files older than 30 days are PURGED). Caches and checkpoints.
+export HERALD_SCRATCH="${HERALD_SCRATCH:-/scratch/$USER/herald}"
+
+# Code checkout on AICR (home is 100 GiB and snapshotted)
+export HERALD_CODE="${HERALD_CODE:-$HOME/LiverTumorClassification}"
+
+# Python environment created by cluster/setup_env.sh
+export HERALD_VENV="${HERALD_VENV:-$HOME/envs/herald}"
+
+# Derived paths used by the training scripts
+export HERALD_RAW="$HERALD_STORE/raw"                 # 180 GB of .tar archives
+export HERALD_DATA="$HERALD_STORE/mct_ltdiag"         # prepared per-case NIfTI
+export HERALD_WORK="$HERALD_SCRATCH/work"             # caches, runs, checkpoints
+export HERALD_RESULTS="$HERALD_STORE/results"         # copies of finished runs
+
+if [ -n "$SLURM_JOB_ID" ] || [ "${HERALD_LOAD_MODULES:-0}" = 1 ]; then
+    module load miniforge3 2>/dev/null || module load conda 2>/dev/null || true
+    module load cuda 2>/dev/null || true
+fi
+[ -f "$HERALD_VENV/bin/activate" ] && source "$HERALD_VENV/bin/activate"
+export PYTHONUNBUFFERED=1
+mkdir -p "$HERALD_WORK" 2>/dev/null || true

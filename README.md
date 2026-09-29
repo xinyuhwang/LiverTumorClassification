@@ -1,36 +1,61 @@
 # LiverTumorClassification
 
-HERALD (Hepatic Evaluation and Reporting with AI-Driven Diagnostics): liver segmentation, tumor segmentation and tumor subtype classification (BCLM, CRLM, HCC, HH, ICC) on the MCT-LTDiag multi-phase CT dataset.
+HERALD (Hepatic Evaluation and Reporting with AI-Driven Diagnostics) covers liver segmentation, tumor segmentation, and tumor subtype classification (BCLM, CRLM, HCC, HH, ICC). It uses the MCT-LTDiag multi-phase CT dataset ([doi:10.7910/DVN/S3RW15](https://doi.org/10.7910/DVN/S3RW15), CC0).
 
 ## Layout
 
 ```text
-ds2net/                              DS²Net pipeline (Google Colab notebooks)
-  liver_segmentation.ipynb           Stage 1: liver segmentation, Swin-Tiny + MHA
-  segmentation_classification.ipynb  Liver/tumor segmentation + EfficientNet-B0 classifier
-unet_hybrid/                         UNet-Hybrid pipeline (SLURM / HPC scripts)
-  datasets.py                        Volume loading and per-stage datasets
-  models.py                          UNetTransformer, classifiers, losses
-  train.py                           Entry point for all three stages (original Stage 3)
-  stage3_paper.py                    Stage 3 as described in the paper
-  STAGE3_DESIGN.md                   How the two Stage 3 implementations differ
-  mct_ltdiag_split.csv               Train/val/test split (stratified by type and age bin)
-  results/                           Training logs and test-set Dice by tumor type
+common/                    shared by all pipelines
+  splits.py                load_splits(): the one train/val/test split
+  mct_ltdiag_split.csv     517 cases, stratified by type and age bin
+data_prep/
+  download_mct_ltdiag.py   download from Harvard Dataverse (resumable, MD5-checked)
+  prepare_mct_ltdiag.py    archives → per-case NIfTI layout + QA manifest
+  summarize_manifest.py    QA summary of the manifest
+ds2net/                    DS²Net pipeline (Swin-Tiny + DEM/SEM)
+  config.py datasets.py models.py train.py
+  PORTING.md               notebooks → scripts: what changed and why
+  notebooks/               original Colab notebooks (reference)
+unet_hybrid/               UNet-Hybrid pipeline (UNetTransformer)
+  datasets.py models.py train.py
+  stage3_paper.py          Stage 3 as described in the paper
+  STAGE3_DESIGN.md         the two Stage 3 implementations
+  results/                 original training logs
+cluster/                   AICR setup: env, job scripts, submit / pull helpers
+docs/
+  AICR.md                  connecting to and running on AICR
+  ROADMAP.md               the 11 proposals, prioritised
+experiments/               one folder per experiment and version (see its README)
 ```
 
-## UNet-Hybrid usage
+## Data layout
+
+`data_prep/prepare_mct_ltdiag.py` writes one folder per case, and both pipelines read this layout:
+
+```text
+<data_dir>/<case>/phase_0.nii.gz   non-contrast
+                  phase_1.nii.gz   arterial
+                  pvp.nii.gz       portal venous (phase_2.nii.gz → pvp.nii.gz)
+                  phase_3.nii.gz   delayed
+                  liver_mask.nii.gz
+                  tumor_mask.nii.gz
+```
+
+## Quick start
+
+On AICR, follow [docs/AICR.md](docs/AICR.md) once, then:
 
 ```bash
-cd unet_hybrid
-python train.py --stage 1   # liver segmentation
-python train.py --stage 2   # tumor segmentation (warm-started from stage 1)
-python train.py --stage 3   # tumor classification
-python train.py --stage 0   # all stages
-
-python stage3_paper.py --backbone efficientnet_b3   # paper-version Stage 3
-python stage3_paper.py --mode ensemble              # after training each backbone
+bash cluster/submit.sh ds2net --stage 1 --run_name liver_baseline
+bash cluster/submit.sh unet_hybrid --stage 1
+bash cluster/submit.sh stage3_paper --backbone efficientnet_b3
 ```
 
-See [unet_hybrid/STAGE3_DESIGN.md](unet_hybrid/STAGE3_DESIGN.md) for the two Stage 3 implementations.
+Locally, with data prepared under `data/mct_ltdiag`:
 
-`--data_dir` must contain one folder per case with `pvp.nii.gz`, `liver_mask.nii.gz`, `tumor_mask.nii.gz` and `phase_0..3.nii.gz` (non-contrast, arterial, portal venous, delayed). Add `--smoke_test` for a 6-case, 2-epoch run.
+```bash
+cd ds2net && python train.py --stage 1 --smoke_test --no_pretrain
+cd unet_hybrid && python train.py --stage 1 --smoke_test --data_dir ../data/mct_ltdiag
+```
+
+Research plan: [docs/ROADMAP.md](docs/ROADMAP.md). Results so far: [experiments/](experiments/).

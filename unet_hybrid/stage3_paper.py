@@ -59,7 +59,7 @@ from sklearn.metrics import (accuracy_score, classification_report,
 
 import datasets as DS
 import models   as M
-from train import load_splits
+from train import load_splits, DEFAULT_SPLITS_CSV
 
 SEED = 42
 BACKBONES = ("efficientnet_b3", "vit_b16", "swin_tiny", "swin_base",
@@ -82,7 +82,7 @@ def parse_args():
     p.add_argument("--data_dir",   default="/scratch/teh.c/mct_training/mct_local")
     p.add_argument("--ckpt_dir",   default="/scratch/teh.c/mct_training/checkpoints")
     p.add_argument("--log_dir",    default="/scratch/teh.c/mct_training/logs")
-    p.add_argument("--splits_csv", default="/scratch/teh.c/mct_training/mct_ltdiag_splits.csv")
+    p.add_argument("--splits_csv", default=DEFAULT_SPLITS_CSV)
     p.add_argument("--cache_dir",  default=None,
                    help="Where to cache tumor crops (default: <ckpt_dir>/stage3_crops)")
     p.add_argument("--stage2_ckpt", default=None,
