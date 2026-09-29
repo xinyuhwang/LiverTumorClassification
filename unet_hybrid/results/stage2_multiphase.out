@@ -1,0 +1,54 @@
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 545.23.08              Driver Version: 545.23.08    CUDA Version: 12.3     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  Tesla P100-PCIE-12GB           On  | 00000000:03:00.0 Off |                    0 |
+| N/A   34C    P0              25W / 250W |      0MiB / 12288MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Device: cuda
+  GPU: Tesla P100-PCIE-12GB
+Splits — train: 357, val: 78, test: 78
+============================================================
+  Stage 2 — Tumor Segmentation
+============================================================
+  TumorDataset: indexing 357 cases…
+  TumorDataset ready: 20644 slices from 357 cases (1241.3s)
+  TumorDataset: indexing 78 cases…
+  TumorDataset ready: 4886 slices from 78 cases (279.1s)
+  Resumed from epoch 10 (best dice so far: 0.5272)
+Ep  11/40 | tr_loss 0.2541 tr_dice 0.6553 | vl_loss 0.3849 vl_dice 0.5202 | 2896s
+Ep  12/40 | tr_loss 0.2460 tr_dice 0.6690 | vl_loss 0.3707 vl_dice 0.5118 | 2880s
+Ep  13/40 | tr_loss 0.2414 tr_dice 0.6707 | vl_loss 0.3175 vl_dice 0.5481 | 2876s
+  ✓ Saved  best val tumor Dice: 0.5481
+Ep  14/40 | tr_loss 0.2187 tr_dice 0.7023 | vl_loss 0.3619 vl_dice 0.5449 | 2887s
+Ep  15/40 | tr_loss 0.2218 tr_dice 0.6972 | vl_loss 0.3446 vl_dice 0.5551 | 2868s
+  ✓ Saved  best val tumor Dice: 0.5551
+Ep  16/40 | tr_loss 0.2303 tr_dice 0.6872 | vl_loss 0.3498 vl_dice 0.5436 | 2874s
+Ep  17/40 | tr_loss 0.2223 tr_dice 0.7014 | vl_loss 0.3136 vl_dice 0.5571 | 2881s
+  ✓ Saved  best val tumor Dice: 0.5571
+Ep  18/40 | tr_loss 0.2160 tr_dice 0.7036 | vl_loss 0.3296 vl_dice 0.5313 | 2889s
+Ep  19/40 | tr_loss 0.2085 tr_dice 0.7160 | vl_loss 0.3529 vl_dice 0.5448 | 2907s
+Ep  20/40 | tr_loss 0.1977 tr_dice 0.7312 | vl_loss 0.3117 vl_dice 0.5711 | 2889s
+  ✓ Saved  best val tumor Dice: 0.5711
+Ep  21/40 | tr_loss 0.2018 tr_dice 0.7232 | vl_loss 0.3458 vl_dice 0.5612 | 2889s
+Ep  22/40 | tr_loss 0.1955 tr_dice 0.7323 | vl_loss 0.3594 vl_dice 0.5517 | 2875s
+Ep  23/40 | tr_loss 0.1802 tr_dice 0.7548 | vl_loss 0.3526 vl_dice 0.5610 | 2870s
+Ep  24/40 | tr_loss 0.1800 tr_dice 0.7558 | vl_loss 0.3292 vl_dice 0.5683 | 2899s
+Ep  25/40 | tr_loss 0.1828 tr_dice 0.7520 | vl_loss 0.3340 vl_dice 0.5424 | 2870s
+Ep  26/40 | tr_loss 0.1729 tr_dice 0.7673 | vl_loss 0.3426 vl_dice 0.5647 | 2886s
+Ep  27/40 | tr_loss 0.1620 tr_dice 0.7812 | vl_loss 0.3113 vl_dice 0.5728 | 2883s
+  ✓ Saved  best val tumor Dice: 0.5728
+Ep  28/40 | tr_loss 0.1713 tr_dice 0.7682 | vl_loss 0.3249 vl_dice 0.5631 | 2872s
+Ep  29/40 | tr_loss 0.1593 tr_dice 0.7840 | vl_loss 0.3095 vl_dice 0.5732 | 2859s
