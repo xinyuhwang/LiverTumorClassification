@@ -8,10 +8,14 @@ import pandas as pd
 
 DEFAULT_SPLITS_CSV = str(Path(__file__).resolve().parent / "mct_ltdiag_split.csv")
 
-# 4 cases with unexpected NIfTI axis ordering — exclude from all splits.
-# 231109b01, 240504b27, 240504e30: liver mask slice count differs from the PVP
-# (dataset audit, branch setup/data-and-env); 240504e48: reason not recorded.
-BAD_CASES = {'231109b01', '240504b27', '240504e30', '240504e48'}
+# Cases excluded from all splits. 231109b01: its liver mask stays wrong even
+# after resampling onto the PVP grid (18% of the tumor inside it; ≥10% of the
+# mask on air/fat in every phase, PVP included).
+# Re-included 2026-09-29 (E01 v1 data QA): 240504b27 and 240504e30, whose liver
+# masks were on a different slice grid and are now resampled by
+# data_prep/prepare_mct_ltdiag.py, and 240504e48, which shows no problem in QA.
+# All four are training cases, so val/test are unchanged.
+BAD_CASES = {'231109b01'}
 
 
 def load_splits(splits_csv=DEFAULT_SPLITS_CSV):

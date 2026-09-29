@@ -22,7 +22,7 @@ This comes from Yu Zhang's full-dataset audit (branch `setup/data-and-env`, comm
 
 - **Median fraction outside:** 0.027 overall; by type BCLM 0.014, CRLM 0.017, HCC 0.017, ICC 0.017, **HH 0.231**.
 - **Worst cases:** 240229c11 (HH, 1.00), 231206d19 (ICC, 0.99), 231025c23 (HH, 0.99), 230218b3 (HCC, 0.98).
-- **Mismatched liver masks:** 3 of the 4 `BAD_CASES` (231109b01, 240504b27, 240504e30) have a liver mask with a different slice count from the PVP. That explains their exclusion.
+- **Mismatched liver masks:** 3 of the 4 `BAD_CASES` (231109b01, 240504b27, 240504e30) have a liver mask with a different slice count from the PVP. That explains their exclusion. After v1's data preparation resampled those masks onto the PVP grid, 240504b27 and 240504e30 pass QA and were re-included, along with 240504e48, which shows no problem. Only 231109b01 stays excluded (training set 357 → 360).
 
 A liver model trained on these masks learns to exclude such tumors, most of all hemangiomas. That motivates v2: liver label = liver mask ∪ tumor mask. LiTS uses the same convention, counting tumor as liver.
 

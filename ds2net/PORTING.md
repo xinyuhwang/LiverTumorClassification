@@ -35,7 +35,7 @@
 |---|---|---|
 | 1 | **Labels come from separate `liver_mask.nii.gz` and `tumor_mask.nii.gz`**, produced by `data_prep/` from the dataset's `liver_mask_pvp.nii.gz` and `mask_pvp.nii.gz`. | The notebooks read only `mask_pvp.nii.gz`, which is **tumor-only** (labels {0,1}; checked on a real case, and shown by identical liver/tumor Dice in the notebook output). Their "liver" was the tumor. See `experiments/E01_liver_labels`. |
 | 2 | **Stage 2 predicts tumor only** (1 output channel instead of 2). | Liver is Stage 1's job, as in `unet_hybrid/`. The notebook's second channel was a copy of the tumor mask anyway. |
-| 3 | **All pipelines use one split**, `common/mct_ltdiag_split.csv` (357/78/78 after the 4 excluded cases). | The two notebooks and `unet_hybrid/` each used a different split, so their results weren't comparable, and Stage 1's test cases could be in Stage 2's training set. |
+| 3 | **All pipelines use one split**, `common/mct_ltdiag_split.csv` (360/78/78; 1 case excluded, see `common/splits.py`). | The two notebooks and `unet_hybrid/` each used a different split, so their results weren't comparable, and Stage 1's test cases could be in Stage 2's training set. |
 | 4 | **Test reports both slice-level and per-case metrics.** Per-case means full volume, 8-fold TTA, on the original NIfTI grid. | The notebook's headline 0.685 was slice-level on tumor slices only; per-case it was 0.375. Both are now saved in `metrics.json`. |
 | 5 | **Inference builds its input exactly like training**, resampling to 1 mm in z. | The notebook's Stage 2 inference skipped the z-resampling that training used. That changed what the ±1 context slices contained. |
 

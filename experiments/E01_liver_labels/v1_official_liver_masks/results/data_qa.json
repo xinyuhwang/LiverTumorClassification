@@ -1,0 +1,1538 @@
+{
+ "n_cases": 517,
+ "n_flagged": 149,
+ "flag_counts": {
+  "tumor_outside_liver": 126,
+  "misaligned_nc": 18,
+  "misaligned_delay": 16,
+  "misaligned_art": 4,
+  "misaligned_pvp": 1
+ },
+ "liver_ml_quantiles": {
+  "0.0": 666.1,
+  "0.05": 891.8,
+  "0.5": 1246.0,
+  "0.95": 2013.5,
+  "1.0": 6215.3
+ },
+ "tumor_ml_quantiles": {
+  "0.0": 0.58,
+  "0.05": 2.41,
+  "0.5": 44.23,
+  "0.95": 631.27,
+  "1.0": 5172.78
+ },
+ "tumor_in_liver_quantiles": {
+  "0.0": 0.0,
+  "0.05": 0.4736,
+  "0.5": 0.9731,
+  "0.95": 1.0,
+  "1.0": 1.0
+ },
+ "max_origin_shift_mm_quantiles": {
+  "0.0": 0.0,
+  "0.05": 0.0,
+  "0.5": 0.0,
+  "0.95": 0.0,
+  "1.0": 206.5
+ },
+ "n_cases_resampled": 17,
+ "resampled_cases": [
+  {
+   "case_id": "230906d01",
+   "resampled": "phase_0"
+  },
+  {
+   "case_id": "230906d02",
+   "resampled": "phase_1 phase_3"
+  },
+  {
+   "case_id": "230906d10",
+   "resampled": "phase_0 phase_1"
+  },
+  {
+   "case_id": "230906d12",
+   "resampled": "phase_0 phase_1"
+  },
+  {
+   "case_id": "231109b01",
+   "resampled": "liver_mask"
+  },
+  {
+   "case_id": "231206d18",
+   "resampled": "phase_0 phase_1 phase_3"
+  },
+  {
+   "case_id": "240112d23",
+   "resampled": "phase_0 phase_1"
+  },
+  {
+   "case_id": "240112d27",
+   "resampled": "phase_0"
+  },
+  {
+   "case_id": "240112d40",
+   "resampled": "phase_0"
+  },
+  {
+   "case_id": "240122d53",
+   "resampled": "phase_0 phase_1 phase_3"
+  },
+  {
+   "case_id": "240122d55",
+   "resampled": "phase_0"
+  },
+  {
+   "case_id": "240122d65",
+   "resampled": "phase_0 phase_1 phase_3"
+  },
+  {
+   "case_id": "240122d68",
+   "resampled": "phase_0 phase_1 phase_3"
+  },
+  {
+   "case_id": "240122d70",
+   "resampled": "phase_0 phase_1 phase_3"
+  },
+  {
+   "case_id": "240122d75",
+   "resampled": "phase_0 phase_1 phase_3"
+  },
+  {
+   "case_id": "240504b27",
+   "resampled": "liver_mask"
+  },
+  {
+   "case_id": "240504e30",
+   "resampled": "liver_mask"
+  }
+ ],
+ "liver_air_frac_quantiles": {
+  "nc": {
+   "0.0": 0.0,
+   "0.05": 0.0,
+   "0.5": 0.0008,
+   "0.95": 0.0701,
+   "1.0": 0.4142
+  },
+  "art": {
+   "0.0": 0.0,
+   "0.05": 0.0,
+   "0.5": 0.0005,
+   "0.95": 0.0173,
+   "1.0": 0.4095
+  },
+  "pvp": {
+   "0.0": 0.0,
+   "0.05": 0.0,
+   "0.5": 0.0001,
+   "0.95": 0.0014,
+   "1.0": 0.4063
+  },
+  "delay": {
+   "0.0": 0.0,
+   "0.05": 0.0,
+   "0.5": 0.0005,
+   "0.95": 0.0276,
+   "1.0": 0.4129
+  }
+ },
+ "liver_air_frac_gt_10pct": {
+  "nc": 18,
+  "art": 4,
+  "pvp": 1,
+  "delay": 16
+ },
+ "liver_volume_outliers": [
+  {
+   "case_id": "230525b4",
+   "liver_ml": 666.14
+  },
+  {
+   "case_id": "231025c10",
+   "liver_ml": 4803.72
+  },
+  {
+   "case_id": "231025c16",
+   "liver_ml": 6215.26
+  },
+  {
+   "case_id": "240229c38",
+   "liver_ml": 4078.9
+  },
+  {
+   "case_id": "240504a08",
+   "liver_ml": 670.61
+  },
+  {
+   "case_id": "240504b30",
+   "liver_ml": 3845.09
+  }
+ ],
+ "tumor_outside_liver_lt_99pct": [
+  {
+   "case_id": "230218a2",
+   "tumor_in_liver": 0.9799
+  },
+  {
+   "case_id": "230218a4",
+   "tumor_in_liver": 0.9646
+  },
+  {
+   "case_id": "230218a5",
+   "tumor_in_liver": 0.9713
+  },
+  {
+   "case_id": "230218a8",
+   "tumor_in_liver": 0.9481
+  },
+  {
+   "case_id": "230218b1",
+   "tumor_in_liver": 0.9411
+  },
+  {
+   "case_id": "230218b10",
+   "tumor_in_liver": 0.6016
+  },
+  {
+   "case_id": "230218b2",
+   "tumor_in_liver": 0.9784
+  },
+  {
+   "case_id": "230218b3",
+   "tumor_in_liver": 0.0153
+  },
+  {
+   "case_id": "230218b5",
+   "tumor_in_liver": 0.952
+  },
+  {
+   "case_id": "230218b6",
+   "tumor_in_liver": 0.846
+  },
+  {
+   "case_id": "230218b7",
+   "tumor_in_liver": 0.852
+  },
+  {
+   "case_id": "230218b9",
+   "tumor_in_liver": 0.9397
+  },
+  {
+   "case_id": "230218c1",
+   "tumor_in_liver": 0.8649
+  },
+  {
+   "case_id": "230218c10",
+   "tumor_in_liver": 0.0331
+  },
+  {
+   "case_id": "230218c3",
+   "tumor_in_liver": 0.7508
+  },
+  {
+   "case_id": "230218c4",
+   "tumor_in_liver": 0.1115
+  },
+  {
+   "case_id": "230218c5",
+   "tumor_in_liver": 0.7325
+  },
+  {
+   "case_id": "230218c6",
+   "tumor_in_liver": 0.3313
+  },
+  {
+   "case_id": "230218c8",
+   "tumor_in_liver": 0.5126
+  },
+  {
+   "case_id": "230312a10",
+   "tumor_in_liver": 0.9888
+  },
+  {
+   "case_id": "230312a11",
+   "tumor_in_liver": 0.9607
+  },
+  {
+   "case_id": "230312a12",
+   "tumor_in_liver": 0.8121
+  },
+  {
+   "case_id": "230312a4",
+   "tumor_in_liver": 0.8459
+  },
+  {
+   "case_id": "230312a5",
+   "tumor_in_liver": 0.9829
+  },
+  {
+   "case_id": "230312a6",
+   "tumor_in_liver": 0.7677
+  },
+  {
+   "case_id": "230312a7",
+   "tumor_in_liver": 0.8809
+  },
+  {
+   "case_id": "230312a8",
+   "tumor_in_liver": 0.7125
+  },
+  {
+   "case_id": "230312a9",
+   "tumor_in_liver": 0.9301
+  },
+  {
+   "case_id": "230408a11",
+   "tumor_in_liver": 0.98
+  },
+  {
+   "case_id": "230408a3",
+   "tumor_in_liver": 0.9467
+  },
+  {
+   "case_id": "230408a4",
+   "tumor_in_liver": 0.9557
+  },
+  {
+   "case_id": "230408a5",
+   "tumor_in_liver": 0.7902
+  },
+  {
+   "case_id": "230408a7",
+   "tumor_in_liver": 0.95
+  },
+  {
+   "case_id": "230408a8",
+   "tumor_in_liver": 0.9134
+  },
+  {
+   "case_id": "230525a2",
+   "tumor_in_liver": 0.9571
+  },
+  {
+   "case_id": "230525b2",
+   "tumor_in_liver": 0.886
+  },
+  {
+   "case_id": "230525b3",
+   "tumor_in_liver": 0.9673
+  },
+  {
+   "case_id": "230525b5",
+   "tumor_in_liver": 0.9894
+  },
+  {
+   "case_id": "230525b7",
+   "tumor_in_liver": 0.9705
+  },
+  {
+   "case_id": "230525b9",
+   "tumor_in_liver": 0.8369
+  },
+  {
+   "case_id": "230525c1",
+   "tumor_in_liver": 0.9706
+  },
+  {
+   "case_id": "230525c10",
+   "tumor_in_liver": 0.9666
+  },
+  {
+   "case_id": "230525c2",
+   "tumor_in_liver": 0.9183
+  },
+  {
+   "case_id": "230525c3",
+   "tumor_in_liver": 0.9691
+  },
+  {
+   "case_id": "230525c5",
+   "tumor_in_liver": 0.3973
+  },
+  {
+   "case_id": "230525c7",
+   "tumor_in_liver": 0.9122
+  },
+  {
+   "case_id": "230525c8",
+   "tumor_in_liver": 0.9452
+  },
+  {
+   "case_id": "230525c9",
+   "tumor_in_liver": 0.9308
+  },
+  {
+   "case_id": "230525d1",
+   "tumor_in_liver": 0.9871
+  },
+  {
+   "case_id": "230525d10",
+   "tumor_in_liver": 0.9816
+  },
+  {
+   "case_id": "230525d2",
+   "tumor_in_liver": 0.9825
+  },
+  {
+   "case_id": "230525d3",
+   "tumor_in_liver": 0.8592
+  },
+  {
+   "case_id": "230525d5",
+   "tumor_in_liver": 0.898
+  },
+  {
+   "case_id": "230525d7",
+   "tumor_in_liver": 0.9709
+  },
+  {
+   "case_id": "230525d8",
+   "tumor_in_liver": 0.9882
+  },
+  {
+   "case_id": "230816b03",
+   "tumor_in_liver": 0.9675
+  },
+  {
+   "case_id": "230816b07",
+   "tumor_in_liver": 0.9242
+  },
+  {
+   "case_id": "230816b10",
+   "tumor_in_liver": 0.8881
+  },
+  {
+   "case_id": "230816b11",
+   "tumor_in_liver": 0.8768
+  },
+  {
+   "case_id": "230816b13",
+   "tumor_in_liver": 0.9792
+  },
+  {
+   "case_id": "230816b14",
+   "tumor_in_liver": 0.9817
+  },
+  {
+   "case_id": "230816b15",
+   "tumor_in_liver": 0.9731
+  },
+  {
+   "case_id": "230906d03",
+   "tumor_in_liver": 0.9646
+  },
+  {
+   "case_id": "230906d04",
+   "tumor_in_liver": 0.9779
+  },
+  {
+   "case_id": "230906d08",
+   "tumor_in_liver": 0.8911
+  },
+  {
+   "case_id": "230906d09",
+   "tumor_in_liver": 0.6225
+  },
+  {
+   "case_id": "230906d10",
+   "tumor_in_liver": 0.9753
+  },
+  {
+   "case_id": "230906d13",
+   "tumor_in_liver": 0.459
+  },
+  {
+   "case_id": "230906d15",
+   "tumor_in_liver": 0.867
+  },
+  {
+   "case_id": "231025c01",
+   "tumor_in_liver": 0.9625
+  },
+  {
+   "case_id": "231025c02",
+   "tumor_in_liver": 0.6545
+  },
+  {
+   "case_id": "231025c03",
+   "tumor_in_liver": 0.4953
+  },
+  {
+   "case_id": "231025c04",
+   "tumor_in_liver": 0.4991
+  },
+  {
+   "case_id": "231025c05",
+   "tumor_in_liver": 0.9092
+  },
+  {
+   "case_id": "231025c06",
+   "tumor_in_liver": 0.9468
+  },
+  {
+   "case_id": "231025c07",
+   "tumor_in_liver": 0.6284
+  },
+  {
+   "case_id": "231025c08",
+   "tumor_in_liver": 0.8508
+  },
+  {
+   "case_id": "231025c09",
+   "tumor_in_liver": 0.966
+  },
+  {
+   "case_id": "231025c10",
+   "tumor_in_liver": 0.7523
+  },
+  {
+   "case_id": "231025c11",
+   "tumor_in_liver": 0.2836
+  },
+  {
+   "case_id": "231025c12",
+   "tumor_in_liver": 0.9323
+  },
+  {
+   "case_id": "231025c13",
+   "tumor_in_liver": 0.4995
+  },
+  {
+   "case_id": "231025c14",
+   "tumor_in_liver": 0.2067
+  },
+  {
+   "case_id": "231025c15",
+   "tumor_in_liver": 0.9434
+  },
+  {
+   "case_id": "231025c16",
+   "tumor_in_liver": 0.9063
+  },
+  {
+   "case_id": "231025c17",
+   "tumor_in_liver": 0.3304
+  },
+  {
+   "case_id": "231025c18",
+   "tumor_in_liver": 0.9608
+  },
+  {
+   "case_id": "231025c19",
+   "tumor_in_liver": 0.7583
+  },
+  {
+   "case_id": "231025c20",
+   "tumor_in_liver": 0.9456
+  },
+  {
+   "case_id": "231025c21",
+   "tumor_in_liver": 0.8223
+  },
+  {
+   "case_id": "231025c22",
+   "tumor_in_liver": 0.8381
+  },
+  {
+   "case_id": "231025c23",
+   "tumor_in_liver": 0.0101
+  },
+  {
+   "case_id": "231025c24",
+   "tumor_in_liver": 0.948
+  },
+  {
+   "case_id": "231025c25",
+   "tumor_in_liver": 0.9379
+  },
+  {
+   "case_id": "231025c26",
+   "tumor_in_liver": 0.5445
+  },
+  {
+   "case_id": "231025c27",
+   "tumor_in_liver": 0.3605
+  },
+  {
+   "case_id": "231025c28",
+   "tumor_in_liver": 0.9837
+  },
+  {
+   "case_id": "231025c29",
+   "tumor_in_liver": 0.6432
+  },
+  {
+   "case_id": "231025c30",
+   "tumor_in_liver": 0.5209
+  },
+  {
+   "case_id": "231025c31",
+   "tumor_in_liver": 0.854
+  },
+  {
+   "case_id": "231025c32",
+   "tumor_in_liver": 0.4773
+  },
+  {
+   "case_id": "231025c33",
+   "tumor_in_liver": 0.7161
+  },
+  {
+   "case_id": "231025c34",
+   "tumor_in_liver": 0.7713
+  },
+  {
+   "case_id": "231025c35",
+   "tumor_in_liver": 0.8092
+  },
+  {
+   "case_id": "231109b01",
+   "tumor_in_liver": 0.1821
+  },
+  {
+   "case_id": "231109b04",
+   "tumor_in_liver": 0.9632
+  },
+  {
+   "case_id": "231109b05",
+   "tumor_in_liver": 0.9583
+  },
+  {
+   "case_id": "231109b06",
+   "tumor_in_liver": 0.9788
+  },
+  {
+   "case_id": "231109b08",
+   "tumor_in_liver": 0.9882
+  },
+  {
+   "case_id": "231109b09",
+   "tumor_in_liver": 0.9553
+  },
+  {
+   "case_id": "231109b11",
+   "tumor_in_liver": 0.9576
+  },
+  {
+   "case_id": "231109b14",
+   "tumor_in_liver": 0.9884
+  },
+  {
+   "case_id": "231109b15",
+   "tumor_in_liver": 0.7192
+  },
+  {
+   "case_id": "231109b16",
+   "tumor_in_liver": 0.9633
+  },
+  {
+   "case_id": "231109b19",
+   "tumor_in_liver": 0.9835
+  },
+  {
+   "case_id": "231206d05",
+   "tumor_in_liver": 0.9873
+  },
+  {
+   "case_id": "231206d10",
+   "tumor_in_liver": 0.9849
+  },
+  {
+   "case_id": "231206d12",
+   "tumor_in_liver": 0.9648
+  },
+  {
+   "case_id": "231206d14",
+   "tumor_in_liver": 0.8886
+  },
+  {
+   "case_id": "231206d18",
+   "tumor_in_liver": 0.9641
+  },
+  {
+   "case_id": "231206d19",
+   "tumor_in_liver": 0.0055
+  },
+  {
+   "case_id": "240112d11",
+   "tumor_in_liver": 0.9403
+  },
+  {
+   "case_id": "240112d17",
+   "tumor_in_liver": 0.9227
+  },
+  {
+   "case_id": "240112d21",
+   "tumor_in_liver": 0.8984
+  },
+  {
+   "case_id": "240112d24",
+   "tumor_in_liver": 0.8495
+  },
+  {
+   "case_id": "240112d25",
+   "tumor_in_liver": 0.9678
+  },
+  {
+   "case_id": "240112d27",
+   "tumor_in_liver": 0.2953
+  },
+  {
+   "case_id": "240112d28",
+   "tumor_in_liver": 0.9579
+  },
+  {
+   "case_id": "240112d29",
+   "tumor_in_liver": 0.9667
+  },
+  {
+   "case_id": "240112d30",
+   "tumor_in_liver": 0.9733
+  },
+  {
+   "case_id": "240112d31",
+   "tumor_in_liver": 0.9405
+  },
+  {
+   "case_id": "240112d32",
+   "tumor_in_liver": 0.974
+  },
+  {
+   "case_id": "240112d33",
+   "tumor_in_liver": 0.9856
+  },
+  {
+   "case_id": "240112d34",
+   "tumor_in_liver": 0.9846
+  },
+  {
+   "case_id": "240112d38",
+   "tumor_in_liver": 0.9833
+  },
+  {
+   "case_id": "240112d39",
+   "tumor_in_liver": 0.979
+  },
+  {
+   "case_id": "240112d40",
+   "tumor_in_liver": 0.0669
+  },
+  {
+   "case_id": "240112d41",
+   "tumor_in_liver": 0.922
+  },
+  {
+   "case_id": "240112d42",
+   "tumor_in_liver": 0.2155
+  },
+  {
+   "case_id": "240112d43",
+   "tumor_in_liver": 0.9716
+  },
+  {
+   "case_id": "240122d22",
+   "tumor_in_liver": 0.9458
+  },
+  {
+   "case_id": "240122d45",
+   "tumor_in_liver": 0.9747
+  },
+  {
+   "case_id": "240122d47",
+   "tumor_in_liver": 0.9822
+  },
+  {
+   "case_id": "240122d48",
+   "tumor_in_liver": 0.8976
+  },
+  {
+   "case_id": "240122d51",
+   "tumor_in_liver": 0.981
+  },
+  {
+   "case_id": "240122d52",
+   "tumor_in_liver": 0.981
+  },
+  {
+   "case_id": "240122d54",
+   "tumor_in_liver": 0.4837
+  },
+  {
+   "case_id": "240122d55",
+   "tumor_in_liver": 0.9648
+  },
+  {
+   "case_id": "240122d57",
+   "tumor_in_liver": 0.9692
+  },
+  {
+   "case_id": "240122d61",
+   "tumor_in_liver": 0.8972
+  },
+  {
+   "case_id": "240122d62",
+   "tumor_in_liver": 0.9692
+  },
+  {
+   "case_id": "240122d65",
+   "tumor_in_liver": 0.6522
+  },
+  {
+   "case_id": "240122d66",
+   "tumor_in_liver": 0.9778
+  },
+  {
+   "case_id": "240122d67",
+   "tumor_in_liver": 0.5512
+  },
+  {
+   "case_id": "240122d68",
+   "tumor_in_liver": 0.9366
+  },
+  {
+   "case_id": "240122d69",
+   "tumor_in_liver": 0.9504
+  },
+  {
+   "case_id": "240122d73",
+   "tumor_in_liver": 0.9487
+  },
+  {
+   "case_id": "240122d74",
+   "tumor_in_liver": 0.9828
+  },
+  {
+   "case_id": "240229c01",
+   "tumor_in_liver": 0.9846
+  },
+  {
+   "case_id": "240229c02",
+   "tumor_in_liver": 0.5725
+  },
+  {
+   "case_id": "240229c03",
+   "tumor_in_liver": 0.9374
+  },
+  {
+   "case_id": "240229c04",
+   "tumor_in_liver": 0.984
+  },
+  {
+   "case_id": "240229c05",
+   "tumor_in_liver": 0.788
+  },
+  {
+   "case_id": "240229c06",
+   "tumor_in_liver": 0.8263
+  },
+  {
+   "case_id": "240229c07",
+   "tumor_in_liver": 0.7691
+  },
+  {
+   "case_id": "240229c08",
+   "tumor_in_liver": 0.3414
+  },
+  {
+   "case_id": "240229c10",
+   "tumor_in_liver": 0.6717
+  },
+  {
+   "case_id": "240229c11",
+   "tumor_in_liver": 0.0
+  },
+  {
+   "case_id": "240229c12",
+   "tumor_in_liver": 0.417
+  },
+  {
+   "case_id": "240229c13",
+   "tumor_in_liver": 0.8903
+  },
+  {
+   "case_id": "240229c14",
+   "tumor_in_liver": 0.7247
+  },
+  {
+   "case_id": "240229c15",
+   "tumor_in_liver": 0.5123
+  },
+  {
+   "case_id": "240229c16",
+   "tumor_in_liver": 0.8817
+  },
+  {
+   "case_id": "240229c17",
+   "tumor_in_liver": 0.5153
+  },
+  {
+   "case_id": "240229c18",
+   "tumor_in_liver": 0.9384
+  },
+  {
+   "case_id": "240229c19",
+   "tumor_in_liver": 0.509
+  },
+  {
+   "case_id": "240229c20",
+   "tumor_in_liver": 0.8503
+  },
+  {
+   "case_id": "240229c22",
+   "tumor_in_liver": 0.4879
+  },
+  {
+   "case_id": "240229c23",
+   "tumor_in_liver": 0.5875
+  },
+  {
+   "case_id": "240229c24",
+   "tumor_in_liver": 0.9784
+  },
+  {
+   "case_id": "240229c25",
+   "tumor_in_liver": 0.1137
+  },
+  {
+   "case_id": "240229c26",
+   "tumor_in_liver": 0.8762
+  },
+  {
+   "case_id": "240229c27",
+   "tumor_in_liver": 0.5463
+  },
+  {
+   "case_id": "240229c28",
+   "tumor_in_liver": 0.829
+  },
+  {
+   "case_id": "240229c29",
+   "tumor_in_liver": 0.7148
+  },
+  {
+   "case_id": "240229c30",
+   "tumor_in_liver": 0.9075
+  },
+  {
+   "case_id": "240229c31",
+   "tumor_in_liver": 0.1814
+  },
+  {
+   "case_id": "240229c32",
+   "tumor_in_liver": 0.9256
+  },
+  {
+   "case_id": "240229c33",
+   "tumor_in_liver": 0.9106
+  },
+  {
+   "case_id": "240229c34",
+   "tumor_in_liver": 0.6959
+  },
+  {
+   "case_id": "240229c35",
+   "tumor_in_liver": 0.1981
+  },
+  {
+   "case_id": "240229c36",
+   "tumor_in_liver": 0.4898
+  },
+  {
+   "case_id": "240229c37",
+   "tumor_in_liver": 0.2496
+  },
+  {
+   "case_id": "240229c38",
+   "tumor_in_liver": 0.9349
+  },
+  {
+   "case_id": "240229c39",
+   "tumor_in_liver": 0.6254
+  },
+  {
+   "case_id": "240229c40",
+   "tumor_in_liver": 0.0911
+  },
+  {
+   "case_id": "240229c41",
+   "tumor_in_liver": 0.9334
+  },
+  {
+   "case_id": "240229c43",
+   "tumor_in_liver": 0.9012
+  },
+  {
+   "case_id": "240229c44",
+   "tumor_in_liver": 0.836
+  },
+  {
+   "case_id": "240229c45",
+   "tumor_in_liver": 0.3937
+  },
+  {
+   "case_id": "240229c47",
+   "tumor_in_liver": 0.6817
+  },
+  {
+   "case_id": "240504a06",
+   "tumor_in_liver": 0.9168
+  },
+  {
+   "case_id": "240504a09",
+   "tumor_in_liver": 0.9893
+  },
+  {
+   "case_id": "240504a10",
+   "tumor_in_liver": 0.9596
+  },
+  {
+   "case_id": "240504a11",
+   "tumor_in_liver": 0.9824
+  },
+  {
+   "case_id": "240504a12",
+   "tumor_in_liver": 0.9419
+  },
+  {
+   "case_id": "240504a13",
+   "tumor_in_liver": 0.9608
+  },
+  {
+   "case_id": "240504a14",
+   "tumor_in_liver": 0.9637
+  },
+  {
+   "case_id": "240504b03",
+   "tumor_in_liver": 0.9416
+  },
+  {
+   "case_id": "240504b05",
+   "tumor_in_liver": 0.9719
+  },
+  {
+   "case_id": "240504b06",
+   "tumor_in_liver": 0.9096
+  },
+  {
+   "case_id": "240504b07",
+   "tumor_in_liver": 0.9702
+  },
+  {
+   "case_id": "240504b08",
+   "tumor_in_liver": 0.8792
+  },
+  {
+   "case_id": "240504b09",
+   "tumor_in_liver": 0.5574
+  },
+  {
+   "case_id": "240504b10",
+   "tumor_in_liver": 0.9719
+  },
+  {
+   "case_id": "240504b12",
+   "tumor_in_liver": 0.749
+  },
+  {
+   "case_id": "240504b13",
+   "tumor_in_liver": 0.8714
+  },
+  {
+   "case_id": "240504b15",
+   "tumor_in_liver": 0.9558
+  },
+  {
+   "case_id": "240504b17",
+   "tumor_in_liver": 0.9809
+  },
+  {
+   "case_id": "240504b18",
+   "tumor_in_liver": 0.9809
+  },
+  {
+   "case_id": "240504b19",
+   "tumor_in_liver": 0.985
+  },
+  {
+   "case_id": "240504b21",
+   "tumor_in_liver": 0.8113
+  },
+  {
+   "case_id": "240504b22",
+   "tumor_in_liver": 0.9832
+  },
+  {
+   "case_id": "240504b23",
+   "tumor_in_liver": 0.7569
+  },
+  {
+   "case_id": "240504b24",
+   "tumor_in_liver": 0.9769
+  },
+  {
+   "case_id": "240504b25",
+   "tumor_in_liver": 0.9873
+  },
+  {
+   "case_id": "240504b26",
+   "tumor_in_liver": 0.9798
+  },
+  {
+   "case_id": "240504b27",
+   "tumor_in_liver": 0.9698
+  },
+  {
+   "case_id": "240504b28",
+   "tumor_in_liver": 0.9889
+  },
+  {
+   "case_id": "240504b29",
+   "tumor_in_liver": 0.9895
+  },
+  {
+   "case_id": "240504b30",
+   "tumor_in_liver": 0.8881
+  },
+  {
+   "case_id": "240504b31",
+   "tumor_in_liver": 0.7034
+  },
+  {
+   "case_id": "240504b33",
+   "tumor_in_liver": 0.9869
+  },
+  {
+   "case_id": "240504b34",
+   "tumor_in_liver": 0.9874
+  },
+  {
+   "case_id": "240504b37",
+   "tumor_in_liver": 0.9436
+  },
+  {
+   "case_id": "240504b38",
+   "tumor_in_liver": 0.8475
+  },
+  {
+   "case_id": "240504b40",
+   "tumor_in_liver": 0.9878
+  },
+  {
+   "case_id": "240504b42",
+   "tumor_in_liver": 0.9741
+  },
+  {
+   "case_id": "240504b43",
+   "tumor_in_liver": 0.776
+  },
+  {
+   "case_id": "240504b44",
+   "tumor_in_liver": 0.9799
+  },
+  {
+   "case_id": "240504b45",
+   "tumor_in_liver": 0.5068
+  },
+  {
+   "case_id": "240504b50",
+   "tumor_in_liver": 0.9698
+  },
+  {
+   "case_id": "240504e02",
+   "tumor_in_liver": 0.9376
+  },
+  {
+   "case_id": "240504e03",
+   "tumor_in_liver": 0.935
+  },
+  {
+   "case_id": "240504e04",
+   "tumor_in_liver": 0.9535
+  },
+  {
+   "case_id": "240504e05",
+   "tumor_in_liver": 0.8807
+  },
+  {
+   "case_id": "240504e06",
+   "tumor_in_liver": 0.9226
+  },
+  {
+   "case_id": "240504e07",
+   "tumor_in_liver": 0.6733
+  },
+  {
+   "case_id": "240504e09",
+   "tumor_in_liver": 0.9633
+  },
+  {
+   "case_id": "240504e10",
+   "tumor_in_liver": 0.9523
+  },
+  {
+   "case_id": "240504e13",
+   "tumor_in_liver": 0.9855
+  },
+  {
+   "case_id": "240504e14",
+   "tumor_in_liver": 0.9689
+  },
+  {
+   "case_id": "240504e15",
+   "tumor_in_liver": 0.966
+  },
+  {
+   "case_id": "240504e17",
+   "tumor_in_liver": 0.9617
+  },
+  {
+   "case_id": "240504e18",
+   "tumor_in_liver": 0.9704
+  },
+  {
+   "case_id": "240504e19",
+   "tumor_in_liver": 0.9342
+  },
+  {
+   "case_id": "240504e20",
+   "tumor_in_liver": 0.9808
+  },
+  {
+   "case_id": "240504e22",
+   "tumor_in_liver": 0.4421
+  },
+  {
+   "case_id": "240504e23",
+   "tumor_in_liver": 0.9896
+  },
+  {
+   "case_id": "240504e24",
+   "tumor_in_liver": 0.9819
+  },
+  {
+   "case_id": "240504e25",
+   "tumor_in_liver": 0.7623
+  },
+  {
+   "case_id": "240504e27",
+   "tumor_in_liver": 0.9076
+  },
+  {
+   "case_id": "240504e28",
+   "tumor_in_liver": 0.9518
+  },
+  {
+   "case_id": "240504e30",
+   "tumor_in_liver": 0.9859
+  },
+  {
+   "case_id": "240504e31",
+   "tumor_in_liver": 0.9876
+  },
+  {
+   "case_id": "240504e33",
+   "tumor_in_liver": 0.9216
+  },
+  {
+   "case_id": "240504e34",
+   "tumor_in_liver": 0.9866
+  },
+  {
+   "case_id": "240504e35",
+   "tumor_in_liver": 0.7303
+  },
+  {
+   "case_id": "240504e38",
+   "tumor_in_liver": 0.9076
+  },
+  {
+   "case_id": "240504e39",
+   "tumor_in_liver": 0.9491
+  },
+  {
+   "case_id": "240504e40",
+   "tumor_in_liver": 0.973
+  },
+  {
+   "case_id": "240504e41",
+   "tumor_in_liver": 0.9669
+  },
+  {
+   "case_id": "240504e42",
+   "tumor_in_liver": 0.6215
+  },
+  {
+   "case_id": "240504e43",
+   "tumor_in_liver": 0.98
+  },
+  {
+   "case_id": "240504e44",
+   "tumor_in_liver": 0.9899
+  },
+  {
+   "case_id": "240504e47",
+   "tumor_in_liver": 0.8464
+  },
+  {
+   "case_id": "240504e48",
+   "tumor_in_liver": 0.9244
+  },
+  {
+   "case_id": "240504e49",
+   "tumor_in_liver": 0.9896
+  },
+  {
+   "case_id": "240504e50",
+   "tumor_in_liver": 0.9289
+  },
+  {
+   "case_id": "240620a01",
+   "tumor_in_liver": 0.9498
+  },
+  {
+   "case_id": "240620a03",
+   "tumor_in_liver": 0.956
+  },
+  {
+   "case_id": "240620a05",
+   "tumor_in_liver": 0.9735
+  },
+  {
+   "case_id": "240620a06",
+   "tumor_in_liver": 0.9624
+  },
+  {
+   "case_id": "240620a09",
+   "tumor_in_liver": 0.987
+  },
+  {
+   "case_id": "240620a12",
+   "tumor_in_liver": 0.9558
+  },
+  {
+   "case_id": "240620a13",
+   "tumor_in_liver": 0.8718
+  },
+  {
+   "case_id": "240620a16",
+   "tumor_in_liver": 0.9098
+  },
+  {
+   "case_id": "240620a18",
+   "tumor_in_liver": 0.9121
+  },
+  {
+   "case_id": "240620a19",
+   "tumor_in_liver": 0.6932
+  },
+  {
+   "case_id": "240620a23",
+   "tumor_in_liver": 0.9709
+  },
+  {
+   "case_id": "240620a24",
+   "tumor_in_liver": 0.9856
+  },
+  {
+   "case_id": "240620a26",
+   "tumor_in_liver": 0.965
+  },
+  {
+   "case_id": "240620a28",
+   "tumor_in_liver": 0.9233
+  },
+  {
+   "case_id": "240620a29",
+   "tumor_in_liver": 0.979
+  },
+  {
+   "case_id": "240620a30",
+   "tumor_in_liver": 0.947
+  },
+  {
+   "case_id": "240620a31",
+   "tumor_in_liver": 0.9729
+  },
+  {
+   "case_id": "240620a32",
+   "tumor_in_liver": 0.9723
+  },
+  {
+   "case_id": "240620a33",
+   "tumor_in_liver": 0.9851
+  },
+  {
+   "case_id": "240620a34",
+   "tumor_in_liver": 0.8775
+  },
+  {
+   "case_id": "240620a35",
+   "tumor_in_liver": 0.9014
+  },
+  {
+   "case_id": "240620a40",
+   "tumor_in_liver": 0.8697
+  },
+  {
+   "case_id": "240620a42",
+   "tumor_in_liver": 0.9626
+  },
+  {
+   "case_id": "240620a43",
+   "tumor_in_liver": 0.9623
+  },
+  {
+   "case_id": "240620a44",
+   "tumor_in_liver": 0.9785
+  },
+  {
+   "case_id": "240620a46",
+   "tumor_in_liver": 0.9601
+  },
+  {
+   "case_id": "240620a47",
+   "tumor_in_liver": 0.9862
+  },
+  {
+   "case_id": "240620a52",
+   "tumor_in_liver": 0.6095
+  },
+  {
+   "case_id": "240620a55",
+   "tumor_in_liver": 0.9311
+  },
+  {
+   "case_id": "240620a57",
+   "tumor_in_liver": 0.9524
+  },
+  {
+   "case_id": "240620a58",
+   "tumor_in_liver": 0.959
+  },
+  {
+   "case_id": "240620a59",
+   "tumor_in_liver": 0.6519
+  },
+  {
+   "case_id": "240620a60",
+   "tumor_in_liver": 0.9429
+  },
+  {
+   "case_id": "240620a62",
+   "tumor_in_liver": 0.9864
+  },
+  {
+   "case_id": "240620a63",
+   "tumor_in_liver": 0.9128
+  },
+  {
+   "case_id": "240620a65",
+   "tumor_in_liver": 0.975
+  },
+  {
+   "case_id": "240722e100",
+   "tumor_in_liver": 0.9825
+  },
+  {
+   "case_id": "240722e52",
+   "tumor_in_liver": 0.9315
+  },
+  {
+   "case_id": "240722e56",
+   "tumor_in_liver": 0.9771
+  },
+  {
+   "case_id": "240722e58",
+   "tumor_in_liver": 0.8635
+  },
+  {
+   "case_id": "240722e61",
+   "tumor_in_liver": 0.9861
+  },
+  {
+   "case_id": "240722e62",
+   "tumor_in_liver": 0.8
+  },
+  {
+   "case_id": "240722e64",
+   "tumor_in_liver": 0.9796
+  },
+  {
+   "case_id": "240722e65",
+   "tumor_in_liver": 0.971
+  },
+  {
+   "case_id": "240722e66",
+   "tumor_in_liver": 0.9361
+  },
+  {
+   "case_id": "240722e67",
+   "tumor_in_liver": 0.9368
+  },
+  {
+   "case_id": "240722e69",
+   "tumor_in_liver": 0.9839
+  },
+  {
+   "case_id": "240722e70",
+   "tumor_in_liver": 0.8544
+  },
+  {
+   "case_id": "240722e75",
+   "tumor_in_liver": 0.9748
+  },
+  {
+   "case_id": "240722e76",
+   "tumor_in_liver": 0.718
+  },
+  {
+   "case_id": "240722e77",
+   "tumor_in_liver": 0.9449
+  },
+  {
+   "case_id": "240722e82",
+   "tumor_in_liver": 0.9281
+  },
+  {
+   "case_id": "240722e85",
+   "tumor_in_liver": 0.9782
+  },
+  {
+   "case_id": "240722e87",
+   "tumor_in_liver": 0.9833
+  },
+  {
+   "case_id": "240722e90",
+   "tumor_in_liver": 0.9266
+  },
+  {
+   "case_id": "240722e91",
+   "tumor_in_liver": 0.8782
+  },
+  {
+   "case_id": "240722e93",
+   "tumor_in_liver": 0.9836
+  },
+  {
+   "case_id": "240722e94",
+   "tumor_in_liver": 0.9798
+  },
+  {
+   "case_id": "240722e96",
+   "tumor_in_liver": 0.9559
+  },
+  {
+   "case_id": "240722e97",
+   "tumor_in_liver": 0.9574
+  },
+  {
+   "case_id": "240722e98",
+   "tumor_in_liver": 0.9705
+  },
+  {
+   "case_id": "240722e99",
+   "tumor_in_liver": 0.9876
+  }
+ ]
+}
