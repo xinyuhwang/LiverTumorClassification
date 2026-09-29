@@ -1,0 +1,13 @@
+# Paper and poster PDFs
+DS_2net_and_Transformers_on_Liver_Cancer_Ultrasounds.pdf
+Wang_Xinyu_Christopher_Teh_HERALD Hepatic Evaluation and Reporting with AI-Driven Diagnostics.pdf
+
+# Original archive of unet_hybrid/
+unet.zip
+
+# Python
+__pycache__/
+*.pyc
+
+# Training artifacts
+*.pth

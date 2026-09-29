@@ -1,0 +1,78 @@
+=== Stage 1 started at Fri Apr 17 12:41:21 AM EDT 2026 ===
+Fri Apr 17 00:41:21 2026       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 545.23.08              Driver Version: 545.23.08    CUDA Version: 12.3     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  Tesla P100-PCIE-12GB           On  | 00000000:82:00.0 Off |                    0 |
+| N/A   33C    P0              24W / 250W |      0MiB / 12288MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Device: cuda
+  GPU: Tesla P100-PCIE-12GB
+Splits — train: 357, val: 78, test: 78
+============================================================
+  Stage 1 — Liver Segmentation
+============================================================
+  LiverDataset: indexing 357 cases…
+  LiverDataset ready: 13142 slices from 357 cases (1153.2s)
+  LiverDataset: indexing 78 cases…
+  LiverDataset ready: 2931 slices from 78 cases (254.6s)
+  Resumed from epoch 0 (best dice so far: -1.0000)
+Ep   1/40 | tr_loss 0.1127 tr_dice 0.8673 | vl_loss 0.1822 vl_dice 0.7542 | 2454s
+  ✓ Saved  best val liver Dice: 0.7542
+Ep   2/40 | tr_loss 0.1049 tr_dice 0.8774 | vl_loss 0.1779 vl_dice 0.7812 | 2435s
+  ✓ Saved  best val liver Dice: 0.7812
+Ep   3/40 | tr_loss 0.0994 tr_dice 0.8853 | vl_loss 0.1710 vl_dice 0.7873 | 2434s
+  ✓ Saved  best val liver Dice: 0.7873
+Ep   4/40 | tr_loss 0.0962 tr_dice 0.8904 | vl_loss 0.1711 vl_dice 0.7852 | 2386s
+Ep   5/40 | tr_loss 0.0953 tr_dice 0.8919 | vl_loss 0.1713 vl_dice 0.7840 | 2393s
+Ep   6/40 | tr_loss 0.0939 tr_dice 0.8934 | vl_loss 0.1692 vl_dice 0.7817 | 2398s
+Ep   7/40 | tr_loss 0.0924 tr_dice 0.8958 | vl_loss 0.1751 vl_dice 0.7893 | 2387s
+  ✓ Saved  best val liver Dice: 0.7893
+Ep   8/40 | tr_loss 0.0916 tr_dice 0.8971 | vl_loss 0.1665 vl_dice 0.7863 | 2414s
+Ep   9/40 | tr_loss 0.1042 tr_dice 0.8784 | vl_loss 0.1944 vl_dice 0.7644 | 2512s
+Ep  10/40 | tr_loss 0.0969 tr_dice 0.8884 | vl_loss 0.1736 vl_dice 0.7873 | 2477s
+Ep  11/40 | tr_loss 0.0903 tr_dice 0.8979 | vl_loss 0.1653 vl_dice 0.7910 | 2444s
+  ✓ Saved  best val liver Dice: 0.7910
+Ep  12/40 | tr_loss 0.0898 tr_dice 0.8986 | vl_loss 0.1676 vl_dice 0.7958 | 2451s
+  ✓ Saved  best val liver Dice: 0.7958
+Ep  13/40 | tr_loss 0.0894 tr_dice 0.9000 | vl_loss 0.1660 vl_dice 0.7946 | 2492s
+Ep  14/40 | tr_loss 0.0873 tr_dice 0.9022 | vl_loss 0.1612 vl_dice 0.8022 | 2405s
+  ✓ Saved  best val liver Dice: 0.8022
+Ep  15/40 | tr_loss 0.0833 tr_dice 0.9079 | vl_loss 0.1628 vl_dice 0.7996 | 2434s
+Ep  16/40 | tr_loss 0.0816 tr_dice 0.9103 | vl_loss 0.1627 vl_dice 0.7956 | 2476s
+Ep  17/40 | tr_loss 0.0814 tr_dice 0.9105 | vl_loss 0.1622 vl_dice 0.7996 | 2487s
+Ep  18/40 | tr_loss 0.0808 tr_dice 0.9116 | vl_loss 0.1620 vl_dice 0.8004 | 2462s
+Ep  19/40 | tr_loss 0.0799 tr_dice 0.9128 | vl_loss 0.1659 vl_dice 0.8003 | 2451s
+Ep  20/40 | tr_loss 0.0790 tr_dice 0.9139 | vl_loss 0.1600 vl_dice 0.8034 | 2433s
+  ✓ Saved  best val liver Dice: 0.8034
+Ep  21/40 | tr_loss 0.0787 tr_dice 0.9143 | vl_loss 0.1609 vl_dice 0.7979 | 2481s
+Ep  22/40 | tr_loss 0.0782 tr_dice 0.9155 | vl_loss 0.1604 vl_dice 0.8002 | 2493s
+Ep  23/40 | tr_loss 0.0772 tr_dice 0.9164 | vl_loss 0.1605 vl_dice 0.8021 | 2520s
+Ep  24/40 | tr_loss 0.0762 tr_dice 0.9175 | vl_loss 0.1619 vl_dice 0.8011 | 2486s
+Ep  25/40 | tr_loss 0.0763 tr_dice 0.9177 | vl_loss 0.1590 vl_dice 0.8053 | 2479s
+  ✓ Saved  best val liver Dice: 0.8053
+Ep  26/40 | tr_loss 0.0758 tr_dice 0.9182 | vl_loss 0.1574 vl_dice 0.8061 | 2462s
+  ✓ Saved  best val liver Dice: 0.8061
+Ep  27/40 | tr_loss 0.0751 tr_dice 0.9195 | vl_loss 0.1575 vl_dice 0.8068 | 2473s
+  ✓ Saved  best val liver Dice: 0.8068
+Ep  28/40 | tr_loss 0.0746 tr_dice 0.9202 | vl_loss 0.1609 vl_dice 0.8052 | 2526s
+Ep  29/40 | tr_loss 0.0744 tr_dice 0.9204 | vl_loss 0.1579 vl_dice 0.8036 | 2491s
+Ep  30/40 | tr_loss 0.0741 tr_dice 0.9209 | vl_loss 0.1596 vl_dice 0.8066 | 2514s
+Ep  31/40 | tr_loss 0.0735 tr_dice 0.9217 | vl_loss 0.1607 vl_dice 0.8049 | 2498s
+Ep  32/40 | tr_loss 0.0737 tr_dice 0.9212 | vl_loss 0.1588 vl_dice 0.8071 | 2469s
+  ✓ Saved  best val liver Dice: 0.8071
+Ep  33/40 | tr_loss 0.0733 tr_dice 0.9217 | vl_loss 0.1584 vl_dice 0.8060 | 2459s
+Ep  34/40 | tr_loss 0.0731 tr_dice 0.9220 | vl_loss 0.1596 vl_dice 0.8058 | 2455s
