@@ -8,7 +8,9 @@ import pandas as pd
 
 DEFAULT_SPLITS_CSV = str(Path(__file__).resolve().parent / "mct_ltdiag_split.csv")
 
-# 4 cases with unexpected NIfTI axis ordering — exclude from all splits
+# 4 cases with unexpected NIfTI axis ordering — exclude from all splits.
+# 231109b01, 240504b27, 240504e30: liver mask slice count differs from the PVP
+# (dataset audit, branch setup/data-and-env); 240504e48: reason not recorded.
 BAD_CASES = {'231109b01', '240504b27', '240504e30', '240504e48'}
 
 

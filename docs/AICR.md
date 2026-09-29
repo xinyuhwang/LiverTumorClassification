@@ -11,6 +11,18 @@ Yes. AICR's acceptable-use policy forbids non-anonymized data, and data covered 
 
 Check again if you ever add other data, for example hospital data under a data use agreement.
 
+## This project's allocation
+
+| | |
+|---|---|
+| Username | `wang_xinyu14_neu` |
+| Slurm account | `p2026_0093_neu` |
+| Group storage | `/work/neu/p2026_0093_neu` (1 TB) → `HERALD_STORE=/work/neu/p2026_0093_neu/herald` |
+| Scratch | `/scratch/wang_xinyu14_neu` (≈9.1 TiB quota, 30-day purge) |
+| Modules | `miniforge3/25.3.0-3`, `conda/latest`, `cuda/13.1.1` |
+
+These are already set in `cluster/env.sh`. Verified 2026-09-29: the DTN reaches Dataverse and has Python 3.9 and `tmux`.
+
 ## Cluster facts
 
 | | |
@@ -59,7 +71,7 @@ ssh aicr
 git clone <this repository's URL> ~/LiverTumorClassification
 cd ~/LiverTumorClassification
 sacctmgr show user $USER withassoc format=user,account -p   # find your account
-nano cluster/env.sh      # set HERALD_ACCOUNT and HERALD_STORE
+# cluster/env.sh already has this project's account and /work path
 ```
 
 **4. Python environment (inside a GPU session).**
