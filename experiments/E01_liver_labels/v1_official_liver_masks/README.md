@@ -2,10 +2,10 @@
 
 | | |
 |---|---|
-| Status | data QA done (2026-09-29); Stage 1 training next |
+| Status | data QA done; Stage 1 training submitted (AICR job 1119412, 2026-09-29) |
 | Compared with | v0 (notebook labels) |
 | Change | Stage 1 trains on the dataset's `liver_mask_pvp.nii.gz` (written as `liver_mask.nii.gz` by `data_prep/`) instead of `mask_pvp ≥ 1` |
-| Code | data prep at commit `9c2c3f5` (AICR job 1119015); training commit: fill in from the job log |
+| Code | data prep at commit `9c2c3f5` (AICR job 1119015); training at commit `369e977` (job 1119412; smoke test job 1119353 passed) |
 | Run | `$HERALD_STORE/results/runs/ds2net/e01_v1_liver` |
 | Date | 2026-09-29 |
 
@@ -42,7 +42,9 @@ Files: [`results/data_qa.json`](results/data_qa.json) (summary) and [`results/ma
 | Median liver-mask air fraction per phase | ≈ 0.1% in every phase |
 | Liver volume | median 1,249 ml; 7 cases outside 700–3,500 ml |
 
-### Steps 2–3 — Stage 1 training (pending)
+### Steps 2–3 — Stage 1 training (running)
+
+The smoke test (4 train / 2 val / 2 test cases, 2 epochs) already showed a gap between slice-level and per-case scores: slice-level Dice 0.88, per-case Dice 0.67 (precision 0.54, recall 0.91). Training uses only slices that contain liver (`slices="liver"`), but inference runs on every slice, so false positives outside the liver lower per-case precision. Watch whether this persists in the full run. If it does, a follow-up version should add non-liver slices to training (not yet an option in `ds2net/`).
 
 | Metric (test, n = 78, per case) | v0 | v1 |
 |---|---|---|
