@@ -19,9 +19,15 @@ See `run.sh`.
 
 ## Results
 
-| Metric (test, n = 78) | Previous | This version | Δ (95% CI) |
-|---|---|---|---|
-| | | | |
+Paste the output of:
+
+```bash
+python common/evaluate.py summary <this run> --by-type --md
+python common/evaluate.py compare <previous run> <this run> --md
+```
+
+| metric | n | a | b | diff | ci_low | ci_high | p_boot | … |
+|---|---|---|---|---|---|---|---|---|
 
 Per-case results are in `results/per_case_test.csv`.
 

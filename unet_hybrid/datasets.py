@@ -182,6 +182,41 @@ def _liver_bbox(liver_mask, pad=8, min_size=16):
     return r0, r1, c0, c1
 
 
+# ── Per-slice inputs (shared by the datasets and test-time prediction) ────────
+
+def liver_input(data, sl):
+    """Stage 1 input for slice sl: (12, IMG_SIZE, IMG_SIZE), 4 phases × 3 slices,
+    whole slice resized."""
+    D = data["pvp"].shape[2]
+    def crop_resize(vol, sl_idx):
+        s = np.clip(sl_idx, 0, D - 1)
+        return _resize_slice(vol[:, :, s].astype(np.float32), IMG_SIZE)
+    channels = []
+    for phase_vol in data["phases"]:
+        channels += [crop_resize(phase_vol, sl - 1), crop_resize(phase_vol, sl),
+                     crop_resize(phase_vol, sl + 1)]
+    return np.stack(channels)
+
+
+def tumor_input(data, sl):
+    """Stage 2 input for slice sl, cropped to the GT liver bounding box of that
+    slice: ((12, IMG_SIZE, IMG_SIZE), (r0, r1, c0, c1))."""
+    D = data["pvp"].shape[2]
+    r0, r1, c0, c1 = _liver_bbox(data["liver_mask"][:, :, sl])
+    def crop_resize_ph(sl_idx, phase_key):
+        s    = np.clip(sl_idx, 0, D - 1)
+        vol  = data["phase_vols"][phase_key]
+        crop = vol[r0:r1, c0:c1, s].astype(np.float32)
+        if crop.shape[0] < 1 or crop.shape[1] < 1:
+            crop = vol[:, :, s].astype(np.float32)
+        return _resize_slice(crop, IMG_SIZE)
+    strips = []
+    for ph in PHASE_NAMES:
+        strips += [crop_resize_ph(sl - 1, ph), crop_resize_ph(sl, ph),
+                   crop_resize_ph(sl + 1, ph)]
+    return np.stack(strips), (r0, r1, c0, c1)
+
+
 # ── Stage 1: LiverDataset ─────────────────────────────────────────────────────
 
 class LiverDataset(Dataset):
@@ -219,19 +254,7 @@ class LiverDataset(Dataset):
     def __getitem__(self, idx):
         cid, sl = self.samples[idx]
         data    = fetch_case_cached(cid)
-        D       = data["pvp"].shape[2]
-
-        def crop_resize(vol, sl_idx):
-            s = np.clip(sl_idx, 0, D - 1)
-            return _resize_slice(vol[:, :, s].astype(np.float32), IMG_SIZE)
-
-        # build 12-channel input: 4 phases × 3 adjacent slices
-        channels = []
-        for phase_vol in data["phases"]:
-            channels.append(crop_resize(phase_vol, sl - 1))
-            channels.append(crop_resize(phase_vol, sl))
-            channels.append(crop_resize(phase_vol, sl + 1))
-        img = np.stack(channels)  # (12, IMG_SIZE, IMG_SIZE)
+        img     = liver_input(data, sl)  # (12, IMG_SIZE, IMG_SIZE)
 
         msk = _resize_mask(
             data["liver_mask"][:, :, sl].astype(np.float32),
@@ -280,31 +303,9 @@ class TumorDataset(Dataset):
     def __getitem__(self, idx):
         cid, sl = self.samples[idx]
         data    = fetch_case_cached(cid)
-        D       = data["pvp"].shape[2]
-
-        # 1. compute bbox on full-res liver mask for this slice
-        lmsk_2d        = data["liver_mask"][:, :, sl]
-        r0, r1, c0, c1 = _liver_bbox(lmsk_2d)
-
-        # 2. crop-then-resize each channel of the triplet (4 phases x 3 slices = 12ch)
-        def crop_resize_ph(sl_idx, phase_key):
-            s    = np.clip(sl_idx, 0, D - 1)
-            vol  = data["phase_vols"][phase_key]
-            crop = vol[r0:r1, c0:c1, s].astype(np.float32)
-            if crop.shape[0] < 1 or crop.shape[1] < 1:
-                crop = vol[:, :, s].astype(np.float32)
-            return _resize_slice(crop, IMG_SIZE)
-
-        strips = []
-        for ph in PHASE_NAMES:
-            strips += [
-                crop_resize_ph(sl - 1, ph),
-                crop_resize_ph(sl,     ph),
-                crop_resize_ph(sl + 1, ph),
-            ]
-
-        img = np.stack(strips)  # (12, IMG_SIZE, IMG_SIZE)
-        # 3. same crop for tumor mask
+        # crop to this slice's GT liver bbox, then resize (4 phases × 3 slices)
+        img, (r0, r1, c0, c1) = tumor_input(data, sl)
+        # same crop for the tumor mask
         tmsk_crop = data["tumor_mask"][r0:r1, c0:c1, sl].astype(np.float32)
         if tmsk_crop.shape[0] < 1 or tmsk_crop.shape[1] < 1:
             tmsk_crop = data["tumor_mask"][:, :, sl].astype(np.float32)
