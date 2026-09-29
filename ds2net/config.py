@@ -26,6 +26,9 @@ LIVER = {
     "img_size": 224,
     "target_spacing": 1.0,             # mm, all three axes (as in the notebook)
     "slices": "liver",                 # train on slices containing liver
+    # liver label = official liver mask ∪ tumor mask. The official mask leaves
+    # out >10% of the tumor in ~24% of cases (E01); False = mask as shipped.
+    "liver_includes_tumor": False,
     "batch_size": 48, "grad_accum_steps": 4,
     "lr": 1e-4, "weight_decay": 1e-4, "epochs": 60, "pct_start": 0.20,
     "early_stop_patience": 15, "val_every": 3,
@@ -46,6 +49,7 @@ TUMOR = {
     # mask was tumor-only, so it only ever saw tumor slices); "liver" also
     # includes tumor-free liver slices.
     "slices": "tumor",
+    "liver_includes_tumor": False,     # only affects slices="liver"
     "batch_size": 64, "grad_accum_steps": 3,
     "lr": 2e-4, "weight_decay": 1e-4, "epochs": 50, "pct_start": 0.15,
     "early_stop_patience": 12, "val_every": 3,

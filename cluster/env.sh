@@ -1,13 +1,13 @@
 # cluster/env.sh — shared settings for every AICR job. Source it:
 #   source cluster/env.sh
-# Edit the three values marked EDIT once, after your first login.
+# Project allocation p2026_0093_neu (Northeastern). Override any value by
+# exporting it before sourcing this file.
 
-# EDIT: Slurm account (list yours with: sacctmgr show user $USER withassoc format=user,account -p)
-export HERALD_ACCOUNT="${HERALD_ACCOUNT:-CHANGE_ME}"
+# Slurm account (list yours with: sacctmgr show user $USER withassoc format=user,account -p)
+export HERALD_ACCOUNT="${HERALD_ACCOUNT:-p2026_0093_neu}"
 
-# EDIT: long-lived project storage (snapshotted). Raw data, prepared data, final results.
-#       /work/<institution>/<groupname>/ — ask your PI / group for the path.
-export HERALD_STORE="${HERALD_STORE:-/work/CHANGE_ME/herald}"
+# Long-lived group storage (1 TB, 7-day snapshots): raw data, prepared data, results
+export HERALD_STORE="${HERALD_STORE:-/work/neu/p2026_0093_neu/herald}"
 
 # Fast scratch (10 TiB, files older than 30 days are PURGED). Caches and checkpoints.
 export HERALD_SCRATCH="${HERALD_SCRATCH:-/scratch/$USER/herald}"
@@ -24,7 +24,7 @@ export HERALD_DATA="$HERALD_STORE/mct_ltdiag"         # prepared per-case NIfTI
 export HERALD_WORK="$HERALD_SCRATCH/work"             # caches, runs, checkpoints
 export HERALD_RESULTS="$HERALD_STORE/results"         # copies of finished runs
 
-if [ -n "$SLURM_JOB_ID" ] || [ "${HERALD_LOAD_MODULES:-0}" = 1 ]; then
+if [ -n "${SLURM_JOB_ID:-}" ] ||[ "${HERALD_LOAD_MODULES:-0}" = 1 ]; then
     module load miniforge3 2>/dev/null || module load conda 2>/dev/null || true
     module load cuda 2>/dev/null || true
 fi

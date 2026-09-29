@@ -321,14 +321,24 @@ def run_seg_stage(args, cfg, splits, device, run_dir, case_types):
         if stage == 1 and args.save_liver_masks:
             np.save(liver_out / f"{cid}_liver_prob.npy", prob.astype(np.float16))
         if cid in te:
-            _, masks, _ = DS.load_case(Path(args.data_dir) / cid)
-            rows.append({"case_id": cid, "tumor_type": case_types.get(cid),
-                         **volume_metrics(pred, masks[task].astype(bool))})
+            _, masks, _ = DS.load_case(Path(args.data_dir) / cid,
+                                       cfg.get("liver_includes_tumor", False))
+            row = {"case_id": cid, "tumor_type": case_types.get(cid),
+                   **volume_metrics(pred, masks[task].astype(bool))}
+            if task == "liver":
+                # common reference for comparing label variants (E01)
+                union = (masks["liver"] | masks["tumor"]).astype(bool)
+                row["Dice_vs_union"] = volume_metrics(pred, union)["Dice"]
+                row["tumor_covered"] = (float((pred & masks["tumor"].astype(bool)).sum())
+                                        / max(int(masks["tumor"].sum()), 1))
+            rows.append(row)
         print(f"  [{i}/{len(predict_ids)}] {cid}", flush=True)
 
     per_case = pd.DataFrame(rows)
     per_case.to_csv(run_dir / "per_case_test.csv", index=False)
     vol_keys = ["Dice", "IoU", "Precision", "Recall"]
+    if task == "liver":
+        vol_keys += ["Dice_vs_union", "tumor_covered"]
     metrics = {"stage": stage, "task": task, "n_test_cases": len(per_case),
                "best_val_dice": state["best"],
                "test_slice_level": slice_m,

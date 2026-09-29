@@ -31,8 +31,10 @@ CACHE_VERSION = "ds2net-v1"
 
 # ── Volume loading ────────────────────────────────────────────────────────────
 
-def load_case(case_dir):
-    """Raw HU phases (on the PVP grid), binary masks, voxel spacing."""
+def load_case(case_dir, liver_includes_tumor=False):
+    """Raw HU phases (on the PVP grid), binary masks, voxel spacing.
+    liver_includes_tumor: liver label = liver_mask ∪ tumor_mask (the official
+    liver mask leaves out part of the tumor in many cases; see E01)."""
     case_dir = Path(case_dir)
     pvp_img  = nib.load(case_dir / "pvp.nii.gz")
     shape    = pvp_img.shape
@@ -46,6 +48,8 @@ def load_case(case_dir):
         phases.append(vol)
     masks = {k: (np.asanyarray(nib.load(case_dir / f"{k}_mask.nii.gz").dataobj) > 0)
                 .astype(np.uint8) for k in ("liver", "tumor")}
+    if liver_includes_tumor:
+        masks["liver"] = masks["liver"] | masks["tumor"]
     spacing = tuple(float(z) for z in pvp_img.header.get_zooms()[:3])
     return phases, masks, spacing
 
@@ -68,7 +72,7 @@ def build_volume(case_dir, cfg):
       masks_rs  : {"liver","tumor"} → (H_rs, W_rs, D_rs) uint8
       rs_shape, orig_shape, spacing
     """
-    phases, masks, spacing = load_case(case_dir)
+    phases, masks, spacing = load_case(case_dir, cfg.get("liver_includes_tumor", False))
     factors = _resample_factors(spacing, cfg["target_spacing"])
     S = cfg["img_size"]
     phases_rs = []
@@ -104,8 +108,9 @@ def to_original_grid(prob_slices, rs_shape, orig_shape):
 # ── Stage 1/2 slice cache ─────────────────────────────────────────────────────
 
 def cache_key(cfg):
-    keys = ("task", "n_context_slices", "img_size", "target_spacing", "slices")
-    blob = json.dumps({k: cfg[k] for k in keys} | {"hu": HU_WINDOWS, "v": CACHE_VERSION},
+    keys = ("task", "n_context_slices", "img_size", "target_spacing", "slices",
+            "liver_includes_tumor")
+    blob = json.dumps({k: cfg.get(k) for k in keys} | {"hu": HU_WINDOWS, "v": CACHE_VERSION},
                       sort_keys=True)
     return f"{cfg['task']}_{hashlib.md5(blob.encode()).hexdigest()[:10]}"
 
