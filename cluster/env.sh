@@ -24,7 +24,7 @@ export HERALD_DATA="$HERALD_STORE/mct_ltdiag"         # prepared per-case NIfTI
 export HERALD_WORK="$HERALD_SCRATCH/work"             # caches, runs, checkpoints
 export HERALD_RESULTS="$HERALD_STORE/results"         # copies of finished runs
 
-if [ -n "$SLURM_JOB_ID" ] || [ "${HERALD_LOAD_MODULES:-0}" = 1 ]; then
+if [ -n "${SLURM_JOB_ID:-}" ] ||[ "${HERALD_LOAD_MODULES:-0}" = 1 ]; then
     module load miniforge3 2>/dev/null || module load conda 2>/dev/null || true
     module load cuda 2>/dev/null || true
 fi
