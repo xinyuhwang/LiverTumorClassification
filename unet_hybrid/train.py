@@ -25,6 +25,7 @@ import datasets as DS
 import models   as M
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # repo root
 from common.splits import load_splits, BAD_CASES, DEFAULT_SPLITS_CSV
+from common.metrics import volume_metrics, liver_extras
 # ── reproducibility ───────────────────────────────────────────────────────────
 SEED = 42
 random.seed(SEED); np.random.seed(SEED); torch.manual_seed(SEED)
@@ -59,6 +60,8 @@ def parse_args():
     # ── Run stages ─────────────────────────────────────────────────────────
     p.add_argument("--resume",      action="store_true",
                    help="Resume from latest checkpoint if available")
+    p.add_argument("--eval_only",   action="store_true",
+                   help="Skip training; evaluate the stage's best checkpoint on test")
     p.add_argument("--base_channels", type=int, default=32,
                    help="Base channel width for UNetTransformer")
     p.add_argument("--no_pretrain", action="store_true",
@@ -89,6 +92,70 @@ def class_weights(labels_df, cls2idx, device):
     w = 1.0 / (counts + 1e-6)
     w = w / w.sum() * len(counts)
     return torch.tensor(w, dtype=torch.float32).to(device)
+
+
+# ── Stage 1 & 2 per-case test evaluation ──────────────────────────────────────
+
+@torch.no_grad()
+def predict_case(model, data, stage_num, device, batch=16):
+    """Probability volume on the case's original grid.
+    Stage 1: every slice, whole slice (as trained).
+    Stage 2: slices containing GT liver, inside each slice's GT liver bbox
+             (the training protocol, i.e. oracle liver); elsewhere 0."""
+    model.eval()
+    H, W, D = data["pvp"].shape
+    prob = np.zeros((H, W, D), np.float32)
+    slices = (list(range(D)) if stage_num == 1 else
+              [s for s in range(D) if data["liver_mask"][:, :, s].any()])
+    for i in range(0, len(slices), batch):
+        chunk = slices[i:i + batch]
+        if stage_num == 1:
+            xs, boxes = [DS.liver_input(data, s) for s in chunk], [(0, H, 0, W)] * len(chunk)
+        else:
+            pairs = [DS.tumor_input(data, s) for s in chunk]
+            xs, boxes = [p[0] for p in pairs], [p[1] for p in pairs]
+        x = torch.from_numpy(np.stack(xs)).float().to(device)
+        with autocast(device_type=device.type, enabled=device.type == "cuda"):
+            main, _, _ = model(x)
+        probs = torch.sigmoid(main.float())
+        for s, (r0, r1, c0, c1), p in zip(chunk, boxes, probs):
+            p = F.interpolate(p[None], size=(r1 - r0, c1 - c0), mode="bilinear",
+                              align_corners=False)[0, 0]
+            prob[r0:r1, c0:c1, s] = p.cpu().numpy()
+    return prob
+
+
+def evaluate_seg_test(stage_num, model, test_ids, case_types, args, device, log):
+    tag  = "liver" if stage_num == 1 else "tumor"
+    out  = os.path.join(args.log_dir, f"stage{stage_num}")
+    os.makedirs(out, exist_ok=True)
+    rows = []
+    print(f"\n── Stage {stage_num} per-case test evaluation ({len(test_ids)} cases) ──")
+    for i, cid in enumerate(test_ids, 1):
+        data = DS.fetch_case_cached(cid)
+        pred = predict_case(model, data, stage_num, device) > 0.5
+        row  = {"case_id": cid, "tumor_type": case_types.get(cid),
+                **volume_metrics(pred, data[f"{tag}_mask"])}
+        if stage_num == 1:
+            row.update(liver_extras(pred, data["liver_mask"], data["tumor_mask"]))
+        rows.append(row)
+        print(f"  [{i}/{len(test_ids)}] {cid} Dice {row['Dice']:.4f}", flush=True)
+    per_case = pd.DataFrame(rows)
+    per_case.to_csv(os.path.join(out, "per_case_test.csv"), index=False)
+    keys = ["Dice", "IoU", "Precision", "Recall"] + (
+        ["Dice_vs_union", "tumor_covered"] if stage_num == 1 else [])
+    metrics = {"stage": stage_num, "task": tag, "n_test_cases": len(per_case),
+               "protocol": ("full volume, every slice" if stage_num == 1 else
+                            "GT liver bbox per slice (oracle liver), liver slices only"),
+               "test_per_case_mean": per_case[keys].mean().to_dict(),
+               "test_per_case_std": per_case[keys].std().to_dict(),
+               "test_per_case_by_type": per_case.groupby("tumor_type")[keys].mean()
+                                                .round(4).to_dict(orient="index")}
+    with open(os.path.join(out, "metrics.json"), "w") as f:
+        json.dump(metrics, f, indent=1)
+    log[f"stage{stage_num}_test"] = metrics
+    print(per_case[keys].agg(["mean", "std"]).round(4).to_string())
+    print(f"Per-case results → {out}/per_case_test.csv")
 
 
 # ── Stage 1 & 2 training loop ─────────────────────────────────────────────────
@@ -125,7 +192,7 @@ def val_seg_epoch(model, loader, criterion, device):
     return float(np.mean(losses)), float(np.mean(dices))
 
 
-def run_seg_stage(stage_num, train_ids, val_ids, args, device, log):
+def run_seg_stage(stage_num, train_ids, val_ids, test_ids, case_types, args, device, log):
     tag      = "liver" if stage_num == 1 else "tumor"
     ckpt     = os.path.join(args.ckpt_dir, f"unet_v2_{tag}_best.pth")
     ckpt_latest = os.path.join(args.ckpt_dir, f"unet_v2_{tag}_latest.pth")
@@ -135,6 +202,15 @@ def run_seg_stage(stage_num, train_ids, val_ids, args, device, log):
     print(f"\n{'='*60}")
     print(f"  Stage {stage_num} — {tag.capitalize()} Segmentation")
     print(f"{'='*60}")
+
+    if args.eval_only:
+        model = M.UNetTransformer(in_ch=12, out_ch=1, img_size=args.img_size,
+                                  tf_heads=args.tf_heads, tf_win=args.tf_win,
+                                  base=args.base_channels).to(device)
+        model.load_state_dict(torch.load(ckpt, map_location=device, weights_only=True))
+        print(f"  Evaluating {ckpt}")
+        evaluate_seg_test(stage_num, model, test_ids, case_types, args, device, log)
+        return None
 
     train_ds = DatasetCls(train_ids, augment=True)
     val_ds   = DatasetCls(val_ids,   augment=False)
@@ -244,6 +320,9 @@ def run_seg_stage(stage_num, train_ids, val_ids, args, device, log):
 
     log[f"stage{stage_num}"] = {"best_val_dice": best_dice, "history": history}
     print(f"\nStage {stage_num} complete — best {tag} Dice: {best_dice:.4f}")
+    if test_ids:
+        model.load_state_dict(torch.load(ckpt, map_location=device, weights_only=True))
+        evaluate_seg_test(stage_num, model, test_ids, case_types, args, device, log)
     return best_dice
 
 
@@ -273,14 +352,15 @@ def train_cls_epoch(model, loader, optimizer, scaler, criterion, device):
 @torch.no_grad()
 def val_cls_epoch(model, loader, device):
     model.eval()
-    preds_all, labels_all = [], []
+    preds_all, labels_all, probs_all = [], [], []
     for slice_x, vol_x, labels in loader:
         slice_x = slice_x.to(device)
         vol_x   = vol_x.to(device)
         logits  = model(slice_x.float(), vol_x.float())
         preds_all.extend(logits.argmax(1).cpu().tolist())
         labels_all.extend(labels.cpu().tolist())
-    return accuracy_score(labels_all, preds_all), preds_all, labels_all
+        probs_all.extend(torch.softmax(logits.float(), 1).cpu().tolist())
+    return accuracy_score(labels_all, preds_all), preds_all, labels_all, probs_all
 
 
 def run_cls_stage(train_ids, val_ids, test_ids, labels_df,
@@ -336,11 +416,11 @@ def run_cls_stage(train_ids, val_ids, test_ids, labels_df,
 
     best_acc, no_imp = -1.0, 0
     history = []
-    for ep in range(1, args.epochs_cls + 1):
+    for ep in range(1, (0 if args.eval_only else args.epochs_cls) + 1):
         t0                   = time.time()
         tr_loss, tr_acc      = train_cls_epoch(model, train_loader, optimizer,
                                                scaler, criterion, device)
-        vl_acc, _, _         = val_cls_epoch(model, val_loader, device)
+        vl_acc, *_           = val_cls_epoch(model, val_loader, device)
         scheduler.step()
         elapsed = time.time() - t0
 
@@ -365,8 +445,18 @@ def run_cls_stage(train_ids, val_ids, test_ids, labels_df,
     # ── Test evaluation ────────────────────────────────────────────────────
     print("\n── Test set evaluation ──")
     model.load_state_dict(torch.load(ckpt, map_location=device, weights_only=True))
-    test_acc, test_preds, test_labels = val_cls_epoch(model, test_loader, device)
+    test_acc, test_preds, test_labels, test_probs = val_cls_epoch(model, test_loader, device)
     class_names = [idx2cls[i] for i in range(num_classes)]
+    # per-case output for common/evaluate.py (test_loader is unshuffled, so
+    # rows follow test_ds.case_ids)
+    out = os.path.join(args.log_dir, "stage3")
+    os.makedirs(out, exist_ok=True)
+    pd.DataFrame([{"case_id": cid, "true": idx2cls[t], "pred": idx2cls[p],
+                   **{f"p_{n}": pr[i] for i, n in enumerate(class_names)}}
+                  for cid, t, p, pr in zip(test_ds.case_ids, test_labels,
+                                           test_preds, test_probs)]
+                 ).to_csv(os.path.join(out, "per_case_test.csv"), index=False)
+    print(f"Per-case results → {out}/per_case_test.csv")
     print(f"Test accuracy: {test_acc:.4f}")
     present_labels = sorted(set(test_labels))
     present_names  = [idx2cls[i] for i in present_labels]
@@ -427,11 +517,12 @@ def main():
     log      = {}
     run_all  = (args.stage == 0)
 
+    case_types = dict(zip(labels_df["case_id"], labels_df["type"].astype(str)))
     if run_all or args.stage == 1:
-        run_seg_stage(1, train_ids, val_ids, args, device, log)
+        run_seg_stage(1, train_ids, val_ids, test_ids, case_types, args, device, log)
 
     if run_all or args.stage == 2:
-        run_seg_stage(2, train_ids, val_ids, args, device, log)
+        run_seg_stage(2, train_ids, val_ids, test_ids, case_types, args, device, log)
 
     if run_all or args.stage == 3:
         run_cls_stage(train_ids, val_ids, test_ids, labels_df,

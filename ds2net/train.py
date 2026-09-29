@@ -34,6 +34,7 @@ import datasets as DS
 import models as M
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))   # repo root
 from common.splits import load_splits, DEFAULT_SPLITS_CSV
+from common.metrics import volume_metrics, liver_extras
 
 SEED = 42
 METRIC_KEYS = ["Dice", "IoU", "Precision", "Recall", "F1", "MAE"]
@@ -105,16 +106,6 @@ def slice_metrics(probs, gt, thr):
             "IoU": ((tp + 1e-6) / (tp + fp + fn + 1e-6)).mean().item(),
             "Precision": pr, "Recall": rc, "F1": 2 * pr * rc / (pr + rc + 1e-6),
             "MAE": (probs - gt).abs().mean().item()}
-
-
-def volume_metrics(pred, gt):
-    tp = int((pred & gt).sum()); fp = int((pred & ~gt).sum()); fn = int((~pred & gt).sum())
-    pr = tp / (tp + fp) if tp + fp else float(fn == 0)
-    rc = tp / (tp + fn) if tp + fn else 1.0
-    dice = 2 * tp / (2 * tp + fp + fn) if tp + fp + fn else 1.0
-    return {"Dice": dice, "IoU": tp / (tp + fp + fn) if tp + fp + fn else 1.0,
-            "Precision": pr, "Recall": rc, "pred_voxels": int(pred.sum()),
-            "gt_voxels": int(gt.sum())}
 
 
 def cc_filter(mask, min_voxels):
@@ -327,10 +318,7 @@ def run_seg_stage(args, cfg, splits, device, run_dir, case_types):
                    **volume_metrics(pred, masks[task].astype(bool))}
             if task == "liver":
                 # common reference for comparing label variants (E01)
-                union = (masks["liver"] | masks["tumor"]).astype(bool)
-                row["Dice_vs_union"] = volume_metrics(pred, union)["Dice"]
-                row["tumor_covered"] = (float((pred & masks["tumor"].astype(bool)).sum())
-                                        / max(int(masks["tumor"].sum()), 1))
+                row.update(liver_extras(pred, masks["liver"], masks["tumor"]))
             rows.append(row)
         print(f"  [{i}/{len(predict_ids)}] {cid}", flush=True)
 

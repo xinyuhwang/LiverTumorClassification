@@ -45,6 +45,9 @@ def load_run(path):
         csv = path / "per_case_test.csv"
         probs = sorted(path.glob("stage3_paper_*_probs.json"))
         path = csv if csv.exists() else (probs[0] if len(probs) == 1 else csv)
+    if not path.exists():
+        raise FileNotFoundError(f"No per-case results at {path} (expected "
+                                "per_case_test.csv or one stage3_paper_*_probs.json)")
     if path.suffix == ".json":
         d = json.loads(path.read_text())
         names = d["class_names"]

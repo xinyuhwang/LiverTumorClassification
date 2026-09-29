@@ -20,7 +20,7 @@ How do we score every version so that differences between versions are real and 
 | Version | Change | Status |
 |---|---|---|
 | [v1](v1_bootstrap_stats/) | `common/evaluate.py`: bootstrap CIs, paired comparison (bootstrap + Wilcoxon / McNemar), Markdown output; tests | Done |
-| v2 | Per-case test output for `unet_hybrid/train.py` (Stages 1–3), so UNet-Hybrid can be compared with DS²Net case by case | Planned |
+| [v2](v2_unet_per_case/) | Per-case test output for `unet_hybrid/train.py` (Stages 1–3) + `--eval_only`; shared `common/metrics.py` | Done |
 | v3 | Compute-cost columns (params, FLOPs, latency per case) in every `metrics.json` | Planned |
 
 ## How every experiment reports results (from now on)
