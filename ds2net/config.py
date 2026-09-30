@@ -36,6 +36,8 @@ LIVER = {
     "mha_heads": 8, "mha_dropout": 0.1,
     "seg_threshold": 0.5,
     "min_component_voxels": 1000,      # 3-D connected-component filter (liver)
+    # keep only the largest connected component at test time (E01 v3)
+    "keep_largest_component": False,
     **AUGMENT,
 }
 
