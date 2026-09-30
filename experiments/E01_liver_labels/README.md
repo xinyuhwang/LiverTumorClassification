@@ -39,11 +39,14 @@ A liver model trained on these masks learns to exclude such tumors, most of all 
 |---|---|---|---|
 | [v0](v0_notebook_labels/) | Notebook labels: liver = `mask_pvp ≥ 1` | Done (documented, not rerun) | Not measurable: the label was the tumor |
 | [v1](v1_official_liver_masks/) | Official `liver_mask_pvp.nii.gz` via `data_prep/` | Done | **0.950** (0.941–0.957); HH `tumor_covered` 0.67 |
-| [v2](v2_liver_union_tumor/) | Liver label = official liver mask ∪ tumor mask (`--set liver_includes_tumor=True`) | Running (AICR job 1130505) | — |
-| v3 (only if needed) | TotalSegmentator cross-check of cases still flagged | Conditional on v2 | — |
+| [v2](v2_liver_union_tumor/) | Liver label = official liver mask ∪ tumor mask (`--set liver_includes_tumor=True`) | Done — **adopted** | 0.949 (0.939–0.958); `tumor_covered` +0.047 (CI +0.021 to +0.080), HH 0.67 → 0.88 |
+| v3 | v2 + non-liver slices in training (reduce over-segmentation) | Next | — |
+| v4 (only if needed) | TotalSegmentator cross-check of cases still flagged | Conditional | — |
 
 v1 and v2 are both scored against their own label definition, and also against the union label, so they can be compared on the same reference.
 
 ## Conclusion so far
 
 v0's "liver" label was the tumor mask, so no DS²Net liver result so far is valid (see [v0](v0_notebook_labels/)). v1 fixes the labels at the data level and gives a Stage 1 baseline of per-case Dice 0.950 (95% CI 0.941–0.957). The model reproduces the official mask's omission of tumors, most of all hemangiomas (`tumor_covered` 0.67). That's what v2 tests.
+
+v2 (liver ∪ tumor) raises tumor coverage significantly (+0.047; HH 0.67 → 0.88) with unchanged mean liver agreement, and is adopted as the liver label. The remaining weakness is over-segmentation outside the liver, which v2 amplifies in a few cases. That's v3.
