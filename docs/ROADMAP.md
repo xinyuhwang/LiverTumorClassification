@@ -10,7 +10,7 @@ These are 11 proposals from two papers: OrganLens (O1–O7) and GigaPath-Flash /
 
 | ID | Proposal | Impact | Cost | Tier | Experiment | Status |
 |---|---|:-:|:-:|:-:|---|---|
-| O3 | Correct liver labels (official masks; TotalSegmentator only as QA) | 5 | 1 | 1 | E01 | v1 data QA done; training queued |
+| O3 | Correct liver labels (official masks; TotalSegmentator only as QA) | 5 | 1 | 1 | E01 | Done: liver Dice 0.973 (0.969–0.975) |
 | O5 | Evaluation standards: shared split, per-case metrics, bootstrap CIs | 5 | 1 | 1 | E02 | v1 done (`common/evaluate.py`) |
 | O1 | Mask-weighted patch pooling + tumor-area slice weighting | 4 | 2 | 1 | E03 | Planned |
 | G1 | ABMIL per-patient aggregation | 3 | 1 | 1 | E03 | Planned |

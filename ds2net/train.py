@@ -34,7 +34,7 @@ import datasets as DS
 import models as M
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))   # repo root
 from common.splits import load_splits, DEFAULT_SPLITS_CSV
-from common.metrics import volume_metrics, liver_extras
+from common.metrics import volume_metrics, liver_extras, largest_component
 
 SEED = 42
 METRIC_KEYS = ["Dice", "IoU", "Precision", "Recall", "F1", "MAE"]
@@ -309,6 +309,8 @@ def run_seg_stage(args, cfg, splits, device, run_dir, case_types):
     for i, cid in enumerate(predict_ids, 1):
         prob = predict_case(model, Path(args.data_dir) / cid, stage, cfg, device, amp, amp_dtype)
         pred = cc_filter(prob > cfg["seg_threshold"], cfg["min_component_voxels"])
+        if cfg.get("keep_largest_component", False):
+            pred = largest_component(pred)
         if stage == 1 and args.save_liver_masks:
             np.save(liver_out / f"{cid}_liver_prob.npy", prob.astype(np.float16))
         if cid in te:

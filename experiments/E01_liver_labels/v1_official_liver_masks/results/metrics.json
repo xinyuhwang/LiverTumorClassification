@@ -1,0 +1,72 @@
+{
+ "stage": 1,
+ "task": "liver",
+ "n_test_cases": 78,
+ "best_val_dice": 0.9307237350460373,
+ "test_slice_level": {
+  "Dice": 0.9372956184531326,
+  "IoU": 0.9041031060823753,
+  "Precision": 0.9290905271225901,
+  "Recall": 0.9655352993242776,
+  "F1": 0.9453542134944174,
+  "MAE": 0.004271386669507361
+ },
+ "test_per_case_mean": {
+  "Dice": 0.9498393110660348,
+  "IoU": 0.9063465229080085,
+  "Precision": 0.9205807573003982,
+  "Recall": 0.9826893230623812,
+  "Dice_vs_union": 0.9480963563976444,
+  "tumor_covered": 0.9006243017433609
+ },
+ "test_per_case_std": {
+  "Dice": 0.03473561045932916,
+  "IoU": 0.05758549256033909,
+  "Precision": 0.05538834103304228,
+  "Recall": 0.011811413725104076,
+  "Dice_vs_union": 0.03846220704232859,
+  "tumor_covered": 0.19318172136621148
+ },
+ "test_per_case_by_type": {
+  "BCLM": {
+   "Dice": 0.9399,
+   "IoU": 0.8888,
+   "Precision": 0.9029,
+   "Recall": 0.9819,
+   "Dice_vs_union": 0.9398,
+   "tumor_covered": 0.9425
+  },
+  "CRLM": {
+   "Dice": 0.9543,
+   "IoU": 0.9129,
+   "Precision": 0.9242,
+   "Recall": 0.9868,
+   "Dice_vs_union": 0.9541,
+   "tumor_covered": 0.9662
+  },
+  "HCC": {
+   "Dice": 0.9597,
+   "IoU": 0.9229,
+   "Precision": 0.9371,
+   "Recall": 0.9838,
+   "Dice_vs_union": 0.959,
+   "tumor_covered": 0.935
+  },
+  "HH": {
+   "Dice": 0.9476,
+   "IoU": 0.9022,
+   "Precision": 0.9205,
+   "Recall": 0.9774,
+   "Dice_vs_union": 0.939,
+   "tumor_covered": 0.6723
+  },
+  "ICC": {
+   "Dice": 0.948,
+   "IoU": 0.9054,
+   "Precision": 0.9191,
+   "Recall": 0.983,
+   "Dice_vs_union": 0.9479,
+   "tumor_covered": 0.9597
+  }
+ }
+}

@@ -5,6 +5,18 @@ per_case_test.csv files from ds2net/ and unet_hybrid/ are directly comparable
 """
 
 import numpy as np
+from scipy.ndimage import label
+
+
+def largest_component(mask):
+    """Keep only the largest 3-D connected component (the liver is one organ).
+    E01 v3: removes spurious blobs far from the liver, but also drops tumor
+    predicted as a separate piece (231025c23)."""
+    lab, n = label(mask)
+    if n <= 1:
+        return mask.astype(bool)
+    sizes = np.bincount(lab.ravel()); sizes[0] = 0
+    return lab == sizes.argmax()
 
 
 def volume_metrics(pred, gt):

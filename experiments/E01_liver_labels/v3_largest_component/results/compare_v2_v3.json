@@ -1,0 +1,62 @@
+{
+ "run_a": "experiments/E01_liver_labels/v2_liver_union_tumor/results",
+ "run_b": "experiments/E01_liver_labels/v3_largest_component/results",
+ "n_common": 78,
+ "only_in_a": [],
+ "only_in_b": [],
+ "n_boot": 2000,
+ "results": [
+  {
+   "metric": "Dice_vs_union",
+   "n": 78,
+   "a": 0.9493673472112959,
+   "b": 0.972676653251088,
+   "diff": 0.023309306039792574,
+   "ci_low": 0.015627754378027072,
+   "ci_high": 0.033017549275796206,
+   "p_boot": 0.0,
+   "p_wilcoxon": 1.7188289684919617e-13,
+   "better": 75,
+   "worse": 3
+  },
+  {
+   "metric": "Precision",
+   "n": 78,
+   "a": 0.9231363605717251,
+   "b": 0.9676576906873263,
+   "diff": 0.04452133011560156,
+   "ci_low": 0.03164013202381532,
+   "ci_high": 0.0603330998109966,
+   "p_boot": 0.0,
+   "p_wilcoxon": 1.682175044870657e-14,
+   "better": 78,
+   "worse": 0
+  },
+  {
+   "metric": "Recall",
+   "n": 78,
+   "a": 0.9801991860261768,
+   "b": 0.978117587480169,
+   "diff": -0.002081598546007707,
+   "ci_low": -0.003421583975221929,
+   "ci_high": -0.0009904416939742681,
+   "p_boot": 0.0,
+   "p_wilcoxon": 1.682175044870657e-14,
+   "better": 0,
+   "worse": 78
+  },
+  {
+   "metric": "tumor_covered",
+   "n": 78,
+   "a": 0.9475513426855162,
+   "b": 0.9402011875996246,
+   "diff": -0.007350155085891532,
+   "ci_low": -0.02196681382994874,
+   "ci_high": -8.812979378434801e-06,
+   "p_boot": 0.0,
+   "p_wilcoxon": 7.62939453125e-06,
+   "better": 0,
+   "worse": 18
+  }
+ ]
+}
