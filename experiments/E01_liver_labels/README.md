@@ -39,7 +39,7 @@ A liver model trained on these masks learns to exclude such tumors, most of all 
 |---|---|---|---|
 | [v0](v0_notebook_labels/) | Notebook labels: liver = `mask_pvp ≥ 1` | Done (documented, not rerun) | Not measurable: the label was the tumor |
 | [v1](v1_official_liver_masks/) | Official `liver_mask_pvp.nii.gz` via `data_prep/` | Done | **0.950** (0.941–0.957); HH `tumor_covered` 0.67 |
-| v2 | Liver label = official liver mask ∪ tumor mask (`--set liver_includes_tumor=True`) | Next | — |
+| [v2](v2_liver_union_tumor/) | Liver label = official liver mask ∪ tumor mask (`--set liver_includes_tumor=True`) | Running (AICR job 1130505) | — |
 | v3 (only if needed) | TotalSegmentator cross-check of cases still flagged | Conditional on v2 | — |
 
 v1 and v2 are both scored against their own label definition, and also against the union label, so they can be compared on the same reference.
