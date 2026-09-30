@@ -30,7 +30,7 @@ experiments/
 
 | Exp | Question | Versions | Status | Headline |
 |---|---|---|---|---|
-| [E01](E01_liver_labels/) | Are the liver labels correct, and how good is Stage 1 with correct ones? | v0, v1 | v1 data QA done; training queued on AICR | v0 liver labels were the tumor mask; official masks leave >10% of the tumor out in 126 cases |
+| [E01](E01_liver_labels/) | Are the liver labels correct, and how good is Stage 1 with correct ones? | v0, v1 | v1 done; v2 next | v1 liver Dice 0.950 (0.941–0.957); model leaves out hemangiomas like the official masks do (HH `tumor_covered` 0.67) |
 | [E02](E02_evaluation/) | Evaluation harness: CIs, paired tests, compute | v1, v2 | v1–v2 done; v3 planned | `common/evaluate.py` CIs + paired tests; UNet-Hybrid now writes per-case test output |
 | E03 | Stage 3 pooling / aggregation (mask-weighted, area-weighted, ABMIL) | — | Planned | |
 | E04 | Joint segment + classify model | — | Planned | |
