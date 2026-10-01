@@ -6,6 +6,9 @@ Wang_Xinyu_Christopher_Teh_HERALD Hepatic Evaluation and Reporting with AI-Drive
 EfficientPathologyFoundationModelsWholeSlideTumorMicroenvironmentAnalysis.pdf
 OrganLens_Organ-specific Representation Learning for CT foundationModel.pdf
 
+# Personal notes on the reference papers
+docs/LearnedFromOrganLensGiga.md
+
 # Original archive of unet_hybrid/
 unet.zip
 
