@@ -51,7 +51,14 @@ TUMOR = {
     # mask was tumor-only, so it only ever saw tumor slices); "liver" also
     # includes tumor-free liver slices.
     "slices": "tumor",
-    "liver_includes_tumor": False,     # only affects slices="liver"
+    "liver_includes_tumor": False,     # liver(+tumor) defines slices="liver" and the ROI
+    # Search region. "none" = whole slice (notebook). "liver" = each slice cropped
+    # to a square box around the liver(+tumor) plus a margin, then resized.
+    "roi": "none",
+    "roi_margin_mm": 10,
+    # Stage 1 run whose saved liver masks give the box at test time ("cascade"
+    # evaluation, E01 post-processing); the GT box ("oracle") is always reported.
+    "roi_liver_run": None,
     "batch_size": 64, "grad_accum_steps": 3,
     "lr": 2e-4, "weight_decay": 1e-4, "epochs": 50, "pct_start": 0.15,
     "early_stop_patience": 12, "val_every": 3,

@@ -50,6 +50,19 @@ Median per-case change in `Dice_vs_union` is +0.004. Full output: [`results/comp
 
 v2 summary with CIs: [`results/evaluate_summary.json`](results/evaluate_summary.json). Per case: [`results/per_case_test.csv`](results/per_case_test.csv).
 
+## Validation check (added 2026-09-30)
+
+This decision was first made on test. Re-checked on the 78 validation cases (v1 and v2 saved probabilities, small-component filter as trained; [`../v3_largest_component/rescore_split.py`](../v3_largest_component/rescore_split.py)):
+
+| v1 → v2 on validation | v1 | v2 | diff | 95% CI | better / worse |
+|---|---|---|---|---|---|
+| `tumor_covered` | 0.9454 | 0.9759 | +0.0305 | +0.0154 to +0.0482 | 53 / 7 |
+| `Dice_vs_union` | 0.9448 | 0.9523 | +0.0075 | +0.0036 to +0.0125 | 53 / 25 |
+| Precision | 0.9219 | 0.9256 | +0.0037 | −0.0005 to +0.0082 | 42 / 36 |
+| Recall | 0.9725 | 0.9826 | +0.0102 | +0.0039 to +0.0183 | 54 / 24 |
+
+HH `tumor_covered` on validation goes 0.835 → 0.968 (n = 15). The decision holds, more strongly than on test.
+
 ## Observations
 
 - **The hypothesis holds for tumor coverage.** It rises significantly (+0.047, CI excludes 0; 59 cases better, 2 worse), and most for hemangiomas (0.67 → 0.88). v1's three failures are recovered: 230218c4 12% → 97%, 231025c23 0.5% → 57%, 231025c14 18% → 67%. No test case has less than half of its tumor covered any more.

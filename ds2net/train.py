@@ -24,7 +24,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, WeightedRandomSampler
-from scipy.ndimage import label as cc_label
+from scipy.ndimage import label as cc_label, zoom
+from skimage.transform import resize as sk_resize
 from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score,
                              cohen_kappa_score, confusion_matrix)
 from sklearn.preprocessing import label_binarize
@@ -171,23 +172,65 @@ TTA = [(lambda x: x, lambda p: p),
         lambda p: torch.flip(torch.rot90(p, -1, [-2, -1]), [-2]))]
 
 
+def tta_probs(model, x, stage, cfg, amp, amp_dtype):
+    acc = 0
+    for fwd, inv in TTA:
+        with torch.autocast(x.device.type, dtype=amp_dtype, enabled=amp):
+            preds, stb = seg_forward(model, fwd(x), stage)
+        acc = acc + inv(seg_probs(stage, cfg, preds, stb))
+    return (acc / len(TTA))[:, 0].float().cpu().numpy()
+
+
+def predicted_liver(liver_dir, case_id, cfg):
+    """Stage 1 liver mask as adopted in E01: threshold 0.5, small-component
+    filter, largest component. On the case's original grid."""
+    prob = np.load(Path(liver_dir) / f"{case_id}_liver_prob.npy").astype(np.float32)
+    return largest_component(cc_filter(prob > 0.5, 1000))
+
+
 @torch.no_grad()
-def predict_case(model, case_dir, stage, cfg, device, amp, amp_dtype, batch=16):
-    """8-fold TTA over every slice → probability volume on the original grid."""
+def predict_case(model, case_dir, stage, cfg, device, amp, amp_dtype, batch=16,
+                 roi_mask=None):
+    """8-fold TTA → probability volume on the original grid.
+    Whole-slice mode (default): every slice.
+    Liver-ROI mode (cfg roi="liver"): only slices where roi_mask has liver,
+    each cropped to its square liver box; 0 outside the box. roi_mask is on
+    the original grid; None means the GT liver(+tumor) mask."""
     model.eval()
-    phases_rs, masks_rs, rs_shape, orig_shape, _ = DS.build_volume(case_dir, cfg)
-    D = phases_rs[0].shape[0]
-    probs = np.zeros((D, cfg["img_size"], cfg["img_size"]), np.float32)
-    for s in range(0, D, batch):
-        x = torch.from_numpy(np.stack([DS.stack_context(phases_rs, z, cfg["n_context_slices"])
-                                       for z in range(s, min(s + batch, D))])).to(device)
-        acc = 0
-        for fwd, inv in TTA:
-            with torch.autocast(device.type, dtype=amp_dtype, enabled=amp):
-                preds, stb = seg_forward(model, fwd(x), stage)
-            acc = acc + inv(seg_probs(stage, cfg, preds, stb))
-        probs[s:s + len(x)] = (acc / len(TTA))[:, 0].float().cpu().numpy()
-    return DS.to_original_grid(probs, rs_shape, orig_shape)
+    S, n_ctx = cfg["img_size"], cfg["n_context_slices"]
+    if cfg.get("roi", "none") != "liver":
+        phases_rs, _, rs_shape, orig_shape, _ = DS.build_volume(case_dir, cfg)
+        D = phases_rs[0].shape[0]
+        probs = np.zeros((D, S, S), np.float32)
+        for s in range(0, D, batch):
+            x = torch.from_numpy(np.stack([DS.stack_context(phases_rs, z, n_ctx)
+                                           for z in range(s, min(s + batch, D))])).to(device)
+            probs[s:s + len(x)] = tta_probs(model, x, stage, cfg, amp, amp_dtype)
+        return DS.to_original_grid(probs, rs_shape, orig_shape)
+
+    vols_rs, masks_rs, orig_shape, _, factors = DS.load_resampled(case_dir, cfg)
+    if roi_mask is None:
+        roi_rs = masks_rs["liver"].astype(bool)
+    else:
+        roi_rs = (zoom(roi_mask.astype(np.uint8), factors, order=0) if factors
+                  else roi_mask.astype(np.uint8)).astype(bool)
+        roi_rs = roi_rs[:masks_rs["liver"].shape[0], :masks_rs["liver"].shape[1],
+                        :masks_rs["liver"].shape[2]]
+    canvas = np.zeros(masks_rs["liver"].shape, np.float32)
+    zs = [z for z in range(canvas.shape[2]) if roi_rs[:, :, z].any()]
+    margin = DS.roi_margin_px(cfg)
+    for i in range(0, len(zs), batch):
+        chunk = zs[i:i + batch]
+        boxes = [DS.roi_box(roi_rs[:, :, z], margin) for z in chunk]
+        x = torch.from_numpy(np.stack([DS.roi_stack(vols_rs, z, n_ctx, b, S)
+                                       for z, b in zip(chunk, boxes)])).to(device)
+        for z, b, p in zip(chunk, boxes, tta_probs(model, x, stage, cfg, amp, amp_dtype)):
+            side = b[1] - b[0]
+            DS.paste_square(canvas[:, :, z],
+                            sk_resize(p, (side, side), order=1, preserve_range=True), b)
+    if canvas.shape != tuple(orig_shape):
+        canvas = zoom(canvas, tuple(o / r for o, r in zip(orig_shape, canvas.shape)), order=1)
+    return canvas
 
 
 def run_seg_stage(args, cfg, splits, device, run_dir, case_types):
@@ -301,45 +344,63 @@ def run_seg_stage(args, cfg, splits, device, run_dir, case_types):
     print("\nTest (slice-level, cached slices only): "
           + " ".join(f"{k} {v:.4f}" for k, v in slice_m.items()))
 
-    task, rows = cfg["task"], []
+    task = cfg["task"]
+    roi_mode = cfg.get("roi", "none") == "liver"
+    liver_run = cfg.get("roi_liver_run")
+    liver_dir = (Path(args.work_dir) / "runs" / "ds2net" / liver_run / "liver_masks"
+                 if liver_run else None)
+    # Evaluation modes: Stage 1 and whole-slice Stage 2 have one. Liver-ROI
+    # Stage 2 has "oracle" (GT liver+tumor box) and, with roi_liver_run,
+    # "cascade" (box from that Stage 1 run's adopted liver masks).
+    modes = ["full"] if not roi_mode else (["oracle"] + (["cascade"] if liver_dir else []))
+    primary = modes[-1]
+    rows = {(sp, m): [] for sp in ("val", "test") for m in modes}
     liver_out = run_dir / "liver_masks"
-    predict_ids = (tr + va + te) if (stage == 1 and args.save_liver_masks) else te
-    if stage == 1 and args.save_liver_masks:
+    save_liver = stage == 1 and args.save_liver_masks
+    predict_ids = (tr + va + te) if save_liver else (va + te)
+    if save_liver:
         liver_out.mkdir(exist_ok=True)
     for i, cid in enumerate(predict_ids, 1):
-        prob = predict_case(model, Path(args.data_dir) / cid, stage, cfg, device, amp, amp_dtype)
-        pred = cc_filter(prob > cfg["seg_threshold"], cfg["min_component_voxels"])
-        if cfg.get("keep_largest_component", False):
-            pred = largest_component(pred)
-        if stage == 1 and args.save_liver_masks:
-            np.save(liver_out / f"{cid}_liver_prob.npy", prob.astype(np.float16))
-        if cid in te:
-            _, masks, _ = DS.load_case(Path(args.data_dir) / cid,
-                                       cfg.get("liver_includes_tumor", False))
-            row = {"case_id": cid, "tumor_type": case_types.get(cid),
-                   **volume_metrics(pred, masks[task].astype(bool))}
-            if task == "liver":
-                # common reference for comparing label variants (E01)
-                row.update(liver_extras(pred, masks["liver"], masks["tumor"]))
-            rows.append(row)
+        split = "test" if cid in te else "val" if cid in va else None
+        _, masks, _ = DS.load_case(Path(args.data_dir) / cid,
+                                   cfg.get("liver_includes_tumor", False))
+        for mode in modes:
+            roi_mask = predicted_liver(liver_dir, cid, cfg) if mode == "cascade" else None
+            prob = predict_case(model, Path(args.data_dir) / cid, stage, cfg, device,
+                                amp, amp_dtype, roi_mask=roi_mask)
+            pred = cc_filter(prob > cfg["seg_threshold"], cfg["min_component_voxels"])
+            if cfg.get("keep_largest_component", False):
+                pred = largest_component(pred)
+            if save_liver:
+                np.save(liver_out / f"{cid}_liver_prob.npy", prob.astype(np.float16))
+            if split:
+                row = {"case_id": cid, "tumor_type": case_types.get(cid),
+                       **volume_metrics(pred, masks[task].astype(bool))}
+                if task == "liver":
+                    # common reference for comparing label variants (E01)
+                    row.update(liver_extras(pred, masks["liver"], masks["tumor"]))
+                rows[(split, mode)].append(row)
         print(f"  [{i}/{len(predict_ids)}] {cid}", flush=True)
 
-    per_case = pd.DataFrame(rows)
-    per_case.to_csv(run_dir / "per_case_test.csv", index=False)
     vol_keys = ["Dice", "IoU", "Precision", "Recall"]
     if task == "liver":
         vol_keys += ["Dice_vs_union", "tumor_covered"]
-    metrics = {"stage": stage, "task": task, "n_test_cases": len(per_case),
-               "best_val_dice": state["best"],
-               "test_slice_level": slice_m,
-               "test_per_case_mean": per_case[vol_keys].mean().to_dict(),
-               "test_per_case_std": per_case[vol_keys].std().to_dict(),
-               "test_per_case_by_type": per_case.groupby("tumor_type")[vol_keys].mean()
-                                                .round(4).to_dict(orient="index")}
+    metrics = {"stage": stage, "task": task, "best_val_dice": state["best"],
+               "test_slice_level": slice_m, "eval_modes": modes, "primary_mode": primary,
+               "roi_liver_run": liver_run}
+    for (split, mode), r in rows.items():
+        df = pd.DataFrame(r)
+        name = f"per_case_{split}.csv" if mode == primary else f"per_case_{split}_{mode}.csv"
+        df.to_csv(run_dir / name, index=False)
+        key = f"{split}_{mode}"
+        metrics[key] = {"file": name, "n_cases": len(df),
+                        "per_case_mean": df[vol_keys].mean().to_dict(),
+                        "per_case_std": df[vol_keys].std().to_dict(),
+                        "per_case_by_type": df.groupby("tumor_type")[vol_keys].mean()
+                                              .round(4).to_dict(orient="index")}
+        print(f"\n{split} per-case ({mode}, full volume, 8-fold TTA) → {name}:")
+        print(df[vol_keys].agg(["mean", "std"]).round(4).to_string())
     (run_dir / "metrics.json").write_text(json.dumps(metrics, indent=1))
-    print("\nTest (per-case, full volume, 8-fold TTA):")
-    print(per_case[vol_keys].agg(["mean", "std"]).round(4).to_string())
-    print(per_case.groupby("tumor_type")[vol_keys].mean().round(4).to_string())
 
 
 # ── Stage 3 ───────────────────────────────────────────────────────────────────

@@ -51,4 +51,6 @@ v0's "liver" label was the tumor mask, so no DS²Net liver result so far is vali
 
 v2 (liver ∪ tumor) raises tumor coverage significantly (+0.047; HH 0.67 → 0.88) with unchanged mean liver agreement, and is adopted as the liver label. The remaining weakness was over-segmentation. About half of it was separate blobs far from the liver, so v3 keeps only the largest connected component: Dice 0.949 → 0.973 (CI 0.969–0.975) with no retraining. The one real loss is a large hemangioma predicted as its own component (231025c23).
 
+Both adoptions were made on test first and then confirmed on the validation set (v2 and v3 READMEs, *Validation check*).
+
 **E01 result:** Stage 1 = official liver mask ∪ tumor as the label, plus largest-component post-processing. Per-case test liver Dice **0.973 (95% CI 0.969–0.975)**, precision 0.968, recall 0.978.

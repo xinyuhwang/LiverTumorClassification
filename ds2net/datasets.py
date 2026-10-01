@@ -26,7 +26,7 @@ from skimage.transform import resize as sk_resize
 
 from config import PHASE_NAMES, HU_WINDOWS
 
-CACHE_VERSION = "ds2net-v1"
+CACHE_VERSION = "ds2net-v1"   # bump only if cached content changes for an existing key
 
 
 # ── Volume loading ────────────────────────────────────────────────────────────
@@ -64,6 +64,26 @@ def _resample_factors(spacing, target):
     return f if any(abs(x - 1) > 0.05 for x in f) else None
 
 
+def load_resampled(case_dir, cfg):
+    """
+    Returns
+      vols_rs  : list of 4 arrays (H_rs, W_rs, D_rs) float32 — windowed and
+                 resampled to cfg target_spacing (not resized)
+      masks_rs : {"liver","tumor"} → (H_rs, W_rs, D_rs) uint8
+      orig_shape, spacing, factors (None if no resampling)
+    """
+    phases, masks, spacing = load_case(case_dir, cfg.get("liver_includes_tumor", False))
+    factors = _resample_factors(spacing, cfg["target_spacing"])
+    vols_rs = []
+    for name, vol in zip(PHASE_NAMES, phases):
+        if factors:
+            vol = zoom(vol, factors, order=1)
+        vols_rs.append(_window(vol, name))           # clip after zoom: no overshoot
+    masks_rs = {k: (zoom(m, factors, order=0) if factors else m).astype(np.uint8)
+                for k, m in masks.items()}
+    return vols_rs, masks_rs, phases[0].shape, spacing, factors
+
+
 def build_volume(case_dir, cfg):
     """
     Returns
@@ -72,20 +92,56 @@ def build_volume(case_dir, cfg):
       masks_rs  : {"liver","tumor"} → (H_rs, W_rs, D_rs) uint8
       rs_shape, orig_shape, spacing
     """
-    phases, masks, spacing = load_case(case_dir, cfg.get("liver_includes_tumor", False))
-    factors = _resample_factors(spacing, cfg["target_spacing"])
+    vols_rs, masks_rs, orig_shape, spacing, _ = load_resampled(case_dir, cfg)
     S = cfg["img_size"]
-    phases_rs = []
-    for name, vol in zip(PHASE_NAMES, phases):
-        if factors:
-            vol = zoom(vol, factors, order=1)
-        vol = _window(vol, name)                     # clip after zoom: no overshoot
-        phases_rs.append(np.stack([
-            np.clip(sk_resize(vol[:, :, z], (S, S), order=1, preserve_range=True), 0, 1)
-            for z in range(vol.shape[2])]).astype(np.float32))
-    masks_rs = {k: (zoom(m, factors, order=0) if factors else m).astype(np.uint8)
-                for k, m in masks.items()}
-    return phases_rs, masks_rs, masks_rs["liver"].shape, phases[0].shape, spacing
+    phases_rs = [np.stack([
+        np.clip(sk_resize(vol[:, :, z], (S, S), order=1, preserve_range=True), 0, 1)
+        for z in range(vol.shape[2])]).astype(np.float32) for vol in vols_rs]
+    return phases_rs, masks_rs, masks_rs["liver"].shape, orig_shape, spacing
+
+
+# ── Liver-ROI crops (Stage 2 with roi="liver") ────────────────────────────────
+
+def roi_box(mask2d, margin_px):
+    """Square box (r0, r1, c0, c1) around the mask's pixels plus a margin.
+    The box may extend past the image; crop_square zero-pads it."""
+    rows, cols = np.where(mask2d)
+    r0, r1, c0, c1 = rows.min(), rows.max() + 1, cols.min(), cols.max() + 1
+    side = max(r1 - r0, c1 - c0) + 2 * margin_px
+    cy, cx = (r0 + r1) // 2, (c0 + c1) // 2
+    return cy - side // 2, cy - side // 2 + side, cx - side // 2, cx - side // 2 + side
+
+
+def crop_square(img, box):
+    r0, r1, c0, c1 = box
+    H, W = img.shape
+    out = np.zeros((r1 - r0, c1 - c0), dtype=img.dtype)
+    rs, re, cs, ce = max(r0, 0), min(r1, H), max(c0, 0), min(c1, W)
+    if rs < re and cs < ce:
+        out[rs - r0:re - r0, cs - c0:ce - c0] = img[rs:re, cs:ce]
+    return out
+
+
+def paste_square(canvas, patch, box):
+    """Inverse of crop_square: write the in-image part of patch into canvas."""
+    r0, r1, c0, c1 = box
+    H, W = canvas.shape
+    rs, re, cs, ce = max(r0, 0), min(r1, H), max(c0, 0), min(c1, W)
+    if rs < re and cs < ce:
+        canvas[rs:re, cs:ce] = patch[rs - r0:re - r0, cs - c0:ce - c0]
+
+
+def roi_stack(vols_rs, z, n_ctx, box, size):
+    """(n_ctx × n_phases, size, size) liver-ROI crops, context-major order."""
+    D, half = vols_rs[0].shape[2], n_ctx // 2
+    return np.stack([
+        np.clip(sk_resize(crop_square(vol[:, :, min(max(z + dz, 0), D - 1)], box),
+                          (size, size), order=1, preserve_range=True), 0, 1)
+        for dz in range(-half, half + 1) for vol in vols_rs]).astype(np.float32)
+
+
+def roi_margin_px(cfg):
+    return int(round(cfg.get("roi_margin_mm", 10) / cfg["target_spacing"]))
 
 
 def stack_context(phases_rs, z, n_ctx):
@@ -110,6 +166,8 @@ def to_original_grid(prob_slices, rs_shape, orig_shape):
 def cache_key(cfg):
     keys = ("task", "n_context_slices", "img_size", "target_spacing", "slices",
             "liver_includes_tumor")
+    if cfg.get("roi", "none") != "none":       # keeps keys of existing caches unchanged
+        keys += ("roi", "roi_margin_mm")
     blob = json.dumps({k: cfg.get(k) for k in keys} | {"hu": HU_WINDOWS, "v": CACHE_VERSION},
                       sort_keys=True)
     return f"{cfg['task']}_{hashlib.md5(blob.encode()).hexdigest()[:10]}"
@@ -122,20 +180,34 @@ def _cache_one(args):
     if all(p.exists() for p in paths.values()):
         return case_id, "cached"
     try:
-        phases_rs, masks_rs, *_ = build_volume(Path(data_dir) / case_id, cfg)
+        roi = cfg.get("roi", "none") == "liver"
+        if roi:     # crop each slice to the liver(+tumor) region before resizing
+            vols_rs, masks_rs, *_ = load_resampled(Path(data_dir) / case_id, cfg)
+            n_ph = len(vols_rs)
+        else:
+            phases_rs, masks_rs, *_ = build_volume(Path(data_dir) / case_id, cfg)
+            n_ph = len(phases_rs)
         target = masks_rs[cfg["task"]]
         select = masks_rs[cfg["slices"]]
         S, n_ctx = cfg["img_size"], cfg["n_context_slices"]
         zs = [z for z in range(target.shape[2]) if select[:, :, z].any()]
+        if roi:
+            zs = [z for z in zs if masks_rs["liver"][:, :, z].any()]
         if not zs:
             return case_id, "empty"
         imgs  = np.lib.format.open_memmap(paths["imgs"].with_suffix(".tmp.npy"), "w+",
-                                          np.float16, (len(zs), n_ctx * len(phases_rs), S, S))
+                                          np.float16, (len(zs), n_ctx * n_ph, S, S))
         masks = np.zeros((len(zs), 1, S, S), np.uint8)
         w     = np.zeros(len(zs), np.float32)
         for i, z in enumerate(zs):
-            imgs[i]  = stack_context(phases_rs, z, n_ctx)
-            masks[i, 0] = sk_resize(target[:, :, z], (S, S), order=0,
+            if roi:
+                box = roi_box(masks_rs["liver"][:, :, z], roi_margin_px(cfg))
+                imgs[i] = roi_stack(vols_rs, z, n_ctx, box, S)
+                tgt = crop_square(target[:, :, z], box)
+            else:
+                imgs[i] = stack_context(phases_rs, z, n_ctx)
+                tgt = target[:, :, z]
+            masks[i, 0] = sk_resize(tgt, (S, S), order=0,
                                     preserve_range=True, anti_aliasing=False)
             # sampling weight: liver area (Stage 1) or tumor voxels (Stage 2)
             w[i] = masks[i, 0].sum() if cfg["task"] == "liver" else target[:, :, z].sum()

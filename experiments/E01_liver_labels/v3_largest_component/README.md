@@ -39,6 +39,19 @@ v3 alone: Dice 0.9727 (95% CI 0.9694–0.9753), median 0.9760, lowest case 0.881
 | 231206d09 (ICC) | 0.773 | 0.958 |
 | 240620a11 (BCLM) | 0.844 | 0.944 |
 
+## Validation check (added 2026-09-30)
+
+v2 and v3 were first adopted from **test** results, which should only report. Both decisions were re-checked on the 78 **validation** cases, using the same saved v2 probabilities and [`rescore_split.py`](rescore_split.py):
+
+| v2 → v3 on validation | v2 | v3 | diff | 95% CI | better / worse |
+|---|---|---|---|---|---|
+| `Dice_vs_union` | 0.9523 | 0.9711 | +0.0187 | +0.0109 to +0.0275 | 72 / 3 |
+| Precision | 0.9256 | 0.9672 | +0.0416 | +0.0320 to +0.0542 | 75 / 0 |
+| Recall | 0.9826 | 0.9761 | −0.0065 | −0.0167 to −0.0009 | 0 / 27 |
+| `tumor_covered` | 0.9759 | 0.9759 | 0.0000 | −0.0001 to 0.0000 | 0 / 3 |
+
+The decision holds on validation. Per-case files: [`results/val_check/`](results/val_check/). The files keep the name `per_case_val.csv`; pass the file path to `evaluate.py`.
+
 ## Observations
 
 - **Over-segmentation was mostly separate blobs.** Removing them raises precision in all 78 cases and Dice in 75. It costs a uniform, very small amount of recall (−0.002): voxels in small, genuinely disconnected pieces of the liver.
