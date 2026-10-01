@@ -24,4 +24,4 @@ Best val Dice (batch-pooled slices) 0.9413. Per-case test liver Dice **0.971 ± 
 - **Same label, UNet-Hybrid is clearly better**, almost entirely through precision. It trains with 15% of slices containing no liver (`LiverDataset.BG_RATIO`); DS²Net doesn't. That matches E01 v3's finding that DS²Net's false positives are blobs away from the liver.
 - **After E01's changes, DS²Net matches UNet-Hybrid** on the common reference (difference −0.004, not robust: Wilcoxon p = 0.71). It covers more tumor (0.940 vs 0.887), because UNet-Hybrid still learns the official mask's tumor gaps.
 - **Not yet applied to UNet-Hybrid:** the E01 label (liver ∪ tumor) and largest-component post-processing. UNet-Hybrid doesn't save probability maps or per-case validation output yet, so these comparisons are on test only and are reported, not used for decisions.
-- **Follow-up for E02:** UNet-Hybrid should also write per-case validation output, and optionally save liver probabilities, to match `ds2net`.
+- **Follow-up for E02:** done in E02 v4 (per-case validation output). Saving liver probabilities is still open.
