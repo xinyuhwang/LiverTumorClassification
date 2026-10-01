@@ -35,4 +35,4 @@ experiments/
 | [E02](E02_evaluation/) | Evaluation harness: CIs, paired tests, compute | v1, v2 | v1–v2 done; v3 planned | `common/evaluate.py` CIs + paired tests; UNet-Hybrid now writes per-case test output |
 | E03 | Stage 3 pooling / aggregation (mask-weighted, area-weighted, ABMIL) | — | Planned | |
 | E04 | Joint segment + classify model | — | Planned | |
-| [E05](E05_tumor_baselines/) | Tumor segmentation baselines (DS²Net, UNet-Hybrid) on the liver region | v1 | v1 running (AICR job 1139799) | — |
+| [E05](E05_tumor_baselines/) | Tumor segmentation baselines (DS²Net, UNet-Hybrid) on the liver region | v1 | v1 done; v2 next | DS²Net tumor Dice 0.726 (0.676–0.772) cascade; cascade ≈ oracle; size drives errors (BCLM 0.61). UNet-Hybrid liver 0.971 reproduces the paper |
