@@ -20,10 +20,11 @@ What liver and tumor segmentation accuracy can a strong, standard method reach o
 |---|---|---|---|
 | DS²Net Stage 2, cascade (E05 v1) | 0.726 (0.676–0.772); val 0.769 | 0.865 (0.824–0.908); val 0.893 | 0.973 (E01 v3) |
 | UNet-Hybrid Stage 2, oracle liver (E05 v2) | 0.657; val 0.754 | val 0.858 | 0.971 (official label) |
+| **nnU-Net 3d_fullres fold 0 (E06 v1)** | **0.796** (0.756–0.832); val 0.796 | **0.883** (0.837–0.929); val 0.895 | 0.974; val 0.969 |
 
 ## Versions
 
 | Version | Change | Status |
 |---|---|---|
-| [v1](v1_3d_fullres_fold0/) | nnU-Net v2 `3d_fullres`, default trainer (1,000 epochs), fold 0 = HERALD split | Code ready; locally verified on synthetic data |
+| [v1](v1_3d_fullres_fold0/) | nnU-Net v2 `3d_fullres`, default trainer (1,000 epochs), fold 0 = HERALD split | Done: tumor **0.796** per case / **0.895** global (val); liver 0.969 |
 | v2 (if promising) | 5-fold ensemble | Planned |

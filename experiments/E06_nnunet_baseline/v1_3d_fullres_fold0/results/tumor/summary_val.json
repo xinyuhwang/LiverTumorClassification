@@ -1,0 +1,47 @@
+{
+ "run": "experiments/E06_nnunet_baseline/v1_3d_fullres_fold0/results/tumor/per_case_val.csv",
+ "kind": "seg",
+ "n_boot": 2000,
+ "results": [
+  {
+   "group": "all",
+   "metric": "Dice",
+   "n": 78,
+   "mean": 0.7957316045690991,
+   "ci_low": 0.7552299841250742,
+   "ci_high": 0.8330271637453506,
+   "sd": 0.1760729809500931,
+   "median": 0.8412784160826038
+  },
+  {
+   "group": "all",
+   "metric": "Precision",
+   "n": 78,
+   "mean": 0.8467339333459645,
+   "ci_low": 0.8043804472672537,
+   "ci_high": 0.8856272974816842,
+   "sd": 0.19107313146414978,
+   "median": 0.9119037553446396
+  },
+  {
+   "group": "all",
+   "metric": "Recall",
+   "n": 78,
+   "mean": 0.7996235291703756,
+   "ci_low": 0.7641063137003565,
+   "ci_high": 0.8343162745166098,
+   "sd": 0.15976262729652468,
+   "median": 0.8380467095925301
+  },
+  {
+   "group": "all",
+   "metric": "global_Dice",
+   "n": 78,
+   "mean": 0.8948028485759231,
+   "ci_low": 0.8581607014899654,
+   "ci_high": 0.9153686428139469,
+   "sd": NaN,
+   "median": NaN
+  }
+ ]
+}

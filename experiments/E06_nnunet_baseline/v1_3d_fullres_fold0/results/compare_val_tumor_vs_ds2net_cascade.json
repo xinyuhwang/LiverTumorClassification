@@ -1,0 +1,49 @@
+{
+ "run_a": "experiments/E05_tumor_baselines/v1_ds2net_tumor_roi/results/per_case_val.csv",
+ "run_b": "experiments/E06_nnunet_baseline/v1_3d_fullres_fold0/results/tumor/per_case_val.csv",
+ "n_common": 78,
+ "only_in_a": [],
+ "only_in_b": [],
+ "n_boot": 2000,
+ "results": [
+  {
+   "metric": "Dice",
+   "n": 78,
+   "a": 0.7693707205475989,
+   "b": 0.7957316045690991,
+   "diff": 0.02636088402150025,
+   "ci_low": -0.020038087893782062,
+   "ci_high": 0.06891797227728505,
+   "p_boot": 0.222,
+   "p_wilcoxon": 0.026832602883274756,
+   "better": 49,
+   "worse": 29
+  },
+  {
+   "metric": "Precision",
+   "n": 78,
+   "a": 0.813249334079057,
+   "b": 0.8467339333459645,
+   "diff": 0.03348459926690731,
+   "ci_low": -0.01823018089486812,
+   "ci_high": 0.08001935977787253,
+   "p_boot": 0.175,
+   "p_wilcoxon": 0.00026903894592670094,
+   "better": 56,
+   "worse": 22
+  },
+  {
+   "metric": "Recall",
+   "n": 78,
+   "a": 0.769443419975392,
+   "b": 0.7996235291703756,
+   "diff": 0.030180109194983557,
+   "ci_low": 0.0027915900856069283,
+   "ci_high": 0.06353222401454507,
+   "p_boot": 0.024,
+   "p_wilcoxon": 0.6605159774468587,
+   "better": 39,
+   "worse": 38
+  }
+ ]
+}

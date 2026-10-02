@@ -1,0 +1,62 @@
+{
+ "run_a": "experiments/E01_liver_labels/v3_largest_component/results/val_check/v3/per_case_val.csv",
+ "run_b": "experiments/E06_nnunet_baseline/v1_3d_fullres_fold0/results/liver/per_case_val.csv",
+ "n_common": 78,
+ "only_in_a": [],
+ "only_in_b": [],
+ "n_boot": 2000,
+ "results": [
+  {
+   "metric": "Dice_vs_union",
+   "n": 78,
+   "a": 0.971052617142663,
+   "b": 0.9691096437989885,
+   "diff": -0.0019429733436740182,
+   "ci_low": -0.0069173669014594725,
+   "ci_high": 0.001839459360930209,
+   "p_boot": 0.37,
+   "p_wilcoxon": 0.08895671012895362,
+   "better": 50,
+   "worse": 28
+  },
+  {
+   "metric": "Precision",
+   "n": 78,
+   "a": 0.9671794224003563,
+   "b": 0.9696553179801644,
+   "diff": 0.002475895579807995,
+   "ci_low": -0.005958144065803254,
+   "ci_high": 0.008832313611395538,
+   "p_boot": 0.479,
+   "p_wilcoxon": 3.563904807640036e-08,
+   "better": 71,
+   "worse": 7
+  },
+  {
+   "metric": "Recall",
+   "n": 78,
+   "a": 0.9761257580258925,
+   "b": 0.9698611178079016,
+   "diff": -0.006264640217991028,
+   "ci_low": -0.008945533584972697,
+   "ci_high": -0.0029863556334908713,
+   "p_boot": 0.002,
+   "p_wilcoxon": 3.636330113747471e-12,
+   "better": 9,
+   "worse": 69
+  },
+  {
+   "metric": "tumor_covered",
+   "n": 78,
+   "a": 0.975869789182162,
+   "b": 0.978786686374612,
+   "diff": 0.002916897192449963,
+   "ci_low": -0.006504544015660888,
+   "ci_high": 0.018056637658056138,
+   "p_boot": 0.737,
+   "p_wilcoxon": 0.003194061002848847,
+   "better": 18,
+   "worse": 49
+  }
+ ]
+}
