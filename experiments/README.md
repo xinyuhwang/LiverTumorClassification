@@ -37,3 +37,31 @@ experiments/
 | E04 | Joint segment + classify model | — | Planned | |
 | [E05](E05_tumor_baselines/) | Tumor segmentation baselines (DS²Net, UNet-Hybrid) on the liver region | v1, v2 | v1–v2 done | DS²Net tumor 0.726 cascade / 0.740 oracle (primary). UNet-Hybrid tumor 0.657 oracle; on val comparable Dice (−0.018, n.s.) but less precise (−0.065). UNet-Hybrid liver 0.971 |
 | [E06](E06_nnunet_baseline/) | nnU-Net 3D baseline: what's achievable on this dataset (goal: tumor Dice > 0.90) | v1 | v1 done; v2 (5-fold) next | nnU-Net tumor 0.796 per case / 0.895 global (val), stable on test; ≥ 200 ml and HH reach 0.90+; small tumors (< 10 ml) ~0.65–0.71 |
+
+## Segmentation Dice by tumor type (test set)
+
+Current best version of each model on the shared test split (78 cases), mean ± SD of per-case full-volume Dice. Per-model text tables: [`ds2net/results/segmentation_by_tumor.txt`](../ds2net/results/segmentation_by_tumor.txt). The older [`unet_hybrid/results/segmentation_by_tumor.txt`](../unet_hybrid/results/segmentation_by_tumor.txt) came with the original code, before the shared split and bug fixes, so it isn't comparable with this table.
+
+### Liver
+
+| Type | N | DS²Net (E01 v3) | UNet-Hybrid (E05) | nnU-Net (E06 v1) |
+|---|---|---|---|---|
+| BCLM | 17 | 0.9739 ± 0.0096 | 0.9708 ± 0.0208 | 0.9732 ± 0.0159 |
+| CRLM | 16 | 0.9776 ± 0.0048 | 0.9790 ± 0.0032 | 0.9797 ± 0.0027 |
+| HCC | 16 | 0.9756 ± 0.0060 | 0.9759 ± 0.0066 | 0.9766 ± 0.0074 |
+| HH | 14 | 0.9609 ± 0.0247 | 0.9523 ± 0.0383 | 0.9614 ± 0.0344 |
+| ICC | 15 | 0.9739 ± 0.0099 | 0.9747 ± 0.0112 | 0.9750 ± 0.0119 |
+| **Overall** | **78** | **0.9727 ± 0.0136** | **0.9710 ± 0.0213** | **0.9735 ± 0.0181** |
+
+### Tumor
+
+| Type | N | DS²Net cascade (E05 v1) | DS²Net oracle (E05 v1) | UNet-Hybrid oracle (E05 v2) | nnU-Net (E06 v1) |
+|---|---|---|---|---|---|
+| BCLM | 17 | 0.6112 ± 0.1921 | 0.6192 ± 0.2158 | 0.5479 ± 0.2283 | 0.7233 ± 0.1056 |
+| CRLM | 16 | 0.7524 ± 0.1596 | 0.7504 ± 0.1623 | 0.6879 ± 0.2421 | 0.7838 ± 0.2048 |
+| HCC | 16 | 0.6784 ± 0.2804 | 0.6720 ± 0.2894 | 0.6139 ± 0.3119 | 0.7560 ± 0.2532 |
+| HH | 14 | 0.8125 ± 0.2429 | 0.8768 ± 0.0716 | 0.6660 ± 0.2758 | 0.9012 ± 0.0516 |
+| ICC | 15 | 0.7972 ± 0.1538 | 0.8112 ± 0.1252 | 0.7835 ± 0.0941 | 0.8361 ± 0.1104 |
+| **Overall** | **78** | **0.7258 ± 0.2193** | **0.7401 ± 0.2084** | **0.6567 ± 0.2490** | **0.7960 ± 0.1717** |
+
+*Cascade* searches for the tumor inside the model's own predicted liver (realistic). *Oracle* uses the ground-truth liver box (an upper bound for the two-stage models). nnU-Net segments liver and tumor together in one 3D model. Decisions between versions are made on validation; these test numbers are for reporting.
