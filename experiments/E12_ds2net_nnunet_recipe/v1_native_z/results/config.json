@@ -1,0 +1,87 @@
+{
+ "args": {
+  "stage": 2,
+  "run_name": "e12_v1_native_z",
+  "data_dir": "/work/neu/p2026_0093_neu/herald/mct_ltdiag",
+  "work_dir": "/scratch/wang_xinyu14_neu/herald/work",
+  "splits_csv": "/home/wang_xinyu14_neu/LiverTumorClassification/common/mct_ltdiag_split.csv",
+  "set": [
+   "roi=liver",
+   "slices=liver",
+   "liver_includes_tumor=True",
+   "roi_liver_run=e01_v2_liver_union",
+   "z_spacing=5.0",
+   "samples_per_epoch=59314"
+  ],
+  "resume": false,
+  "eval_only": false,
+  "save_liver_masks": false,
+  "no_pretrain": false,
+  "workers": 16,
+  "num_workers": 8,
+  "max_cases": null,
+  "smoke_test": false
+ },
+ "config": {
+  "task": "tumor",
+  "n_context_slices": 3,
+  "img_size": 224,
+  "target_spacing": 1.0,
+  "z_spacing": 5.0,
+  "samples_per_epoch": 59314,
+  "slices": "liver",
+  "liver_includes_tumor": true,
+  "roi": "liver",
+  "roi_margin_mm": 10,
+  "roi_liver_run": "e01_v2_liver_union",
+  "batch_size": 64,
+  "grad_accum_steps": 3,
+  "lr": 0.0002,
+  "weight_decay": 0.0001,
+  "epochs": 50,
+  "pct_start": 0.15,
+  "early_stop_patience": 12,
+  "val_every": 3,
+  "pos_weight": 10.0,
+  "pos_weight_warmup_extra": 5.0,
+  "boundary_weight": 0.5,
+  "stb_weight": 0.4,
+  "stb_infer_weight": 0.3,
+  "max_grad_norm": 1.0,
+  "difficulty_multiplier": {
+   "BCLM": 2.0,
+   "CRLM": 2.0,
+   "ICC": 1.5,
+   "HCC": 1.0,
+   "HH": 0.8
+  },
+  "seg_threshold": 0.5,
+  "min_component_voxels": 0,
+  "aug_elastic_prob": 0.2,
+  "aug_elastic_alpha": 100,
+  "aug_elastic_sigma": 10,
+  "aug_scale_prob": 0.2,
+  "aug_scale_range": [
+   0.75,
+   1.25
+  ],
+  "aug_rotation_prob": 0.3,
+  "aug_rotation_max_deg": 30,
+  "aug_mirror_prob": 0.5,
+  "aug_ud_flip_prob": 0.05,
+  "aug_hu_jitter_prob": 0.15,
+  "aug_hu_jitter": 0.1,
+  "aug_noise_prob": 0.15,
+  "aug_noise_std": 0.03,
+  "aug_blur_prob": 0.2,
+  "aug_blur_sigma": [
+   0.5,
+   1.5
+  ],
+  "aug_gamma_prob": 0.3,
+  "aug_gamma_range": [
+   0.7,
+   1.5
+  ]
+ }
+}

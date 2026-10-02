@@ -20,3 +20,6 @@ __pycache__/
 
 # Training artifacts
 *.pth
+
+# Outreach emails and attachments (personal)
+docs/outreach/
