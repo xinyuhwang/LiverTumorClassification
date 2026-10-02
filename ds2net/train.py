@@ -127,7 +127,8 @@ def build_seg_model(stage, cfg, pretrained):
         return M.DS2NetLiver(n_input_channels=4 * cfg["n_context_slices"],
                              mha_heads=cfg["mha_heads"], mha_dropout=cfg["mha_dropout"],
                              pretrained=pretrained)
-    return M.DS2NetUNet(n_input_channels=4 * cfg["n_context_slices"], pretrained=pretrained)
+    return M.DS2NetUNet(n_input_channels=4 * cfg["n_context_slices"], pretrained=pretrained,
+                        phase_norm=cfg.get("phase_norm", "instance"))
 
 
 def seg_forward(model, x, stage):

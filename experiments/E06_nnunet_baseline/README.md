@@ -27,4 +27,4 @@ What liver and tumor segmentation accuracy can a strong, standard method reach o
 | Version | Change | Status |
 |---|---|---|
 | [v1](v1_3d_fullres_fold0/) | nnU-Net v2 `3d_fullres`, default trainer (1,000 epochs), fold 0 = HERALD split | Done: tumor **0.796** per case / **0.895** global (val); liver 0.969 |
-| [v2](v2_5fold_ensemble/) | Ensemble of 5 models from inner 5-fold CV over the 360 train cases (val and test held out) | Planned: scripts ready |
+| [v2](v2_5fold_ensemble/) | Ensemble of 5 models from inner 5-fold CV over the 360 train cases (val and test held out) | Done: tumor val 0.807 vs 0.796 (+0.012, n.s.), global 0.903; test flat (0.789); liver +0.003. Not adopted |

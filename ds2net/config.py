@@ -56,6 +56,10 @@ TUMOR = {
     # Slices drawn per epoch. None = all cached slices; set it to keep the
     # training budget fixed when z_spacing changes the slice count (E12).
     "samples_per_epoch": None,
+    # Input normalisation. "instance" = PhaseNorm (notebook): per-slice, per-channel
+    # instance norm, which removes absolute enhancement. "fixed" = one learnable
+    # affine for all slices on the HU-windowed input (E12 v2).
+    "phase_norm": "instance",
     # Slices used for training/validation. "tumor" matches the notebook (its
     # mask was tumor-only, so it only ever saw tumor slices); "liver" also
     # includes tumor-free liver slices.

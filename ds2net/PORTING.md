@@ -80,6 +80,7 @@ All are off by default, so the ported baseline stays reproducible; experiments s
 | `roi="liver"`, `roi_margin_mm`, `roi_liver_run` | 2 | search only a square box around the liver(+tumor) per slice. Test is scored in two modes: **oracle** (GT box) and **cascade** (box from a Stage 1 run's saved liver masks, E01 post-processing) | E05 v1 |
 | `z_spacing=5.0` | 1, 2 | keep the native 5 mm between slices instead of resampling z to `target_spacing`, so context slices are real neighbours | E12 v1 |
 | `samples_per_epoch=N` | 1, 2 | slices drawn per epoch (default: all cached slices). Keeps the training budget fixed when the slice count changes | E12 v1 |
+| `phase_norm=fixed` | 2 | replace PhaseNorm (per-slice instance norm) with one learnable per-channel affine shared by all slices; LI-RADS phase attention then depends on the image | E12 v2 |
 
 Every run also writes **`per_case_val.csv`** next to `per_case_test.csv` (and `_oracle` variants in liver-ROI mode). Versions are chosen on validation.
 
