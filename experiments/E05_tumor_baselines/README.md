@@ -26,4 +26,4 @@ Tumors grow in the liver, so Stage 2 searches only a box around the liver (`roi=
 | Version | Model / change | Status | Test tumor Dice (cascade / oracle) |
 |---|---|---|---|
 | [v1](v1_ds2net_tumor_roi/) | DS²Net Stage 2, liver ROI, notebook hyperparameters | Done | **0.726** (0.676–0.772) / 0.740 (0.692–0.784) |
-| [v2](v2_unet_tumor_oracle/) | UNet-Hybrid Stage 2, oracle (GT liver crop); Stage 1: [`unet_stage1_liver/`](unet_stage1_liver/), liver Dice 0.971 | Test done; val pending (job 1151355) | — / **0.657** (0.600–0.709); vs DS²Net oracle −0.083 (−0.127 to −0.041) |
+| [v2](v2_unet_tumor_oracle/) | UNet-Hybrid Stage 2, oracle (GT liver crop); Stage 1: [`unet_stage1_liver/`](unet_stage1_liver/), liver Dice 0.971 | Done | — / **0.657** (0.600–0.709); vs DS²Net oracle: val −0.018 (−0.045 to +0.009), test −0.083 |
