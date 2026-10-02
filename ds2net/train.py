@@ -7,6 +7,7 @@ train.py — DS²Net entry point
 Usage
   python train.py --stage 1 --run_name liver_v1
   python train.py --stage 2 --run_name tumor_v1 --set slices=liver
+  python train.py --stage 2 --run_name tumor_z5 --set z_spacing=5.0 samples_per_epoch=59314
   python train.py --stage 1 --run_name liver_v1 --eval_only --save_liver_masks
   python train.py --stage 3 --smoke_test
 
@@ -79,6 +80,8 @@ def resolve_config(args):
         cfg.update(epochs=2, val_every=1, batch_size=2)
         if "grad_accum_steps" in cfg:
             cfg["grad_accum_steps"] = 1
+        if cfg.get("samples_per_epoch"):
+            cfg["samples_per_epoch"] = None
     return cfg
 
 
@@ -251,7 +254,8 @@ def run_seg_stage(args, cfg, splits, device, run_dir, case_types):
     kw = dict(num_workers=args.num_workers, pin_memory=device.type == "cuda",
               persistent_workers=args.num_workers > 0)
     sampler = WeightedRandomSampler(torch.tensor(train_ds.slice_weights, dtype=torch.double),
-                                    num_samples=len(train_ds), replacement=True)
+                                    num_samples=cfg.get("samples_per_epoch") or len(train_ds),
+                                    replacement=True)
     train_loader = DataLoader(train_ds, cfg["batch_size"], sampler=sampler, **kw)
     val_loader   = DataLoader(val_ds, cfg["batch_size"], shuffle=True, **kw)
     test_loader  = DataLoader(test_ds, cfg["batch_size"], shuffle=False, **kw)

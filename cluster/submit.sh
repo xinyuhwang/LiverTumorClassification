@@ -7,6 +7,7 @@
 #   unet_hybrid  --stage N [...]         unet_hybrid/train.py
 #   stage3_paper --backbone X [...]      unet_hybrid/stage3_paper.py
 #   nnunet_prep / nnunet_train [--c] / nnunet_predict   E06 nnU-Net baseline
+#   nnunet_predict_ensemble              E06 v2 (fold via NNUNET_FOLD=N for nnunet_train)
 # Extra sbatch options go in SBATCH_EXTRA, e.g.
 #   SBATCH_EXTRA="--partition=b200-batch --time=12:00:00" bash cluster/submit.sh ds2net --stage 1
 set -euo pipefail

@@ -78,6 +78,8 @@ All are off by default, so the ported baseline stays reproducible; experiments s
 | `liver_includes_tumor=True` | 1, 2 | liver label = official liver mask ∪ tumor mask | E01 v2 (adopted) |
 | `keep_largest_component=True` | 1 | keep only the largest connected liver component at test time | E01 v3 (adopted) |
 | `roi="liver"`, `roi_margin_mm`, `roi_liver_run` | 2 | search only a square box around the liver(+tumor) per slice. Test is scored in two modes: **oracle** (GT box) and **cascade** (box from a Stage 1 run's saved liver masks, E01 post-processing) | E05 v1 |
+| `z_spacing=5.0` | 1, 2 | keep the native 5 mm between slices instead of resampling z to `target_spacing`, so context slices are real neighbours | E12 v1 |
+| `samples_per_epoch=N` | 1, 2 | slices drawn per epoch (default: all cached slices). Keeps the training budget fixed when the slice count changes | E12 v1 |
 
 Every run also writes **`per_case_val.csv`** next to `per_case_test.csv` (and `_oracle` variants in liver-ROI mode). Versions are chosen on validation.
 

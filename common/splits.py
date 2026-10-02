@@ -1,6 +1,7 @@
 """
 splits.py — the single train/val/test split shared by every HERALD pipeline
-(ds2net/, unet_hybrid/). Using one split keeps results comparable.
+(ds2net/, unet_hybrid/, nnunet/). Using one split keeps results comparable.
+cv_folds() adds inner cross-validation folds over the training cases.
 """
 
 from pathlib import Path
@@ -48,3 +49,16 @@ def load_splits(splits_csv=DEFAULT_SPLITS_CSV):
     print(f"Splits — train: {len(train_ids)}, val: {len(val_ids)}, "
           f"test: {len(test_ids)}")
     return train_ids, val_ids, test_ids, labels_df
+
+
+def cv_folds(train_ids, labels_df, k=5, seed=0):
+    """K inner cross-validation folds over the training cases only, stratified
+    by tumor type (E06 v2). Returns [{"train": [...], "val": [...]}, ...]; the
+    val lists partition train_ids. HERALD's val and test cases are never used,
+    so ensembles of these folds can still be compared on val and reported on test."""
+    from sklearn.model_selection import StratifiedKFold
+    types = dict(zip(labels_df["case_id"], labels_df["type"].astype(str)))
+    ids = sorted(train_ids)
+    skf = StratifiedKFold(n_splits=k, shuffle=True, random_state=seed)
+    return [{"train": [ids[i] for i in tr], "val": [ids[i] for i in va]}
+            for tr, va in skf.split(ids, [types[c] for c in ids])]

@@ -59,8 +59,10 @@ def _window(vol, name):
     return np.clip((np.clip(vol, lo, hi) - lo) / (hi - lo + 1e-8), 0, 1).astype(np.float32)
 
 
-def _resample_factors(spacing, target):
-    f = tuple(s / target for s in spacing)
+def _resample_factors(spacing, target, z_target=None):
+    """Zoom factors to (target, target, z_target or target) mm; None if all ≈ 1."""
+    goal = (target, target, z_target or target)
+    f = tuple(s / g for s, g in zip(spacing, goal))
     return f if any(abs(x - 1) > 0.05 for x in f) else None
 
 
@@ -68,12 +70,12 @@ def load_resampled(case_dir, cfg):
     """
     Returns
       vols_rs  : list of 4 arrays (H_rs, W_rs, D_rs) float32 — windowed and
-                 resampled to cfg target_spacing (not resized)
+                 resampled to cfg target_spacing / z_spacing (not resized)
       masks_rs : {"liver","tumor"} → (H_rs, W_rs, D_rs) uint8
       orig_shape, spacing, factors (None if no resampling)
     """
     phases, masks, spacing = load_case(case_dir, cfg.get("liver_includes_tumor", False))
-    factors = _resample_factors(spacing, cfg["target_spacing"])
+    factors = _resample_factors(spacing, cfg["target_spacing"], cfg.get("z_spacing"))
     vols_rs = []
     for name, vol in zip(PHASE_NAMES, phases):
         if factors:
@@ -168,6 +170,8 @@ def cache_key(cfg):
             "liver_includes_tumor")
     if cfg.get("roi", "none") != "none":       # keeps keys of existing caches unchanged
         keys += ("roi", "roi_margin_mm")
+    if cfg.get("z_spacing"):
+        keys += ("z_spacing",)
     blob = json.dumps({k: cfg.get(k) for k in keys} | {"hu": HU_WINDOWS, "v": CACHE_VERSION},
                       sort_keys=True)
     return f"{cfg['task']}_{hashlib.md5(blob.encode()).hexdigest()[:10]}"
