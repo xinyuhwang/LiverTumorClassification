@@ -125,37 +125,45 @@ def predict_case(model, data, stage_num, device, batch=16):
     return prob
 
 
-def evaluate_seg_test(stage_num, model, test_ids, case_types, args, device, log):
+def evaluate_seg_test(stage_num, model, test_ids, case_types, args, device, log,
+                      val_ids=()):
+    """Per-case evaluation on validation (if given) and test. Writes
+    <log_dir>/stage<N>/per_case_val.csv, per_case_test.csv and metrics.json
+    (keys <split>_per_case_mean / _std / _by_type)."""
     tag  = "liver" if stage_num == 1 else "tumor"
     out  = os.path.join(args.log_dir, f"stage{stage_num}")
     os.makedirs(out, exist_ok=True)
-    rows = []
-    print(f"\n── Stage {stage_num} per-case test evaluation ({len(test_ids)} cases) ──")
-    for i, cid in enumerate(test_ids, 1):
-        data = DS.fetch_case_cached(cid)
-        pred = predict_case(model, data, stage_num, device) > 0.5
-        row  = {"case_id": cid, "tumor_type": case_types.get(cid),
-                **volume_metrics(pred, data[f"{tag}_mask"])}
-        if stage_num == 1:
-            row.update(liver_extras(pred, data["liver_mask"], data["tumor_mask"]))
-        rows.append(row)
-        print(f"  [{i}/{len(test_ids)}] {cid} Dice {row['Dice']:.4f}", flush=True)
-    per_case = pd.DataFrame(rows)
-    per_case.to_csv(os.path.join(out, "per_case_test.csv"), index=False)
     keys = ["Dice", "IoU", "Precision", "Recall"] + (
         ["Dice_vs_union", "tumor_covered"] if stage_num == 1 else [])
-    metrics = {"stage": stage_num, "task": tag, "n_test_cases": len(per_case),
+    metrics = {"stage": stage_num, "task": tag,
                "protocol": ("full volume, every slice" if stage_num == 1 else
-                            "GT liver bbox per slice (oracle liver), liver slices only"),
-               "test_per_case_mean": per_case[keys].mean().to_dict(),
-               "test_per_case_std": per_case[keys].std().to_dict(),
-               "test_per_case_by_type": per_case.groupby("tumor_type")[keys].mean()
-                                                .round(4).to_dict(orient="index")}
+                            "GT liver bbox per slice (oracle liver), liver slices only")}
+    for split, ids in (("val", list(val_ids)), ("test", list(test_ids))):
+        if not ids:
+            continue
+        rows = []
+        print(f"\n── Stage {stage_num} per-case {split} evaluation ({len(ids)} cases) ──")
+        for i, cid in enumerate(ids, 1):
+            data = DS.fetch_case_cached(cid)
+            pred = predict_case(model, data, stage_num, device) > 0.5
+            row  = {"case_id": cid, "tumor_type": case_types.get(cid),
+                    **volume_metrics(pred, data[f"{tag}_mask"])}
+            if stage_num == 1:
+                row.update(liver_extras(pred, data["liver_mask"], data["tumor_mask"]))
+            rows.append(row)
+            print(f"  [{i}/{len(ids)}] {cid} Dice {row['Dice']:.4f}", flush=True)
+        per_case = pd.DataFrame(rows)
+        per_case.to_csv(os.path.join(out, f"per_case_{split}.csv"), index=False)
+        metrics[f"n_{split}_cases"] = len(per_case)
+        metrics[f"{split}_per_case_mean"] = per_case[keys].mean().to_dict()
+        metrics[f"{split}_per_case_std"] = per_case[keys].std().to_dict()
+        metrics[f"{split}_per_case_by_type"] = (per_case.groupby("tumor_type")[keys].mean()
+                                                .round(4).to_dict(orient="index"))
+        print(per_case[keys].agg(["mean", "std"]).round(4).to_string())
+        print(f"Per-case results → {out}/per_case_{split}.csv")
     with open(os.path.join(out, "metrics.json"), "w") as f:
         json.dump(metrics, f, indent=1)
-    log[f"stage{stage_num}_test"] = metrics
-    print(per_case[keys].agg(["mean", "std"]).round(4).to_string())
-    print(f"Per-case results → {out}/per_case_test.csv")
+    log[f"stage{stage_num}_eval"] = metrics
 
 
 # ── Stage 1 & 2 training loop ─────────────────────────────────────────────────
@@ -209,7 +217,8 @@ def run_seg_stage(stage_num, train_ids, val_ids, test_ids, case_types, args, dev
                                   base=args.base_channels).to(device)
         model.load_state_dict(torch.load(ckpt, map_location=device, weights_only=True))
         print(f"  Evaluating {ckpt}")
-        evaluate_seg_test(stage_num, model, test_ids, case_types, args, device, log)
+        evaluate_seg_test(stage_num, model, test_ids, case_types, args, device, log,
+                          val_ids=val_ids)
         return None
 
     train_ds = DatasetCls(train_ids, augment=True)
@@ -322,7 +331,8 @@ def run_seg_stage(stage_num, train_ids, val_ids, test_ids, case_types, args, dev
     print(f"\nStage {stage_num} complete — best {tag} Dice: {best_dice:.4f}")
     if test_ids:
         model.load_state_dict(torch.load(ckpt, map_location=device, weights_only=True))
-        evaluate_seg_test(stage_num, model, test_ids, case_types, args, device, log)
+        evaluate_seg_test(stage_num, model, test_ids, case_types, args, device, log,
+                          val_ids=val_ids)
     return best_dice
 
 
@@ -447,15 +457,19 @@ def run_cls_stage(train_ids, val_ids, test_ids, labels_df,
     model.load_state_dict(torch.load(ckpt, map_location=device, weights_only=True))
     test_acc, test_preds, test_labels, test_probs = val_cls_epoch(model, test_loader, device)
     class_names = [idx2cls[i] for i in range(num_classes)]
-    # per-case output for common/evaluate.py (test_loader is unshuffled, so
-    # rows follow test_ds.case_ids)
+    # per-case output for common/evaluate.py (loaders are unshuffled, so rows
+    # follow <split>_ds.case_ids)
     out = os.path.join(args.log_dir, "stage3")
     os.makedirs(out, exist_ok=True)
-    pd.DataFrame([{"case_id": cid, "true": idx2cls[t], "pred": idx2cls[p],
-                   **{f"p_{n}": pr[i] for i, n in enumerate(class_names)}}
-                  for cid, t, p, pr in zip(test_ds.case_ids, test_labels,
-                                           test_preds, test_probs)]
-                 ).to_csv(os.path.join(out, "per_case_test.csv"), index=False)
+    def write_cases(split, ds, labels_, preds_, probs_):
+        pd.DataFrame([{"case_id": cid, "true": idx2cls[t], "pred": idx2cls[p],
+                       **{f"p_{n}": pr[i] for i, n in enumerate(class_names)}}
+                      for cid, t, p, pr in zip(ds.case_ids, labels_, preds_, probs_)]
+                     ).to_csv(os.path.join(out, f"per_case_{split}.csv"), index=False)
+    _, val_preds, val_labels, val_probs = val_cls_epoch(model, val_loader, device)
+    write_cases("val", val_ds, val_labels, val_preds, val_probs)
+    write_cases("test", test_ds, test_labels, test_preds, test_probs)
+    print(f"Per-case results → {out}/per_case_val.csv")
     print(f"Per-case results → {out}/per_case_test.csv")
     print(f"Test accuracy: {test_acc:.4f}")
     present_labels = sorted(set(test_labels))

@@ -32,6 +32,7 @@ experiments/
 | Exp | Question | Versions | Status | Headline |
 |---|---|---|---|---|
 | [E01](E01_liver_labels/) | Are the liver labels correct, and how good is Stage 1 with correct ones? | v0–v3 | **Done**: v2 label + v3 post-processing adopted | Stage 1 liver Dice 0.950 → **0.973 (0.969–0.975)**; liver ∪ tumor label fixes hemangioma omission (HH `tumor_covered` 0.67 → 0.88) |
-| [E02](E02_evaluation/) | Evaluation harness: CIs, paired tests, compute | v1, v2 | v1–v2 done; v3 planned | `common/evaluate.py` CIs + paired tests; UNet-Hybrid now writes per-case test output |
+| [E02](E02_evaluation/) | Evaluation harness: CIs, paired tests, compute | v1, v2, v4 | v1, v2, v4 done; v3 planned | `common/evaluate.py` CIs + paired tests; UNet-Hybrid now writes per-case val + test output |
 | E03 | Stage 3 pooling / aggregation (mask-weighted, area-weighted, ABMIL) | — | Planned | |
 | E04 | Joint segment + classify model | — | Planned | |
+| [E05](E05_tumor_baselines/) | Tumor segmentation baselines (DS²Net, UNet-Hybrid) on the liver region | v1, v2 | v1–v2 done | DS²Net tumor 0.726 cascade / 0.740 oracle (primary). UNet-Hybrid tumor 0.657 oracle; on val comparable Dice (−0.018, n.s.) but less precise (−0.065). UNet-Hybrid liver 0.971 |

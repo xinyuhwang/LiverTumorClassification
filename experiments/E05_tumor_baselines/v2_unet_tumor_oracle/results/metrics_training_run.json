@@ -1,0 +1,50 @@
+{
+ "stage": 2,
+ "task": "tumor",
+ "n_test_cases": 78,
+ "protocol": "GT liver bbox per slice (oracle liver), liver slices only",
+ "test_per_case_mean": {
+  "Dice": 0.6566637028337468,
+  "IoU": 0.5338724548894781,
+  "Precision": 0.66677598012515,
+  "Recall": 0.7266151902326856
+ },
+ "test_per_case_std": {
+  "Dice": 0.24898140956563983,
+  "IoU": 0.2506058813837433,
+  "Precision": 0.25357116870278507,
+  "Recall": 0.2667979797035414
+ },
+ "test_per_case_by_type": {
+  "BCLM": {
+   "Dice": 0.5479,
+   "IoU": 0.4068,
+   "Precision": 0.5305,
+   "Recall": 0.7339
+  },
+  "CRLM": {
+   "Dice": 0.6879,
+   "IoU": 0.5694,
+   "Precision": 0.6702,
+   "Recall": 0.7714
+  },
+  "HCC": {
+   "Dice": 0.6139,
+   "IoU": 0.5062,
+   "Precision": 0.6901,
+   "Recall": 0.6176
+  },
+  "HH": {
+   "Dice": 0.666,
+   "IoU": 0.5517,
+   "Precision": 0.7311,
+   "Recall": 0.6445
+  },
+  "ICC": {
+   "Dice": 0.7835,
+   "IoU": 0.653,
+   "Precision": 0.7326,
+   "Recall": 0.8634
+  }
+ }
+}
