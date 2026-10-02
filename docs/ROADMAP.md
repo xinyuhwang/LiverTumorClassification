@@ -8,7 +8,7 @@ These are 11 proposals from two papers: OrganLens (O1–O7) and GigaPath-Flash /
 
 ## Summary
 
-E05 (tumor segmentation baselines) was added on 2026-09-30, outside the 11 proposals, because Stage 2 had no valid numbers under the new pipeline. The backlog items formerly numbered E05–E09 are now E06–E10.
+E05 (tumor segmentation baselines) was added on 2026-09-30, outside the 11 proposals, because Stage 2 had no valid numbers under the new pipeline. The backlog items formerly numbered E05–E09 are now E07–E11: E06 (nnU-Net 3D baseline, "what's achievable") was added on 2026-10-01 after the project goal of tumor Dice > 0.90 was stated.
 
 
 | ID | Proposal | Impact | Cost | Tier | Experiment | Status |
@@ -18,12 +18,12 @@ E05 (tumor segmentation baselines) was added on 2026-09-30, outside the 11 propo
 | O1 | Mask-weighted patch pooling + tumor-area slice weighting | 4 | 2 | 1 | E03 | Planned |
 | G1 | ABMIL per-patient aggregation | 3 | 1 | 1 | E03 | Planned |
 | O2 | Joint segment + classify, with the mask as an auxiliary task | 5 | 4 | 1 → 3 | E04 | Planned (largest) |
-| O4 | Keep peritumoral context (wider / dual-scale crops) | 3 | 1 | 2 | E06 | Backlog |
+| O4 | Keep peritumoral context (wider / dual-scale crops) | 3 | 1 | 2 | E07 | Backlog |
 | G4 | Report compute (params, FLOPs, latency) with accuracy | 2 | 1 | 2 | folded into E02 | Backlog |
-| O7 | CT-pretrained backbone (OrganLens encoder) for Stage 3 | 3 | 3 | 2 | E07 | Backlog |
-| G2 | LoRA fine-tuning (classifiers now; FM segmenter later) | 3 | 2–4 | 2 | E08 | Backlog |
-| O6 | Phase-identity conditioning of a shared encoder | 3 | 4 | 3 | E09 | Backlog |
-| G3 | Distil the Stage 3 ensemble into one model | 2 | 3 | 3 | E10 | Backlog, after the ensemble is final |
+| O7 | CT-pretrained backbone (OrganLens encoder) for Stage 3 | 3 | 3 | 2 | E08 | Backlog |
+| G2 | LoRA fine-tuning (classifiers now; FM segmenter later) | 3 | 2–4 | 2 | E09 | Backlog |
+| O6 | Phase-identity conditioning of a shared encoder | 3 | 4 | 3 | E10 | Backlog |
+| G3 | Distil the Stage 3 ensemble into one model | 2 | 3 | 3 | E11 | Backlog, after the ensemble is final |
 
 **Tier 1** is what we're doing now, in order E01 → E02 → E03 → E04. E04 is much bigger than the first three and starts once they're done. **Tier 2** is cheap follow-ups and backbone swaps. **Tier 3** is larger research directions.
 
@@ -87,7 +87,7 @@ E05 (tumor segmentation baselines) was added on 2026-09-30, outside the 11 propo
 - **Encoder.** Fine-tuned with LoRA (G2).
 - **Cost.** High: a new model and training loop.
 
-### O4 · Peritumoral context (E06)
+### O4 · Peritumoral context (E07)
 
 Parenchyma around the tumor carries diagnostic signal: enhancement relative to background liver, and cirrhosis for HCC. Ablate the crop margin (`--margin_frac`, `roi_margin_mm`) and try a dual-scale input (tumor crop + liver view). Cheap: config flags plus reruns.
 
@@ -95,7 +95,7 @@ Parenchyma around the tumor carries diagnostic signal: enhancement relative to b
 
 Add parameter count, FLOPs, and per-case inference time to every `metrics.json`, and plot accuracy against compute. This matters for the five-model, 4-view-TTA ensemble. Folded into E02.
 
-### O7 · CT-pretrained backbone (E07)
+### O7 · CT-pretrained backbone (E08)
 
 Add the released OrganLens encoder (ViT-L/16, CT-pretrained DINOv2, liver representation) as a Stage 3 backbone option, compared against ImageNet weights.
 - **Risks.**
@@ -103,16 +103,16 @@ Add the released OrganLens encoder (ViT-L/16, CT-pretrained DINOv2, liver repres
   - ViT-L is about 300M parameters.
   - Its liver representation is untested on liver disease.
 
-### G2 · LoRA fine-tuning (E08)
+### G2 · LoRA fine-tuning (E09)
 
 GigaTIME-Flash puts LoRA (rank 8, α 16, on attention `qkv`/`proj`) on a ViT and trains a light conv decoder that takes skip features from blocks 4, 6, 9 and 12.
 - **First:** replace "unfreeze the last blocks" with LoRA in the ViT/Swin classifiers. Low cost.
 - **Later:** a foundation-model encoder with LoRA and a light decoder as a Stage 2 segmenter. High cost.
 
-### O6 · Phase-identity conditioning (E09)
+### O6 · Phase-identity conditioning (E10)
 
 OrganLens adds a learned organ embedding to the CLS token, scaled by a factor that starts at 0. HERALD could do the same with a phase embedding (nc/art/pvp/delay) in one shared encoder, instead of stacking the phases as channels. That's a principled fix for the PhaseNorm problem in `ds2net/PORTING.md`. Cost is high: it needs a per-phase encoder pass and a way to fuse the phases.
 
-### G3 · Ensemble distillation (E10)
+### G3 · Ensemble distillation (E11)
 
 GigaPath-Flash distils a 1B-parameter teacher into a 22M student. For HERALD, distil the Stage 3 ensemble (5 backbones × 4 TTA views = 20 passes per slice) into one student. The paper's note that the KoLeo loss term destabilised distillation into a small model is worth remembering. Only worth doing once the ensemble is final and deployment speed matters.

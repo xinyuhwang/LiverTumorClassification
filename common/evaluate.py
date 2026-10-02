@@ -5,7 +5,8 @@ Every pipeline writes one row per test case; this script turns those rows
 into numbers that can be compared across versions:
   summary   mean / SD / median of each metric with a patient-level bootstrap
             95% CI (resampling patients, as in OrganLens), optionally per
-            tumor type
+            tumor type or tumor size (--size-bins); segmentation runs also get
+            global Dice (all voxels pooled) with its CI
   compare   paired comparison of two runs on their common cases: mean
             difference with bootstrap 95% CI and p-value, plus a Wilcoxon
             signed-rank test (segmentation) or exact McNemar test
@@ -105,22 +106,54 @@ def boot_p(diffs):
 
 # ── Summary ───────────────────────────────────────────────────────────────────
 
-def summarize(kind, df, names, metrics=None, by_type=False, n_boot=N_BOOT):
+def global_dice(g):
+    """Dataset-level Dice: 2·Σtp / Σ(pred + gt), from per-case Dice and voxel
+    counts (tp = Dice · (pred + gt) / 2). Weights every voxel equally, so large
+    lesions dominate; the per-case mean weights every patient equally."""
+    s = g["pred_voxels"].to_numpy(float) + g["gt_voxels"].to_numpy(float)
+    tp = g["Dice"].to_numpy(float) * s / 2
+    return float(2 * tp.sum() / s.sum()) if s.sum() else float("nan")
+
+
+def size_groups(df, bins):
+    """Groups by GT volume (gt_ml column): e.g. bins (10, 50, 200) →
+    <10, 10–50, 50–200, ≥200 ml."""
+    edges = [0.0, *bins, float("inf")]
+    out = []
+    for lo, hi in zip(edges[:-1], edges[1:]):
+        g = df[(df["gt_ml"] >= lo) & (df["gt_ml"] < hi)]
+        label = f"<{hi:g} ml" if lo == 0 else (f"≥{lo:g} ml" if hi == float("inf")
+                                               else f"{lo:g}–{hi:g} ml")
+        if len(g):
+            out.append((label, g))
+    return out
+
+
+def summarize(kind, df, names, metrics=None, by_type=False, n_boot=N_BOOT,
+              size_bins=None):
     rows = []
     groups = [("all", df)]
     if by_type and "tumor_type" in df:
         groups += [(t, g) for t, g in df.groupby("tumor_type")]
     if kind == "cls" and by_type:
         groups += [(f"true={t}", g) for t, g in df.groupby("true")]
+    if size_bins and kind == "seg" and "gt_ml" in df:
+        groups += size_groups(df, size_bins)
     for group, g in groups:
         g = g.reset_index(drop=True)
         if kind == "seg":
-            for m in metrics or [c for c in SEG_METRICS if c in g]:
+            for m in [c for c in (metrics or SEG_METRICS) if c in g]:
                 x = g[m].to_numpy(dtype=float)
                 lo, hi = ci(bootstrap(lambda i: x[i].mean(), len(x), n_boot))
                 rows.append({"group": group, "metric": m, "n": len(x), "mean": x.mean(),
                              "ci_low": lo, "ci_high": hi, "sd": x.std(ddof=1) if len(x) > 1 else 0.0,
                              "median": float(np.median(x))})
+            if {"Dice", "pred_voxels", "gt_voxels"} <= set(g.columns) and \
+                    (metrics is None or "global_Dice" in metrics):
+                lo, hi = ci(bootstrap(lambda i: global_dice(g.iloc[i]), len(g), n_boot))
+                rows.append({"group": group, "metric": "global_Dice", "n": len(g),
+                             "mean": global_dice(g), "ci_low": lo, "ci_high": hi,
+                             "sd": float("nan"), "median": float("nan")})
         else:
             point = cls_metrics(g, names)
             boots = bootstrap(lambda i: cls_metrics(g.iloc[i], names), len(g), n_boot)
@@ -207,6 +240,8 @@ def main(argv=None):
     s = sub.add_parser("summary", help="metric means with bootstrap 95% CIs")
     s.add_argument("run")
     s.add_argument("--by-type", action="store_true", help="also per tumor type")
+    s.add_argument("--size-bins", type=float, nargs="*", metavar="ML",
+                   help="also by GT volume, e.g. --size-bins 10 50 200 (needs a gt_ml column)")
     c = sub.add_parser("compare", help="paired comparison of two runs (B − A)")
     c.add_argument("run_a"); c.add_argument("run_b")
     for q in (s, c):
@@ -218,7 +253,8 @@ def main(argv=None):
 
     if args.cmd == "summary":
         kind, df, names = load_run(args.run)
-        res = summarize(kind, df, names, args.metrics, args.by_type, args.n_boot)
+        res = summarize(kind, df, names, args.metrics, args.by_type, args.n_boot,
+                        args.size_bins)
         print(f"{args.run}: {kind}, {len(df)} cases, {args.n_boot} bootstrap resamples")
         show(res, args.md)
         payload = {"run": str(args.run), "kind": kind, "n_boot": args.n_boot,

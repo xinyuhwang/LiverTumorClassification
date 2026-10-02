@@ -41,7 +41,8 @@ A liver model trained on these masks learns to exclude such tumors, most of all 
 | [v1](v1_official_liver_masks/) | Official `liver_mask_pvp.nii.gz` via `data_prep/` | Done | **0.950** (0.941–0.957); HH `tumor_covered` 0.67 |
 | [v2](v2_liver_union_tumor/) | Liver label = official liver mask ∪ tumor mask (`--set liver_includes_tumor=True`) | Done — **adopted** | 0.949 (0.939–0.958); `tumor_covered` +0.047 (CI +0.021 to +0.080), HH 0.67 → 0.88 |
 | [v3](v3_largest_component/) | v2 + keep the largest connected component at test time (no retraining) | Done — **adopted** | **0.973** (0.969–0.975); precision +0.045 in all 78 cases |
-| v4 (only if needed) | TotalSegmentator cross-check of cases still flagged | Conditional | — |
+| [v4](v4_keep_near_components/) | Also keep components near (≤ 5/10/20 mm) or large (≥ 5/10/20%) relative to the largest | Done — not adopted (no gain on val/train) | val 0.9705–0.9711 vs v3 0.9711 |
+| v5 (only if needed) | TotalSegmentator cross-check of cases still flagged | Conditional | — |
 
 v1 and v2 are both scored against their own label definition, and also against the union label, so they can be compared on the same reference.
 

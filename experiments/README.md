@@ -36,3 +36,4 @@ experiments/
 | E03 | Stage 3 pooling / aggregation (mask-weighted, area-weighted, ABMIL) | — | Planned | |
 | E04 | Joint segment + classify model | — | Planned | |
 | [E05](E05_tumor_baselines/) | Tumor segmentation baselines (DS²Net, UNet-Hybrid) on the liver region | v1, v2 | v1–v2 done | DS²Net tumor 0.726 cascade / 0.740 oracle (primary). UNet-Hybrid tumor 0.657 oracle; on val comparable Dice (−0.018, n.s.) but less precise (−0.065). UNet-Hybrid liver 0.971 |
+| [E06](E06_nnunet_baseline/) | nnU-Net 3D baseline: what's achievable on this dataset (goal: tumor Dice > 0.90) | v1 | v1 code ready, not yet run | Reference: DS²Net tumor global Dice already 0.893 val / 0.865 test |

@@ -121,3 +121,20 @@ def test_cli_summary_writes_json(tmp_path, capsys):
     assert "| group | metric |" in capsys.readouterr().out
     payload = json.loads(out.read_text())
     assert payload["kind"] == "seg" and payload["results"][0]["n"] == 4
+
+
+def test_global_dice_and_size_bins(tmp_path):
+    d = tmp_path / "g"
+    d.mkdir()
+    # case A: big tumor, Dice 0.9 (pred 100, gt 100 voxels); case B: small, Dice 0.0
+    pd.DataFrame({"case_id": ["a", "b"], "tumor_type": ["HH", "BCLM"],
+                  "Dice": [0.9, 0.0], "pred_voxels": [100, 0], "gt_voxels": [100, 10],
+                  "gt_ml": [100.0, 1.0]}).to_csv(d / "per_case_test.csv", index=False)
+    kind, df, names = E.load_run(d)
+    assert E.global_dice(df) == pytest.approx(2 * 90 / 210)       # pooled voxels
+    res = E.summarize(kind, df, names, size_bins=[10], n_boot=100)
+    groups = set(res["group"])
+    assert {"all", "<10 ml", "≥10 ml"} <= groups
+    g = res[(res.group == "all") & (res.metric == "global_Dice")].iloc[0]
+    assert g["mean"] == pytest.approx(0.857, abs=1e-3)
+    assert res[(res.group == "all") & (res.metric == "Dice")].iloc[0]["mean"] == pytest.approx(0.45)

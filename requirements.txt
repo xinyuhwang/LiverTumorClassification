@@ -11,3 +11,6 @@ pandas
 tqdm
 matplotlib
 seaborn
+
+# E06 nnU-Net baseline
+nnunetv2>=2.5
