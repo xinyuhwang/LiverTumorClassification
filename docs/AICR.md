@@ -125,6 +125,24 @@ bash cluster/pull_results.sh $HERALD_STORE/results/runs/ds2net/e01_v1_liver \
      experiments/E01_liver_labels/v1_official_liver_masks/results
 ```
 
+## nnU-Net (E06)
+
+nnU-Net v2 is installed in `~/envs/herald`. Paths are set in `cluster/env.sh`:
+
+| Variable | Location | Contents |
+|---|---|---|
+| `nnUNet_raw` | `$HERALD_STORE/nnunet/raw` | symlinked images, labels, `dataset.json` (dataset ID 501) |
+| `nnUNet_preprocessed` | `$HERALD_SCRATCH/nnunet/preprocessed` | ~44 GB, rebuildable; also holds `splits_final.json` (HERALD split as fold 0) |
+| `nnUNet_results` | `$HERALD_STORE/nnunet/results` | checkpoints and validation predictions |
+
+```bash
+bash cluster/submit.sh nnunet_prep      # CPU, ~10 min: build dataset + plan/preprocess + integrity check
+bash cluster/submit.sh nnunet_train     # GPU, ~5.5 h for 1,000 epochs (add --c to continue)
+bash cluster/submit.sh nnunet_predict   # GPU, ~10 min: test prediction + val/test scoring
+```
+
+Scores land in `$HERALD_RESULTS/runs/nnunet/e06_v1_3d_fullres_fold0/{tumor,liver}/per_case_{val,test}.csv`.
+
 ## Files
 
 | File | Purpose |
@@ -133,5 +151,5 @@ bash cluster/pull_results.sh $HERALD_STORE/results/runs/ds2net/e01_v1_liver \
 | `cluster/setup_env.sh` | Creates the Python environment and checks the GPU |
 | `cluster/ssh_config.example` | `aicr` and `aicr-dtn` SSH host entries |
 | `cluster/submit.sh` | `sbatch` wrapper that adds your account and log path |
-| `cluster/jobs/*.sbatch` | `prepare_data`, `ds2net`, `unet_hybrid`, `stage3_paper` |
+| `cluster/jobs/*.sbatch` | `prepare_data`, `ds2net`, `unet_hybrid`, `stage3_paper`, `nnunet_prep`, `nnunet_train`, `nnunet_predict` |
 | `cluster/pull_results.sh` | Laptop-side copy of run metrics into `experiments/` |

@@ -21,6 +21,12 @@ unet_hybrid/               UNet-Hybrid pipeline (UNetTransformer)
   stage3_paper.py          Stage 3 as described in the paper
   STAGE3_DESIGN.md         the two Stage 3 implementations
   results/                 original training logs
+nnunet/                    nnU-Net v2 baseline (E06)
+  prepare_dataset.py       prepared data → nnU-Net raw dataset + HERALD split as fold 0
+  evaluate_predictions.py  per-case tumor/liver scores with the shared metric code
+common/ also holds         metrics.py (per-case metrics), evaluate.py (bootstrap CIs,
+                           paired tests, global Dice, --size-bins)
+tests/                     pytest tests for common/ (run: pytest tests/)
 cluster/                   AICR setup: env, job scripts, submit / pull helpers
 docs/
   AICR.md                  connecting to and running on AICR
@@ -58,7 +64,14 @@ cd ds2net && python train.py --stage 1 --smoke_test --no_pretrain
 cd unet_hybrid && python train.py --stage 1 --smoke_test --data_dir ../data/mct_ltdiag
 ```
 
-Research plan: [docs/ROADMAP.md](docs/ROADMAP.md). Results so far: [experiments/](experiments/).
+Evaluate any run (per-case CSV) with bootstrap CIs, or compare two runs case by case:
+
+```bash
+python common/evaluate.py summary <run dir or per_case_*.csv> --by-type --size-bins 10 50 200 --md
+python common/evaluate.py compare <run A> <run B> --md
+```
+
+Research plan: [docs/ROADMAP.md](docs/ROADMAP.md). Results so far: [experiments/](experiments/). Current best (2026-10-02): nnU-Net 3D (E06 v1), tumor Dice 0.796 per case / 0.895 global on validation, liver 0.969.
 ## MCT-LTDiag — Multi-phase CT Liver-Tumor Diagnosis
 
 A two-stage deep learning pipeline for liver segmentation and tumor detection in multi-phase abdominal CT scans, implemented in PyTorch and designed to run in Google Colab.

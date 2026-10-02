@@ -80,6 +80,16 @@ Files: [`results/`](results/) — `tumor/` and `liver/` per-case CSVs, summaries
   - The per-case mean over all tumors is about 0.80, held down by small lesions (< 10 ml: 0.65–0.71).
 
   That matches published liver-tumor results (~0.80–0.83 per case on LiTS). A per-case mean of 0.90 over all tumor sizes is beyond the current state of the art on this kind of data.
+- **Where "large" starts (threshold sweep, 2026-10-02).** `gt_ml` is the **total tumor volume per patient** (all lesions summed); diameters are for a single equivalent sphere.
+
+  | Total tumor volume | ≈ diameter | Val n / mean Dice | Test n / mean Dice |
+  |---|---|---|---|
+  | ≥ 50 ml | 4.6 cm | 42 / 0.865 | 36 / 0.891 |
+  | ≥ 100 ml | 5.8 cm | 35 / 0.892 | 24 / 0.901 |
+  | **≥ 150 ml** | **6.6 cm** | **30 / 0.903** | **14 / 0.910** |
+  | ≥ 200 ml | 7.3 cm | 26 / 0.909 | 14 / 0.910 |
+
+  The group mean reaches 0.90 from about **150 ml** on validation (100 ml on test). That's a mean over patients, not a per-case guarantee, and it was read off validation, so it's descriptive. Hemangiomas aren't only good because they're large: every validation HH is ≥ 152 ml, but 5 of 14 test HH are < 100 ml and HH still averages 0.90 on test.
 - **Where DS²Net and nnU-Net differ:** on global Dice they tie on validation (0.893 vs 0.895). nnU-Net's per-case gain comes from small and mid-size tumors: full 3D context at native z-spacing, and all four phases without PhaseNorm.
 - **Cost:** a single model with no cascade, 5 h 21 min to train, ~10 min to predict and score 78 cases.
 

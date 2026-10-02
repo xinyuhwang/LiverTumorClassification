@@ -6,6 +6,16 @@ These are 11 proposals from two papers: OrganLens (O1–O7) and GigaPath-Flash /
 - **Impact:** how much it could change the validity or accuracy of HERALD's results.
 - **Cost:** engineering plus compute. 1 is a flag or small script; 5 is new pretraining.
 
+## Current status (2026-10-02)
+
+- **Done:**
+  - E01: liver labels, liver Dice 0.973.
+  - E02: evaluation harness (CIs, paired tests, validation output, global Dice, size bins).
+  - E05: tumor baselines (DS²Net 0.726 cascade; UNet-Hybrid 0.657 oracle, test).
+  - E06 v1: nnU-Net 3D, tumor 0.796 per case / 0.895 global on validation.
+- **Goal:** tumor Dice > 0.90, with the measure still to be defined (per case / global / by size). nnU-Net reaches 0.90 for total tumor volume ≥ ~150 ml and for hemangiomas; small tumors (< 10 ml) are ~0.65–0.71.
+- **Proposed next:** E06 v2 (5-fold nnU-Net ensemble) and small-tumor work.
+
 ## Summary
 
 E05 (tumor segmentation baselines) was added on 2026-09-30, outside the 11 proposals, because Stage 2 had no valid numbers under the new pipeline. The backlog items formerly numbered E05–E09 are now E07–E11: E06 (nnU-Net 3D baseline, "what's achievable") was added on 2026-10-01 after the project goal of tumor Dice > 0.90 was stated.
