@@ -145,6 +145,8 @@ Scores land in `$HERALD_RESULTS/runs/nnunet/e06_v1_3d_fullres_fold0/{tumor,liver
 
 **5-fold ensemble (E06 v2).** `python nnunet/prepare_dataset.py --cv_folds 5 --splits_only` adds folds 1–5 to `splits_final.json` and links the val images into `imagesVal/` (seconds). Then train each fold with `NNUNET_FOLD=<N> bash cluster/submit.sh nnunet_train` (~5.5 h each). The job stops if the fold isn't in the file, because nnU-Net would otherwise train on a random split without saying so. Finally, `bash cluster/submit.sh nnunet_predict_ensemble` predicts val and test with all five folds and scores them (~1–2 h). See `experiments/E06_nnunet_baseline/v2_5fold_ensemble/run.sh`.
 
+**Other plans (E06 v3).** `NNUNET_PLANS=<plans name>` selects the plans for `nnunet_train` and `nnunet_predict` (default `nnUNetPlans`), and `NNUNET_RUN=<name>` the scores folder for `nnunet_predict`. ResEnc presets reuse the default 3d_fullres preprocessed data, so only `nnUNetv2_plan_experiment -d 501 -pl nnUNetPlannerResEncM` is needed first.
+
 ## Files
 
 | File | Purpose |
