@@ -33,7 +33,7 @@ E05 (tumor segmentation baselines) was added on 2026-09-30, outside the 11 propo
 | G2 | LoRA fine-tuning (classifiers now; FM segmenter later) | 3 | 2–4 | 2 | E09 | Backlog |
 | O6 | Phase-identity conditioning of a shared encoder | 3 | 4 | 3 | E10 | Backlog |
 | G3 | Distil the Stage 3 ensemble into one model | 2 | 3 | 3 | E11 | Backlog, after the ensemble is final |
-| R1 | Failure rate (Dice < 0.5) and per-size-group tests next to mean Dice [2, 6] | 2 | 1 | 2 | E02, next version | Backlog |
+| R1 | Failure rate (Dice < 0.5) and per-size-group tests next to mean Dice [2, 6] | 2 | 1 | 2 | E02 v6 | Code done, with per-lesion detection |
 | R2 | Cross-phase consistency loss for tumor masks [3] | 3 | 3 | 3 | E13 | Backlog |
 | R3 | Slice-interaction module in DS²Net's 2.5D input [8] | 3 | 2 | 2 | E12, after v1 | Backlog, only if E12 v1 shows slice context helps |
 | R6 | Label QC with a learned quality judge (SegAE) [9] | 3 | 1 | 2 | E14 | Backlog, after E06 v2 and E12 v1 |
@@ -151,6 +151,8 @@ A module that mixes features across neighbouring slices (attention + depthwise c
 SegAE [9] predicts a mask's Dice from the image, the mask and the structure's name, with no reference label. It correlates with real Dice at r = 0.902, takes 0.06 s per 3D mask, and found 8–13% poor masks in large public datasets. Weights are released. Two uses for HERALD:
 - **Screen MCT-LTDiag's labels.** E01 found problems in the official liver masks, but the tumor masks have only been checked for overlap with the liver. Flag low-scoring masks for a visual check, and exclude or fix confirmed bad ones in a new version.
 - **Flag likely failed predictions** per case, alongside R1's failure rate.
+
+**Release check (2026-10-03):** the public repository (github.com/Schuture/SegAE, commit 027fa66) does not contain the paper's vision-language judge. It ships an earlier SegAE: a ResNet-50 regressor on a 2-channel input (CT window [−200, 200] + mask, 256 × 256 crops) conditioned on fixed per-class embeddings for 145 DAP Atlas classes. **Liver is class 13; there is no tumor class**, so tumor masks can't be scored without retraining. The inference script also needs small fixes to run. Usable now for liver masks only.
 
 **First step (cheap, inference only):** run SegAE on nnU-Net's 78 validation predictions and check that its predicted Dice tracks the real per-case Dice we already have. It was trained on PET/CT with a narrow HU window and never learned to predict tumor Dice, so this check decides whether it's usable on our 4-phase contrast CT at all.
 

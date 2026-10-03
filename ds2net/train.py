@@ -36,7 +36,7 @@ import datasets as DS
 import models as M
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))   # repo root
 from common.splits import load_splits, DEFAULT_SPLITS_CSV
-from common.metrics import volume_metrics, liver_extras, largest_component
+from common.metrics import volume_metrics, liver_extras, largest_component, lesion_metrics
 
 SEED = 42
 METRIC_KEYS = ["Dice", "IoU", "Precision", "Recall", "F1", "MAE"]
@@ -370,8 +370,9 @@ def run_seg_stage(args, cfg, splits, device, run_dir, case_types):
         liver_out.mkdir(exist_ok=True)
     for i, cid in enumerate(predict_ids, 1):
         split = "test" if cid in te else "val" if cid in va else None
-        _, masks, _ = DS.load_case(Path(args.data_dir) / cid,
-                                   cfg.get("liver_includes_tumor", False))
+        _, masks, spacing = DS.load_case(Path(args.data_dir) / cid,
+                                         cfg.get("liver_includes_tumor", False))
+        vox_ml = float(np.prod(spacing)) / 1000.0
         for mode in modes:
             roi_mask = predicted_liver(liver_dir, cid, cfg) if mode == "cascade" else None
             prob = predict_case(model, Path(args.data_dir) / cid, stage, cfg, device,
@@ -387,6 +388,10 @@ def run_seg_stage(args, cfg, splits, device, run_dir, case_types):
                 if task == "liver":
                     # common reference for comparing label variants (E01)
                     row.update(liver_extras(pred, masks["liver"], masks["tumor"]))
+                else:   # tumor volume and per-lesion detection counts (R1)
+                    row.update(gt_ml=float(masks["tumor"].sum()) * vox_ml,
+                               pred_ml=float(pred.sum()) * vox_ml,
+                               **lesion_metrics(pred, masks["tumor"].astype(bool), vox_ml)[0])
                 rows[(split, mode)].append(row)
         print(f"  [{i}/{len(predict_ids)}] {cid}", flush=True)
 
@@ -530,18 +535,16 @@ def run_cls_stage(args, cfg, splits, device, run_dir, labels_df):
 
     model.load_state_dict(torch.load(best_path, map_location=device, weights_only=True))
     metrics = {"stage": 3, "best_val_acc": best}
-    rows = []
     for split, loader in (("val", val_loader), ("test", test_loader)):
         y, prob, cids = case_predictions(model, loader, device, amp, amp_dtype)
         metrics[split] = cls_report(y, prob, class_names)
         print(f"\n{split}: acc {metrics[split]['accuracy']:.4f} | "
               f"macro-F1 {metrics[split]['macro_f1']:.4f} | "
               f"macro-AUC {metrics[split]['macro_auc']:.4f}")
-        if split == "test":
-            rows = [{"case_id": c, "true": class_names[t], "pred": class_names[p.argmax()],
-                     **{f"p_{n}": float(v) for n, v in zip(class_names, p)}}
-                    for c, t, p in zip(cids, y, prob)]
-    pd.DataFrame(rows).to_csv(run_dir / "per_case_test.csv", index=False)
+        rows = [{"case_id": c, "true": class_names[t], "pred": class_names[p.argmax()],
+                 **{f"p_{n}": float(v) for n, v in zip(class_names, p)}}
+                for c, t, p in zip(cids, y, prob)]
+        pd.DataFrame(rows).to_csv(run_dir / f"per_case_{split}.csv", index=False)
     (run_dir / "metrics.json").write_text(json.dumps(metrics, indent=1))
 
 

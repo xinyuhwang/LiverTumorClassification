@@ -138,3 +138,19 @@ def test_global_dice_and_size_bins(tmp_path):
     g = res[(res.group == "all") & (res.metric == "global_Dice")].iloc[0]
     assert g["mean"] == pytest.approx(0.857, abs=1e-3)
     assert res[(res.group == "all") & (res.metric == "Dice")].iloc[0]["mean"] == pytest.approx(0.45)
+
+
+def test_fail_rate_and_size_bins_in_compare(tmp_path):
+    a = tmp_path / "a.csv"; b = tmp_path / "b.csv"
+    base = {"case_id": [f"c{i}" for i in range(6)], "tumor_type": ["HH"] * 6,
+            "gt_ml": [1, 2, 5, 100, 300, 400]}
+    pd.DataFrame({**base, "Dice": [0.2, 0.4, 0.6, 0.8, 0.9, 0.9]}).to_csv(a, index=False)
+    pd.DataFrame({**base, "Dice": [0.6, 0.4, 0.6, 0.8, 0.9, 0.95]}).to_csv(b, index=False)
+    res, _ = E.compare(a, b, n_boot=200, size_bins=[10])
+    fr = res[res.metric == "fail_rate"].iloc[0]
+    assert fr["a"] == pytest.approx(2 / 6) and fr["b"] == pytest.approx(1 / 6)
+    assert fr["better"] == 1 and fr["worse"] == 0
+    small = res[(res.group == "<10 ml") & (res.metric == "Dice")].iloc[0]
+    assert small["n"] == 3 and small["diff"] == pytest.approx(0.4 / 3)
+    s = E.summarize("seg", pd.read_csv(a), None, n_boot=200)
+    assert s[(s.group == "all") & (s.metric == "fail_rate")].iloc[0]["mean"] == pytest.approx(2 / 6)

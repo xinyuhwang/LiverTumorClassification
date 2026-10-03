@@ -6,11 +6,14 @@ into numbers that can be compared across versions:
   summary   mean / SD / median of each metric with a patient-level bootstrap
             95% CI (resampling patients, as in OrganLens), optionally per
             tumor type or tumor size (--size-bins); segmentation runs also get
-            global Dice (all voxels pooled) with its CI
+            global Dice (all voxels pooled) and the failure rate (share of
+            cases with Dice < 0.5), each with its CI
   compare   paired comparison of two runs on their common cases: mean
             difference with bootstrap 95% CI and p-value, plus a Wilcoxon
             signed-rank test (segmentation) or exact McNemar test
-            (classification), and how many cases got better / worse
+            (classification), and how many cases got better / worse;
+            segmentation also compares the failure rate, and with --size-bins
+            repeats the Dice comparison within each size group (R1)
 
 Inputs (a run directory or a file):
   segmentation    per_case_test.csv with case_id, [tumor_type], metric columns
@@ -21,7 +24,7 @@ Inputs (a run directory or a file):
 
 Usage
   python common/evaluate.py summary <run> [--by-type] [--md] [--out report.json]
-  python common/evaluate.py compare <run_A> <run_B> [--metrics Dice Recall] [--md]
+  python common/evaluate.py compare <run_A> <run_B> [--metrics Dice Recall] [--size-bins 10 50 200] [--md]
 """
 
 import argparse, json, sys
@@ -32,6 +35,7 @@ import pandas as pd
 from scipy import stats
 
 N_BOOT, SEED, ALPHA = 2000, 0, 0.05
+FAIL_DICE = 0.5          # a case with Dice below this counts as failed (R1)
 SEG_METRICS = ["Dice", "IoU", "Precision", "Recall", "Dice_vs_union", "tumor_covered"]
 CLS_METRICS = ["accuracy", "macro_f1", "macro_auc"]
 
@@ -154,6 +158,12 @@ def summarize(kind, df, names, metrics=None, by_type=False, n_boot=N_BOOT,
                 rows.append({"group": group, "metric": "global_Dice", "n": len(g),
                              "mean": global_dice(g), "ci_low": lo, "ci_high": hi,
                              "sd": float("nan"), "median": float("nan")})
+            if "Dice" in g and (metrics is None or "fail_rate" in metrics):
+                f = (g["Dice"].to_numpy(float) < FAIL_DICE).astype(float)
+                lo, hi = ci(bootstrap(lambda i: f[i].mean(), len(f), n_boot))
+                rows.append({"group": group, "metric": "fail_rate", "n": len(f),
+                             "mean": f.mean(), "ci_low": lo, "ci_high": hi,
+                             "sd": float("nan"), "median": float("nan")})
         else:
             point = cls_metrics(g, names)
             boots = bootstrap(lambda i: cls_metrics(g.iloc[i], names), len(g), n_boot)
@@ -166,7 +176,19 @@ def summarize(kind, df, names, metrics=None, by_type=False, n_boot=N_BOOT,
 
 # ── Paired comparison ─────────────────────────────────────────────────────────
 
-def compare(run_a, run_b, metrics=None, n_boot=N_BOOT):
+def _paired_row(group, m, xa, xb, n_boot):
+    d = xb - xa
+    boots = bootstrap(lambda i: d[i].mean(), len(d), n_boot)
+    lo, hi = ci(boots)
+    nz = d[d != 0]
+    wil = stats.wilcoxon(nz).pvalue if len(nz) >= 1 else 1.0
+    return {"group": group, "metric": m, "n": len(d), "a": xa.mean(), "b": xb.mean(),
+            "diff": d.mean(), "ci_low": lo, "ci_high": hi,
+            "p_boot": boot_p(boots), "p_wilcoxon": float(wil),
+            "better": int((d > 0).sum()), "worse": int((d < 0).sum())}
+
+
+def compare(run_a, run_b, metrics=None, n_boot=N_BOOT, size_bins=None):
     kind_a, a, names = load_run(run_a)
     kind_b, b, _ = load_run(run_b)
     if kind_a != kind_b:
@@ -182,16 +204,23 @@ def compare(run_a, run_b, metrics=None, n_boot=N_BOOT):
     rows = []
     if kind_a == "seg":
         for m in metrics or [c for c in SEG_METRICS if c in a and c in b]:
-            xa, xb = a[m].to_numpy(float), b[m].to_numpy(float)
-            d = xb - xa
-            boots = bootstrap(lambda i: d[i].mean(), len(d), n_boot)
-            lo, hi = ci(boots)
-            nz = d[d != 0]
-            wil = stats.wilcoxon(nz).pvalue if len(nz) >= 1 else 1.0
-            rows.append({"metric": m, "n": len(d), "a": xa.mean(), "b": xb.mean(),
-                         "diff": d.mean(), "ci_low": lo, "ci_high": hi,
-                         "p_boot": boot_p(boots), "p_wilcoxon": float(wil),
-                         "better": int((d > 0).sum()), "worse": int((d < 0).sum())})
+            rows.append(_paired_row("all", m, a[m].to_numpy(float), b[m].to_numpy(float), n_boot))
+        if "Dice" in a and "Dice" in b and (metrics is None or "fail_rate" in metrics):
+            # failed = Dice < FAIL_DICE; better = cases that stopped failing
+            fa = (a["Dice"].to_numpy(float) < FAIL_DICE).astype(float)
+            fb = (b["Dice"].to_numpy(float) < FAIL_DICE).astype(float)
+            r = _paired_row("all", "fail_rate", fa, fb, n_boot)
+            r["better"], r["worse"] = int((fb < fa).sum()), int((fb > fa).sum())
+            rows.append(r)
+        if size_bins:
+            vol = a if "gt_ml" in a else b if "gt_ml" in b else None
+            if vol is None:
+                print("  (no gt_ml column in either run: --size-bins skipped)")
+            else:
+                for label, g in size_groups(vol, size_bins):
+                    idx = g.index.to_numpy()
+                    rows.append(_paired_row(label, "Dice", a["Dice"].to_numpy(float)[idx],
+                                            b["Dice"].to_numpy(float)[idx], n_boot))
     else:
         pa, pb = cls_metrics(a, names), cls_metrics(b, names)
         boots = bootstrap(lambda i: {k: cls_metrics(b.iloc[i], names)[k]
@@ -205,7 +234,7 @@ def compare(run_a, run_b, metrics=None, n_boot=N_BOOT):
         for m in metrics or CLS_METRICS:
             diffs = np.array([x[m] for x in boots])
             lo, hi = ci(diffs)
-            rows.append({"metric": m, "n": len(a), "a": pa[m], "b": pb[m],
+            rows.append({"group": "all", "metric": m, "n": len(a), "a": pa[m], "b": pb[m],
                          "diff": pb[m] - pa[m], "ci_low": lo, "ci_high": hi,
                          "p_boot": boot_p(diffs),
                          "p_mcnemar": float(mcnemar) if m == "accuracy" else float("nan"),
@@ -244,6 +273,8 @@ def main(argv=None):
                    help="also by GT volume, e.g. --size-bins 10 50 200 (needs a gt_ml column)")
     c = sub.add_parser("compare", help="paired comparison of two runs (B − A)")
     c.add_argument("run_a"); c.add_argument("run_b")
+    c.add_argument("--size-bins", type=float, nargs="*", metavar="ML",
+                   help="also compare Dice within GT-volume groups (needs gt_ml in A or B)")
     for q in (s, c):
         q.add_argument("--metrics", nargs="*")
         q.add_argument("--n-boot", type=int, default=N_BOOT)
@@ -260,7 +291,8 @@ def main(argv=None):
         payload = {"run": str(args.run), "kind": kind, "n_boot": args.n_boot,
                    "results": res.to_dict(orient="records")}
     else:
-        res, info = compare(args.run_a, args.run_b, args.metrics, args.n_boot)
+        res, info = compare(args.run_a, args.run_b, args.metrics, args.n_boot,
+                            args.size_bins)
         print(f"B − A on {info['n_common']} common cases "
               f"({len(info['only_in_a'])} only in A, {len(info['only_in_b'])} only in B), "
               f"{args.n_boot} bootstrap resamples\n  A = {args.run_a}\n  B = {args.run_b}")

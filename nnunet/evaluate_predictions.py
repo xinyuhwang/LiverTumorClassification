@@ -7,6 +7,10 @@ Writes, for the given split:
   <out>/liver/per_case_<split>.csv   liver (labels 1+2) vs GT liver ∪ tumor,
                                       plus Dice_vs_union and tumor_covered
 Both include gt_ml / pred_ml (volumes in ml) for size-stratified summaries.
+The tumor CSV also has per-lesion detection counts (n_gt_lesions, n_detected,
+n_fp_lesions, lesion_recall; R1), and
+  <out>/tumor/per_lesion_<split>.csv  one row per GT lesion: volume, detected,
+                                      overlap, lesion_Dice
 
 python evaluate_predictions.py --pred <dir of <case>.nii.gz> --split val --out <dir>
 """
@@ -18,7 +22,7 @@ import numpy as np, pandas as pd, nibabel as nib
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from common.splits import load_splits, DEFAULT_SPLITS_CSV
-from common.metrics import volume_metrics, liver_extras
+from common.metrics import volume_metrics, liver_extras, lesion_metrics
 
 
 def score(args):
@@ -33,12 +37,15 @@ def score(args):
     vox_ml = float(np.prod(img.header.get_zooms()[:3])) / 1000.0
     p_t, p_l = pred == 2, pred >= 1
     ref_l = liver | tumor
+    les_sum, lesions = lesion_metrics(p_t, tumor, vox_ml)
     t = {"case_id": cid, "tumor_type": ctype, **volume_metrics(p_t, tumor),
-         "gt_ml": tumor.sum() * vox_ml, "pred_ml": p_t.sum() * vox_ml}
+         "gt_ml": tumor.sum() * vox_ml, "pred_ml": p_t.sum() * vox_ml, **les_sum}
+    lesions = [{"case_id": cid, "tumor_type": ctype, "case_gt_ml": t["gt_ml"], **l}
+               for l in lesions]
     l = {"case_id": cid, "tumor_type": ctype, **volume_metrics(p_l, ref_l),
          **liver_extras(p_l, liver, tumor), "gt_ml": ref_l.sum() * vox_ml,
          "pred_ml": p_l.sum() * vox_ml}
-    return t, l
+    return t, l, lesions
 
 
 def main():
@@ -67,6 +74,10 @@ def main():
         df.to_csv(out / f"per_case_{args.split}.csv", index=False)
         print(f"{task} {args.split}: {len(df)} cases, mean Dice {df['Dice'].mean():.4f} "
               f"→ {out / f'per_case_{args.split}.csv'}")
+    les = pd.DataFrame([l for r in res for l in r[2]])
+    les.to_csv(Path(args.out) / "tumor" / f"per_lesion_{args.split}.csv", index=False)
+    print(f"tumor lesions {args.split}: {len(les)} GT lesions, detected "
+          f"{les['detected'].mean():.3f} → per_lesion_{args.split}.csv")
 
 
 if __name__ == "__main__":
