@@ -360,6 +360,29 @@ def ds2_adaptive_loss(preds, gt, pos_weight, boundary_weight,
     return total
 
 
+def soft_dice_ce(logit, gt):
+    """nnU-Net's loss for one binary output: soft Dice pooled over the batch
+    (batch_dice, as nnU-Net's 3d_fullres) + unweighted BCE."""
+    prob, gt_f = torch.sigmoid(logit.float()), gt.float()
+    inter = (prob * gt_f).sum()
+    dice = (2 * inter + 1e-5) / (prob.sum() + gt_f.sum() + 1e-5)
+    return (1 - dice) + F.binary_cross_entropy_with_logits(logit.float(), gt_f)
+
+
+def dice_ce_loss(preds, gt, stb_logits=None, stb_weight=0.4):
+    """nnU-Net-style alternative to ds2_adaptive_loss (E12 v4): Dice + CE on
+    every head, deep-supervision weights halving from the finest head
+    (preds are coarsest first) and normalised to 1; no pos_weight, boundary
+    or uncertainty weighting. The small-tumor branch gets the same loss."""
+    w = [0.5 ** i for i in range(len(preds))][::-1]
+    total = sum(wi * soft_dice_ce(p, gt) for wi, p in zip(w, preds)) / sum(w)
+    if stb_logits is not None:
+        stb_up = F.interpolate(stb_logits.float(), size=gt.shape[2:],
+                               mode='bilinear', align_corners=True)
+        total = total + stb_weight * soft_dice_ce(stb_up, gt)
+    return total
+
+
 def fuse_probs(preds, stb_logits=None, stb_weight=0.3):
     """Mean of the head sigmoids; Stage 2 blends in the small-tumor branch
     with weight 1.5 × stb_weight (the notebook's tumor-channel weighting)."""

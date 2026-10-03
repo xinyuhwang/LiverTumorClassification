@@ -34,8 +34,8 @@ nnU-Net (E06 v1) beats DS²Net on tumors: 0.796 vs 0.726 per case on test, and +
 |---|---|---|
 | [v1](v1_native_z/) | slices at native 5 mm instead of 1 mm (`z_spacing=5.0`); same samples per epoch | Done: val 0.767 vs 0.769 (−0.002, n.s.); no effect, kept as base (cheaper) |
 | [v2](v2_fixed_norm/) | no PhaseNorm: one fixed, learnable scaling for all slices (`phase_norm=fixed`) | Done: val 0.780 vs 0.767 (+0.013, n.s.); recall +0.035 (sig.); < 10 ml +0.041; test 0.735. Kept as base |
-| v3 | longer training, no early stopping | Planned |
-| v4 | Dice + cross-entropy loss | Planned |
+| [v3](v3_long_training/) | 100 epochs instead of 50, no early stopping (on top of v2) | Running: job 1169257 |
+| [v4](v4_dice_ce/) | Dice + cross-entropy loss, nnU-Net style (`loss=dice_ce`; on top of v2, run in parallel with v3) | Planned: code ready |
 | v5 | 5-fold ensemble on E06 v2's inner folds | Planned |
 
 ## Conclusion

@@ -81,6 +81,7 @@ All are off by default, so the ported baseline stays reproducible; experiments s
 | `z_spacing=5.0` | 1, 2 | keep the native 5 mm between slices instead of resampling z to `target_spacing`, so context slices are real neighbours | E12 v1 |
 | `samples_per_epoch=N` | 1, 2 | slices drawn per epoch (default: all cached slices). Keeps the training budget fixed when the slice count changes | E12 v1 |
 | `phase_norm=fixed` | 2 | replace PhaseNorm (per-slice instance norm) with one learnable per-channel affine shared by all slices; LI-RADS phase attention then depends on the image | E12 v2 |
+| `loss=dice_ce` | 1, 2 | nnU-Net-style soft Dice (batch) + unweighted BCE on every head, deep-supervision weights halving from the finest; replaces DS²Net's wIoU + wBCE (pos_weight) + boundary loss | E12 v4 |
 
 Every run also writes **`per_case_val.csv`** next to `per_case_test.csv` (and `_oracle` variants in liver-ROI mode). Versions are chosen on validation.
 

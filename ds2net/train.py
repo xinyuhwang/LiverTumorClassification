@@ -138,6 +138,9 @@ def seg_forward(model, x, stage):
 
 
 def seg_loss(stage, cfg, preds, stb, masks, pos_weight):
+    if cfg.get("loss", "ds2") == "dice_ce":
+        return M.dice_ce_loss([p.float() for p in preds], masks, stb_logits=stb,
+                              stb_weight=cfg.get("stb_weight", 0.4))
     return M.ds2_adaptive_loss([p.float() for p in preds], masks, pos_weight,
                                cfg["boundary_weight"],
                                stb_logits=stb, stb_weight=cfg.get("stb_weight", 0.4))

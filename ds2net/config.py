@@ -60,6 +60,10 @@ TUMOR = {
     # instance norm, which removes absolute enhancement. "fixed" = one learnable
     # affine for all slices on the HU-windowed input (E12 v2).
     "phase_norm": "instance",
+    # Training loss. "ds2" = DS²Net's uncertainty-weighted wIoU + wBCE (pos_weight)
+    # + boundary loss (notebook). "dice_ce" = nnU-Net's soft Dice + CE with
+    # deep supervision, no positive weighting (E12 v4).
+    "loss": "ds2",
     # Slices used for training/validation. "tumor" matches the notebook (its
     # mask was tumor-only, so it only ever saw tumor slices); "liver" also
     # includes tumor-free liver slices.
