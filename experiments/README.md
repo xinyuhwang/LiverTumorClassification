@@ -37,7 +37,7 @@ experiments/
 | E04 | Joint segment + classify model | — | Planned | |
 | [E05](E05_tumor_baselines/) | Tumor segmentation baselines (DS²Net, UNet-Hybrid) on the liver region | v1, v2 | v1–v2 done | DS²Net tumor 0.726 cascade / 0.740 oracle (primary). UNet-Hybrid tumor 0.657 oracle; on val comparable Dice (−0.018, n.s.) but less precise (−0.065). UNet-Hybrid liver 0.971 |
 | [E06](E06_nnunet_baseline/) | nnU-Net 3D baseline: what's achievable on this dataset (goal: tumor Dice > 0.90) | v1–v3 | v1–v3 done; v3 adopted | Tumor ≈ 0.80 per case across all variants (default 0.796, 5-fold ensemble 0.807, ResEnc M 0.808 val; test 0.79–0.80). ResEnc M: global 0.913 val / 0.890 test, liver 0.973. ≥ 200 ml and HH 0.90+; < 10 ml ~0.65–0.70 |
-| [E12](E12_ds2net_nnunet_recipe/) | Which parts of nnU-Net's recipe improve DS²Net Stage 2 (native slice spacing, normalisation, training length, loss, ensemble)? | v1–v4 | v1, v2 done; v3 running; v4 code ready | v1 native 5 mm slices: no effect, kept (cheaper). v2 no PhaseNorm: val 0.780 (+0.013, n.s.), recall +0.035 (sig.), small tumors +0.041; test 0.735 |
+| [E12](E12_ds2net_nnunet_recipe/) | Which parts of nnU-Net's recipe improve DS²Net Stage 2 (native slice spacing, normalisation, training length, loss, ensemble)? | v1–v4 | v1–v4 done | Only removing PhaseNorm helped (v2: val 0.780, +0.013 n.s.; recall +0.035, small tumors +0.041; test 0.735). Native 5 mm slices neutral; 100 epochs no gain; Dice + CE loss significantly worse (−0.030). Gap to nnU-Net ≈ 3D context |
 
 ## Segmentation Dice by tumor type (test set)
 
