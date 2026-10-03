@@ -1,0 +1,62 @@
+{
+ "run_a": "experiments/E06_nnunet_baseline/v1_3d_fullres_fold0/results/tumor/per_case_val.csv",
+ "run_b": "experiments/E06_nnunet_baseline/v3_resenc_m_fold0/results/tumor/per_case_val.csv",
+ "n_common": 78,
+ "only_in_a": [],
+ "only_in_b": [],
+ "n_boot": 2000,
+ "results": [
+  {
+   "metric": "Dice",
+   "n": 78,
+   "a": 0.7957316045690991,
+   "b": 0.8083334969928151,
+   "diff": 0.012601892423715927,
+   "ci_low": -0.014643392154630886,
+   "ci_high": 0.04740652499420348,
+   "p_boot": 0.459,
+   "p_wilcoxon": 0.49974442036910083,
+   "better": 42,
+   "worse": 36
+  },
+  {
+   "metric": "IoU",
+   "n": 78,
+   "a": 0.6886228463097896,
+   "b": 0.7021522696125649,
+   "diff": 0.013529423302775161,
+   "ci_low": -0.011618081117061859,
+   "ci_high": 0.04506075632327339,
+   "p_boot": 0.35,
+   "p_wilcoxon": 0.45951741826554204,
+   "better": 42,
+   "worse": 36
+  },
+  {
+   "metric": "Precision",
+   "n": 78,
+   "a": 0.8467339333459645,
+   "b": 0.8618750163279167,
+   "diff": 0.015141082981952464,
+   "ci_low": -0.010630494043240261,
+   "ci_high": 0.05223339695188733,
+   "p_boot": 0.343,
+   "p_wilcoxon": 0.6414300062563798,
+   "better": 38,
+   "worse": 40
+  },
+  {
+   "metric": "Recall",
+   "n": 78,
+   "a": 0.7996235291703756,
+   "b": 0.794519394161352,
+   "diff": -0.00510413500902356,
+   "ci_low": -0.020077907821738378,
+   "ci_high": 0.009095433963902643,
+   "p_boot": 0.521,
+   "p_wilcoxon": 0.9010002035054632,
+   "better": 40,
+   "worse": 37
+  }
+ ]
+}
