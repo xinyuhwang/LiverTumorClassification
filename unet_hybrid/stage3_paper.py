@@ -167,7 +167,10 @@ def load_crops(case_ids, args):
         else:
             arr = extract_case_crops(cid, args.data_dir, args.max_slices,
                                      args.img_size, args.margin_frac)
-            np.save(path, arr)
+            # write-then-rename: parallel jobs never read a half-written file
+            tmp = f"{path}.{os.getpid()}.tmp.npy"
+            np.save(tmp, arr)
+            os.replace(tmp, path)
         if len(arr) == 0:
             print(f"  WARNING: {cid} has no tumor voxels — skipped")
             continue

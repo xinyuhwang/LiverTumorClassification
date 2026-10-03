@@ -1,0 +1,35 @@
+{
+ "args": {
+  "stage": 3,
+  "run_name": "e03_v0_ds2net_cls",
+  "data_dir": "/work/neu/p2026_0093_neu/herald/mct_ltdiag",
+  "work_dir": "/scratch/wang_xinyu14_neu/herald/work",
+  "splits_csv": "/home/wang_xinyu14_neu/LiverTumorClassification/common/mct_ltdiag_split.csv",
+  "set": [],
+  "resume": false,
+  "eval_only": false,
+  "save_liver_masks": false,
+  "no_pretrain": false,
+  "workers": 16,
+  "num_workers": 8,
+  "max_cases": null,
+  "smoke_test": false
+ },
+ "config": {
+  "task": "cls",
+  "roi_margin_mm": 10,
+  "roi_size": 224,
+  "max_slices": 16,
+  "min_tumor_voxels": 50,
+  "bg_ring_width": 8,
+  "batch_size": 128,
+  "lr": 0.0003,
+  "epochs": 50,
+  "patience": 12,
+  "unfreeze_epoch": 10,
+  "label_smoothing": 0.1,
+  "dropout": 0.3,
+  "use_curve_features": true,
+  "curve_embed_dim": 32
+ }
+}

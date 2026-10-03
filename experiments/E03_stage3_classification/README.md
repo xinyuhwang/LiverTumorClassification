@@ -23,7 +23,7 @@ Not comparable with this experiment: different split, pre-fix code, no per-case 
 
 | Version | Change | Status |
 |---|---|---|
-| [v0](v0_baselines/) | Baselines on the shared split: the paper's Stage 3 (6 backbones + its 3-model ensemble) and DS²Net's 4-phase Stage 3 | Planned: code ready |
+| [v0](v0_baselines/) | Baselines on the shared split: the paper's Stage 3 (6 backbones + its 3-model ensemble) and DS²Net's 4-phase Stage 3 | Done: six-model ensemble val 0.667 / AUC 0.894, test 0.692 (paper: 0.69); ViT best single (val 0.705); DS²Net 4-phase 0.603 / test 0.487. All differences n.s. |
 | v1 | Mask-weighted patch pooling + tumor-area slice weighting (O1) | Planned |
 | v2 | ABMIL per-patient aggregation (G1) | Planned |
 
