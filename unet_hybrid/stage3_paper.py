@@ -37,6 +37,17 @@ Choices the paper does not specify (defaults, all overridable)
   - Inputs are HU-windowed to [0,1] (datasets.HU_MIN/HU_MAX), no ImageNet
     mean/std normalisation — matching the original pipeline
 
+Extensions (E03; off by default, so the paper version above is unchanged)
+  --pooling mask   (v1, OrganLens O1) pool the backbone's spatial features
+                   weighted by the tumor-mask channel instead of global
+                   average / CLS pooling, and weight slices by tumor area
+                   when averaging a case's slice predictions
+  --mil abmil      (v2, GigaPath-Flash G1) train on whole cases: slice
+                   embeddings → gated attention (Ilse et al. 2018) → one
+                   prediction per case
+  --tag NAME       suffix for checkpoint / output names (stage3_paper_<backbone>_<tag>);
+                   ensemble members are named the same way
+
 Usage
   python stage3_paper.py --mode train --backbone efficientnet_b3
   python stage3_paper.py --mode train --backbone unet     # needs Stage 2 ckpt
@@ -102,6 +113,13 @@ def parse_args():
     p.add_argument("--tf_heads",      type=int, default=8)
     p.add_argument("--tf_win",        type=int, default=4)
     p.add_argument("--no_pretrain", action="store_true")
+    p.add_argument("--pooling", choices=["avg", "mask"], default="avg",
+                   help="avg = paper (global average / CLS); mask = tumor-mask-weighted "
+                        "features + tumor-area slice weighting (E03 v1)")
+    p.add_argument("--mil", choices=["none", "abmil"], default="none",
+                   help="abmil = attention-based MIL over a case's slices (E03 v2)")
+    p.add_argument("--bags_per_batch", type=int, default=4, help="cases per batch with --mil abmil")
+    p.add_argument("--tag", default="", help="suffix for output names, e.g. v1")
     p.add_argument("--num_workers", type=int, default=4)
     p.add_argument("--smoke_test",  action="store_true",
                    help="6 train cases, 2 epochs")
@@ -199,6 +217,24 @@ class TumorCropDataset(Dataset):
                 torch.tensor(self.labels[cid], dtype=torch.long))
 
 
+class TumorBagDataset(Dataset):
+    """One sample per case: all its crops (a bag), for --mil abmil."""
+    def __init__(self, crops, labels, augment=False):
+        self.crops, self.labels, self.augment = crops, labels, augment
+        self.ids = sorted(crops)
+
+    def __len__(self): return len(self.ids)
+
+    def __getitem__(self, idx):
+        cid = self.ids[idx]
+        x = self.crops[cid].astype(np.float32)
+        if self.augment:
+            if random.random() < 0.5: x = x[:, :, :, ::-1]
+            if random.random() < 0.5: x = x[:, :, ::-1, :]
+        return (torch.from_numpy(np.ascontiguousarray(x)),
+                torch.tensor(self.labels[cid], dtype=torch.long))
+
+
 # ── Models ────────────────────────────────────────────────────────────────────
 
 def adapt_conv_4ch(conv, src=slice(0, 3)):
@@ -244,10 +280,25 @@ class UNetEncoder(nn.Module):
         return self.unet.encode(x)[-1].mean(dim=(2, 3))
 
 
+class GatedAttention(nn.Module):
+    """ABMIL pooling (Ilse et al. 2018): a_k ∝ exp(wᵀ(tanh(V h_k) ⊙ σ(U h_k)))."""
+    def __init__(self, dim, hidden=128):
+        super().__init__()
+        self.V, self.U = nn.Linear(dim, hidden), nn.Linear(dim, hidden)
+        self.w = nn.Linear(hidden, 1)
+
+    def forward(self, h):                                   # h: (K, dim)
+        a = self.w(torch.tanh(self.V(h)) * torch.sigmoid(self.U(h)))
+        a = torch.softmax(a.float(), dim=0).to(h.dtype)
+        return (a * h).sum(0), a.squeeze(1)
+
+
 class PaperClassifier(nn.Module):
     def __init__(self, backbone, num_classes, args):
         super().__init__()
         pretrained = not args.no_pretrain
+        self.backbone_name = backbone
+        self.pooling = getattr(args, "pooling", "avg")
 
         if backbone == "efficientnet_b3":
             net = tvm.efficientnet_b3(
@@ -310,6 +361,38 @@ class PaperClassifier(nn.Module):
                 p.requires_grad_(True)
 
         self.head = FrozenHead(feat_dim, num_classes)
+        self.attn = GatedAttention(feat_dim) if getattr(args, "mil", "none") == "abmil" else None
+
+    def spatial(self, x):
+        """Backbone features before pooling, as (B, C, h, w)."""
+        b = self.backbone_name
+        if b == "efficientnet_b3":
+            return self.features[0](x)
+        if b == "resnet50":
+            return self.features[:-2](x)
+        if b == "vit_b16":
+            t = self.features.forward_features(x)[:, self.features.num_prefix_tokens:]
+            n = int(t.shape[1] ** 0.5)
+            return t.transpose(1, 2).reshape(t.shape[0], t.shape[2], n, n)
+        if b in ("swin_tiny", "swin_base"):
+            return self.features.forward_features(x).permute(0, 3, 1, 2)
+        return self.features.unet.encode(x)[-1]
+
+    def embed(self, x):
+        """One feature vector per crop: the paper's pooling, or mask-weighted (O1)."""
+        if self.pooling == "avg":
+            return self.features(x)
+        f = self.spatial(x)
+        w = F.adaptive_avg_pool2d(x[:, 3:4].to(f.dtype), f.shape[-2:])   # tumor share per cell
+        ws = w.sum(dim=(2, 3))
+        pooled = (f * w).sum(dim=(2, 3)) / ws.clamp(min=1e-6)
+        return torch.where(ws > 1e-6, pooled, f.mean(dim=(2, 3)))      # empty mask → average
+
+    def forward_bags(self, x, sizes):
+        """ABMIL: crops of several cases stacked in x, sizes = crops per case."""
+        h = self.embed(x)
+        z = torch.stack([self.attn(hb)[0] for hb in torch.split(h, sizes)])
+        return self.head(z)
 
     def train(self, mode=True):
         super().train(mode)
@@ -321,7 +404,7 @@ class PaperClassifier(nn.Module):
         return self
 
     def forward(self, x):
-        return self.head(self.features(x))
+        return self.head(self.embed(x))
 
 
 # ── Training / evaluation ─────────────────────────────────────────────────────
@@ -331,11 +414,20 @@ TTA_VIEWS = ((), (-1,), (-2,), (-2, -1))   # original, h-flip, v-flip, both
 
 @torch.no_grad()
 def predict_cases(model, crops, device, batch=32):
-    """Case-level probabilities: TTA-averaged softmax, averaged over slices."""
+    """Case-level probabilities: TTA-averaged softmax, averaged over slices
+    (tumor-area-weighted with --pooling mask; one attention-pooled bag with
+    --mil abmil)."""
     model.eval()
     out = {}
     for cid, arr in crops.items():
         x = torch.from_numpy(arr.astype(np.float32)).to(device)
+        if model.attn is not None:
+            with autocast(device.type, enabled=device.type == "cuda"):
+                p = sum(F.softmax(model.forward_bags(torch.flip(x, v) if v else x,
+                                                     [len(x)]).float(), 1)
+                        for v in TTA_VIEWS) / len(TTA_VIEWS)
+            out[cid] = p[0].cpu().numpy()
+            continue
         probs = []
         for i in range(0, len(x), batch):
             xb = x[i:i + batch]
@@ -343,7 +435,12 @@ def predict_cases(model, crops, device, batch=32):
                 p = sum(F.softmax(model(torch.flip(xb, v) if v else xb).float(), 1)
                         for v in TTA_VIEWS) / len(TTA_VIEWS)
             probs.append(p)
-        out[cid] = torch.cat(probs).mean(0).cpu().numpy()
+        probs = torch.cat(probs)
+        if model.pooling == "mask":            # O1: slices weighted by tumor area
+            area = x[:, 3].sum(dim=(1, 2)).float()
+            out[cid] = ((probs * area[:, None]).sum(0) / area.sum().clamp(min=1e-6)).cpu().numpy()
+        else:
+            out[cid] = probs.mean(0).cpu().numpy()
     return out
 
 
@@ -391,9 +488,14 @@ def run_train(args, device, splits, labels, class_names):
     w = 1.0 / np.maximum(counts, 1)
     w = torch.tensor(w / w.sum() * len(w), dtype=torch.float32, device=device)
 
-    loader = DataLoader(TumorCropDataset(tr_crops, labels, augment=True),
-                        batch_size=args.batch_size, shuffle=True, drop_last=True,
-                        num_workers=args.num_workers, pin_memory=True)
+    if args.mil == "abmil":     # batches of whole cases (bags)
+        loader = DataLoader(TumorBagDataset(tr_crops, labels, augment=True),
+                            batch_size=args.bags_per_batch, shuffle=True, drop_last=True,
+                            num_workers=args.num_workers, collate_fn=lambda b: b)
+    else:
+        loader = DataLoader(TumorCropDataset(tr_crops, labels, augment=True),
+                            batch_size=args.batch_size, shuffle=True, drop_last=True,
+                            num_workers=args.num_workers, pin_memory=True)
 
     model = PaperClassifier(args.backbone, len(class_names), args).to(device)
     params = [p for p in model.parameters() if p.requires_grad]
@@ -405,18 +507,25 @@ def run_train(args, device, splits, labels, class_names):
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer,
                                                            T_max=args.epochs)
     scaler    = GradScaler(device.type, enabled=device.type == "cuda")
-    ckpt      = os.path.join(args.ckpt_dir, f"stage3_paper_{args.backbone}_best.pth")
+    ckpt      = os.path.join(args.ckpt_dir, f"stage3_paper_{args.name}_best.pth")
 
     best_acc, no_imp, history = -1.0, 0, []
     for ep in range(1, args.epochs + 1):
         t0 = time.time()
         model.train()
         losses = []
-        for x, y in loader:
-            x, y = x.to(device), y.to(device)
+        for batch in loader:
             optimizer.zero_grad(set_to_none=True)
-            with autocast(device.type, enabled=device.type == "cuda"):
-                loss = criterion(model(x).float(), y)
+            if args.mil == "abmil":
+                sizes = [len(xb) for xb, _ in batch]
+                x = torch.cat([xb for xb, _ in batch]).to(device)
+                y = torch.stack([yb for _, yb in batch]).to(device)
+                with autocast(device.type, enabled=device.type == "cuda"):
+                    loss = criterion(model.forward_bags(x, sizes).float(), y)
+            else:
+                x, y = batch[0].to(device), batch[1].to(device)
+                with autocast(device.type, enabled=device.type == "cuda"):
+                    loss = criterion(model(x).float(), y)
             scaler.scale(loss).backward()
             scaler.step(optimizer); scaler.update()
             losses.append(loss.item())
@@ -441,19 +550,20 @@ def run_train(args, device, splits, labels, class_names):
     model.load_state_dict(torch.load(ckpt, map_location=device, weights_only=True))
     va_probs = predict_cases(model, va_crops, device)
     te_probs = predict_cases(model, te_crops, device)
-    report(f"{args.backbone} — validation", va_probs, labels, class_names)
-    result = report(f"{args.backbone} — test", te_probs, labels, class_names)
+    report(f"{args.name} — validation", va_probs, labels, class_names)
+    result = report(f"{args.name} — test", te_probs, labels, class_names)
 
     # per-case probabilities, so ensembles can be formed without re-running models
-    probs_path = os.path.join(args.log_dir, f"stage3_paper_{args.backbone}_probs.json")
+    probs_path = os.path.join(args.log_dir, f"stage3_paper_{args.name}_probs.json")
     with open(probs_path, "w") as f:
-        json.dump({"backbone": args.backbone, "class_names": class_names,
+        json.dump({"backbone": args.backbone, "name": args.name, "pooling": args.pooling,
+                   "mil": args.mil, "class_names": class_names,
                    "labels": {c: labels[c] for c in {**va_probs, **te_probs}},
                    "val":  {c: p.tolist() for c, p in va_probs.items()},
                    "test": {c: p.tolist() for c, p in te_probs.items()},
                    "best_val_acc": best_acc, "history": history, **result},
                   f, indent=1)
-    out_dir = os.path.join(args.log_dir, f"stage3_paper_{args.backbone}")
+    out_dir = os.path.join(args.log_dir, f"stage3_paper_{args.name}")
     for split, probs in (("val", va_probs), ("test", te_probs)):
         write_per_case(out_dir, split, probs, labels, class_names)
     print(f"\nSaved → {probs_path}, {out_dir}/per_case_{{val,test}}.csv")
@@ -498,6 +608,7 @@ def main():
     args.cache_dir   = args.cache_dir   or os.path.join(args.ckpt_dir, "stage3_crops")
     args.stage2_ckpt = args.stage2_ckpt or os.path.join(args.ckpt_dir,
                                                         "unet_v2_tumor_best.pth")
+    args.name = args.backbone + (f"_{args.tag}" if args.tag else "")
     os.makedirs(args.ckpt_dir, exist_ok=True)
     os.makedirs(args.log_dir,  exist_ok=True)
 

@@ -471,7 +471,8 @@ def run_cls_stage(args, cfg, splits, device, run_dir, labels_df):
     model = M.EfficientNet4Phase(len(class_names), dropout=cfg["dropout"],
                                  use_curve=cfg["use_curve_features"],
                                  curve_embed_dim=cfg["curve_embed_dim"],
-                                 pretrained=not args.no_pretrain).to(device)
+                                 pretrained=not args.no_pretrain,
+                                 phase_norm=cfg.get("phase_norm", "instance")).to(device)
     best_path = run_dir / "best.pth"
 
     def make_opt(unfrozen):

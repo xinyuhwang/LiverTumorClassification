@@ -96,6 +96,8 @@ CLS = {
     "batch_size": 128, "lr": 3e-4, "epochs": 50, "patience": 12,
     "unfreeze_epoch": 10, "label_smoothing": 0.1, "dropout": 0.3,
     "use_curve_features": True, "curve_embed_dim": 32,
+    # "instance" = PhaseNorm (notebook); "fixed" = FixedPhaseScale (E03 v3, as E12 v2)
+    "phase_norm": "instance",
 }
 
 STAGES = {1: LIVER, 2: TUMOR, 3: CLS}
