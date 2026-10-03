@@ -69,6 +69,22 @@ These are real design problems. They stay so the ported baseline matches the not
 - **Context slices are only 1 mm apart.** Resampling z to 1 mm puts the ±1–2 slices within one original 5 mm slice, so the "2.5D context" is mostly interpolation.
 - **Stage 3 uses ground-truth tumor masks** (an oracle upper bound), as in the notebook.
 
+## Options added after the port
+
+All are off by default, so the ported baseline stays reproducible; experiments switch them on with `--set`.
+
+| Option (`config.py`) | Stage | Effect | Experiment |
+|---|---|---|---|
+| `liver_includes_tumor=True` | 1, 2 | liver label = official liver mask ∪ tumor mask | E01 v2 (adopted) |
+| `keep_largest_component=True` | 1 | keep only the largest connected liver component at test time | E01 v3 (adopted) |
+| `roi="liver"`, `roi_margin_mm`, `roi_liver_run` | 2 | search only a square box around the liver(+tumor) per slice. Test is scored in two modes: **oracle** (GT box) and **cascade** (box from a Stage 1 run's saved liver masks, E01 post-processing) | E05 v1 |
+| `z_spacing=5.0` | 1, 2 | keep the native 5 mm between slices instead of resampling z to `target_spacing`, so context slices are real neighbours | E12 v1 |
+| `samples_per_epoch=N` | 1, 2 | slices drawn per epoch (default: all cached slices). Keeps the training budget fixed when the slice count changes | E12 v1 |
+| `phase_norm=fixed` | 2 | replace PhaseNorm (per-slice instance norm) with one learnable per-channel affine shared by all slices; LI-RADS phase attention then depends on the image | E12 v2 |
+| `loss=dice_ce` | 1, 2 | nnU-Net-style soft Dice (batch) + unweighted BCE on every head, deep-supervision weights halving from the finest; replaces DS²Net's wIoU + wBCE (pos_weight) + boundary loss | E12 v4 |
+
+Every run also writes **`per_case_val.csv`** next to `per_case_test.csv` (and `_oracle` variants in liver-ROI mode). Versions are chosen on validation.
+
 ## Usage
 
 ```bash
@@ -77,6 +93,7 @@ python train.py --stage 1 --run_name liver_baseline
 python train.py --stage 2 --run_name tumor_baseline
 python train.py --stage 2 --run_name tumor_liverslices --set slices=liver
 python train.py --stage 3 --run_name cls_baseline
+python train.py --stage 2 --run_name tumor_roi --set roi=liver slices=liver liver_includes_tumor=True roi_liver_run=<stage-1 run>
 python train.py --stage 1 --smoke_test --no_pretrain          # quick pipeline check
 ```
 

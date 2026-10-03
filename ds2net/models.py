@@ -192,6 +192,20 @@ class PhaseNorm(nn.Module):
         return self.gamma * (x - mean) / std + self.beta
 
 
+class FixedPhaseScale(nn.Module):
+    """Alternative to PhaseNorm (E12 v2): the same affine for every slice,
+    gamma * x + beta per channel, initialised to (x − 0.5) / 0.25. Inputs are
+    already HU-windowed to [0, 1] per phase, so intensities keep their meaning
+    across slices, phases and patients (as nnU-Net's fixed CT normalisation)."""
+    def __init__(self, n_channels):
+        super().__init__()
+        self.gamma = nn.Parameter(torch.full((1, n_channels, 1, 1), 4.0))
+        self.beta  = nn.Parameter(torch.full((1, n_channels, 1, 1), -2.0))
+
+    def forward(self, x):
+        return self.gamma * x + self.beta
+
+
 class LIRADSPhaseAttention(nn.Module):
     """
     LI-RADS-inspired phase gating: each non-arterial phase gets a weight
@@ -200,7 +214,7 @@ class LIRADSPhaseAttention(nn.Module):
 
     Known issue (kept to match the notebook): after PhaseNorm every channel's
     spatial mean equals its learned beta, so these weights do not depend on
-    the input image.
+    the input image. With FixedPhaseScale (phase_norm="fixed") they do.
     """
     def __init__(self, n_phases=4, n_ctx=3, embed_dim=32, art_idx=1):
         super().__init__()
@@ -248,9 +262,11 @@ class DS2NetUNet(nn.Module):
     forward() returns (5 head logits coarsest first, stb_logits at 56×56).
     """
     def __init__(self, n_classes=1, ch=(96, 192, 384, 768), n_input_channels=12,
-                 n_phases=4, D=256, pretrained=True):
+                 n_phases=4, D=256, pretrained=True, phase_norm="instance"):
         super().__init__()
-        self.phase_norm  = PhaseNorm(n_input_channels)
+        # "instance" = PhaseNorm (notebook); "fixed" = FixedPhaseScale (E12 v2)
+        norm = {"instance": PhaseNorm, "fixed": FixedPhaseScale}[phase_norm]
+        self.phase_norm  = norm(n_input_channels)
         self.lirads_attn = LIRADSPhaseAttention(n_phases, n_input_channels // n_phases)
         self.backbone    = swin_backbone(n_input_channels, pretrained)
         self.stage0_ch   = ch[0]
@@ -341,6 +357,29 @@ def ds2_adaptive_loss(preds, gt, pos_weight, boundary_weight,
                                mode='bilinear', align_corners=True)
         total = total + stb_weight * (weighted_iou_bce(stb_up, gt, pos_weight * 1.5)
                                       + boundary_weight * boundary_loss(stb_up, gt))
+    return total
+
+
+def soft_dice_ce(logit, gt):
+    """nnU-Net's loss for one binary output: soft Dice pooled over the batch
+    (batch_dice, as nnU-Net's 3d_fullres) + unweighted BCE."""
+    prob, gt_f = torch.sigmoid(logit.float()), gt.float()
+    inter = (prob * gt_f).sum()
+    dice = (2 * inter + 1e-5) / (prob.sum() + gt_f.sum() + 1e-5)
+    return (1 - dice) + F.binary_cross_entropy_with_logits(logit.float(), gt_f)
+
+
+def dice_ce_loss(preds, gt, stb_logits=None, stb_weight=0.4):
+    """nnU-Net-style alternative to ds2_adaptive_loss (E12 v4): Dice + CE on
+    every head, deep-supervision weights halving from the finest head
+    (preds are coarsest first) and normalised to 1; no pos_weight, boundary
+    or uncertainty weighting. The small-tumor branch gets the same loss."""
+    w = [0.5 ** i for i in range(len(preds))][::-1]
+    total = sum(wi * soft_dice_ce(p, gt) for wi, p in zip(w, preds)) / sum(w)
+    if stb_logits is not None:
+        stb_up = F.interpolate(stb_logits.float(), size=gt.shape[2:],
+                               mode='bilinear', align_corners=True)
+        total = total + stb_weight * soft_dice_ce(stb_up, gt)
     return total
 
 

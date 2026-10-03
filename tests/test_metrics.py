@@ -4,6 +4,7 @@ import sys
 from pathlib import Path
 
 import numpy as np
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from common.metrics import volume_metrics, liver_extras, largest_component
@@ -32,3 +33,25 @@ def test_volume_metrics_and_liver_extras():
     ex = liver_extras(pred, liver, tumor)
     assert round(ex["Dice_vs_union"], 3) == 0.889 and ex["tumor_covered"] == 0.5
     assert volume_metrics(np.zeros_like(pred), np.zeros_like(pred))["Dice"] == 1.0
+
+
+def test_lesion_metrics_detection_and_fp():
+    from common.metrics import lesion_metrics
+    gt = np.zeros((20, 20, 20), bool); pred = np.zeros_like(gt)
+    gt[2:6, 2:6, 2:6] = True            # lesion 1: 64 voxels, half predicted
+    gt[12:14, 12:14, 12:14] = True      # lesion 2: 8 voxels, missed
+    pred[2:6, 2:6, 2:4] = True          # overlaps lesion 1
+    pred[16:18, 2:4, 2:4] = True        # false positive
+    s, les = lesion_metrics(pred, gt, voxel_ml=0.001)
+    assert s == {"n_gt_lesions": 2, "n_detected": 1, "n_pred_lesions": 2,
+                 "n_fp_lesions": 1, "lesion_recall": 0.5}
+    assert les[0]["detected"] and les[0]["overlap"] == pytest.approx(0.5)
+    assert les[0]["lesion_Dice"] == pytest.approx(2 * 32 / (64 + 32))
+    assert not les[1]["detected"] and les[1]["gt_ml"] == pytest.approx(0.008)
+
+
+def test_lesion_metrics_empty():
+    from common.metrics import lesion_metrics
+    z = np.zeros((5, 5, 5), bool)
+    s, les = lesion_metrics(z, z, 1.0)
+    assert s["n_gt_lesions"] == 0 and s["n_fp_lesions"] == 0 and les == []

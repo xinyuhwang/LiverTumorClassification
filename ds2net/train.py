@@ -7,6 +7,7 @@ train.py — DS²Net entry point
 Usage
   python train.py --stage 1 --run_name liver_v1
   python train.py --stage 2 --run_name tumor_v1 --set slices=liver
+  python train.py --stage 2 --run_name tumor_z5 --set z_spacing=5.0 samples_per_epoch=59314
   python train.py --stage 1 --run_name liver_v1 --eval_only --save_liver_masks
   python train.py --stage 3 --smoke_test
 
@@ -35,7 +36,7 @@ import datasets as DS
 import models as M
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))   # repo root
 from common.splits import load_splits, DEFAULT_SPLITS_CSV
-from common.metrics import volume_metrics, liver_extras, largest_component
+from common.metrics import volume_metrics, liver_extras, largest_component, lesion_metrics
 
 SEED = 42
 METRIC_KEYS = ["Dice", "IoU", "Precision", "Recall", "F1", "MAE"]
@@ -79,6 +80,8 @@ def resolve_config(args):
         cfg.update(epochs=2, val_every=1, batch_size=2)
         if "grad_accum_steps" in cfg:
             cfg["grad_accum_steps"] = 1
+        if cfg.get("samples_per_epoch"):
+            cfg["samples_per_epoch"] = None
     return cfg
 
 
@@ -124,7 +127,8 @@ def build_seg_model(stage, cfg, pretrained):
         return M.DS2NetLiver(n_input_channels=4 * cfg["n_context_slices"],
                              mha_heads=cfg["mha_heads"], mha_dropout=cfg["mha_dropout"],
                              pretrained=pretrained)
-    return M.DS2NetUNet(n_input_channels=4 * cfg["n_context_slices"], pretrained=pretrained)
+    return M.DS2NetUNet(n_input_channels=4 * cfg["n_context_slices"], pretrained=pretrained,
+                        phase_norm=cfg.get("phase_norm", "instance"))
 
 
 def seg_forward(model, x, stage):
@@ -134,6 +138,9 @@ def seg_forward(model, x, stage):
 
 
 def seg_loss(stage, cfg, preds, stb, masks, pos_weight):
+    if cfg.get("loss", "ds2") == "dice_ce":
+        return M.dice_ce_loss([p.float() for p in preds], masks, stb_logits=stb,
+                              stb_weight=cfg.get("stb_weight", 0.4))
     return M.ds2_adaptive_loss([p.float() for p in preds], masks, pos_weight,
                                cfg["boundary_weight"],
                                stb_logits=stb, stb_weight=cfg.get("stb_weight", 0.4))
@@ -251,7 +258,8 @@ def run_seg_stage(args, cfg, splits, device, run_dir, case_types):
     kw = dict(num_workers=args.num_workers, pin_memory=device.type == "cuda",
               persistent_workers=args.num_workers > 0)
     sampler = WeightedRandomSampler(torch.tensor(train_ds.slice_weights, dtype=torch.double),
-                                    num_samples=len(train_ds), replacement=True)
+                                    num_samples=cfg.get("samples_per_epoch") or len(train_ds),
+                                    replacement=True)
     train_loader = DataLoader(train_ds, cfg["batch_size"], sampler=sampler, **kw)
     val_loader   = DataLoader(val_ds, cfg["batch_size"], shuffle=True, **kw)
     test_loader  = DataLoader(test_ds, cfg["batch_size"], shuffle=False, **kw)
@@ -362,8 +370,9 @@ def run_seg_stage(args, cfg, splits, device, run_dir, case_types):
         liver_out.mkdir(exist_ok=True)
     for i, cid in enumerate(predict_ids, 1):
         split = "test" if cid in te else "val" if cid in va else None
-        _, masks, _ = DS.load_case(Path(args.data_dir) / cid,
-                                   cfg.get("liver_includes_tumor", False))
+        _, masks, spacing = DS.load_case(Path(args.data_dir) / cid,
+                                         cfg.get("liver_includes_tumor", False))
+        vox_ml = float(np.prod(spacing)) / 1000.0
         for mode in modes:
             roi_mask = predicted_liver(liver_dir, cid, cfg) if mode == "cascade" else None
             prob = predict_case(model, Path(args.data_dir) / cid, stage, cfg, device,
@@ -379,6 +388,10 @@ def run_seg_stage(args, cfg, splits, device, run_dir, case_types):
                 if task == "liver":
                     # common reference for comparing label variants (E01)
                     row.update(liver_extras(pred, masks["liver"], masks["tumor"]))
+                else:   # tumor volume and per-lesion detection counts (R1)
+                    row.update(gt_ml=float(masks["tumor"].sum()) * vox_ml,
+                               pred_ml=float(pred.sum()) * vox_ml,
+                               **lesion_metrics(pred, masks["tumor"].astype(bool), vox_ml)[0])
                 rows[(split, mode)].append(row)
         print(f"  [{i}/{len(predict_ids)}] {cid}", flush=True)
 
@@ -522,18 +535,16 @@ def run_cls_stage(args, cfg, splits, device, run_dir, labels_df):
 
     model.load_state_dict(torch.load(best_path, map_location=device, weights_only=True))
     metrics = {"stage": 3, "best_val_acc": best}
-    rows = []
     for split, loader in (("val", val_loader), ("test", test_loader)):
         y, prob, cids = case_predictions(model, loader, device, amp, amp_dtype)
         metrics[split] = cls_report(y, prob, class_names)
         print(f"\n{split}: acc {metrics[split]['accuracy']:.4f} | "
               f"macro-F1 {metrics[split]['macro_f1']:.4f} | "
               f"macro-AUC {metrics[split]['macro_auc']:.4f}")
-        if split == "test":
-            rows = [{"case_id": c, "true": class_names[t], "pred": class_names[p.argmax()],
-                     **{f"p_{n}": float(v) for n, v in zip(class_names, p)}}
-                    for c, t, p in zip(cids, y, prob)]
-    pd.DataFrame(rows).to_csv(run_dir / "per_case_test.csv", index=False)
+        rows = [{"case_id": c, "true": class_names[t], "pred": class_names[p.argmax()],
+                 **{f"p_{n}": float(v) for n, v in zip(class_names, p)}}
+                for c, t, p in zip(cids, y, prob)]
+        pd.DataFrame(rows).to_csv(run_dir / f"per_case_{split}.csv", index=False)
     (run_dir / "metrics.json").write_text(json.dumps(metrics, indent=1))
 
 

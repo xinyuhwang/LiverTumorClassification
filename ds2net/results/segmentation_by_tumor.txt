@@ -1,0 +1,18 @@
+================================================================================
+  DS²Net Segmentation Dice by Tumor Subtype — Test Set (shared split, 78 cases)
+================================================================================
+  Type       N  Liver Dice        Tumor (cascade)   Tumor (oracle)   
+--------------------------------------------------------------------------------
+  BCLM      17  0.9739 ± 0.0096   0.6112 ± 0.1921   0.6192 ± 0.2158  
+  CRLM      16  0.9776 ± 0.0048   0.7524 ± 0.1596   0.7504 ± 0.1623  
+  HCC       16  0.9756 ± 0.0060   0.6784 ± 0.2804   0.6720 ± 0.2894  
+  HH        14  0.9609 ± 0.0247   0.8125 ± 0.2429   0.8768 ± 0.0716  
+  ICC       15  0.9739 ± 0.0099   0.7972 ± 0.1538   0.8112 ± 0.1252  
+--------------------------------------------------------------------------------
+  Overall   78  0.9727 ± 0.0136   0.7258 ± 0.2193   0.7401 ± 0.2084  
+================================================================================
+  Liver:  E01 v3 (label = liver ∪ tumor, largest connected component)
+  Tumor:  E05 v1 (Stage 2 inside a liver ROI). cascade = ROI from the E01 v3 predicted
+          liver (realistic); oracle = ROI from the ground-truth liver.
+  Mean ± SD of per-case full-volume Dice. Source: experiments/E01_liver_labels/v3_largest_component,
+  experiments/E05_tumor_baselines/v1_ds2net_tumor_roi (per_case_test*.csv).

@@ -1,0 +1,62 @@
+{
+ "run_a": "experiments/E12_ds2net_nnunet_recipe/v1_native_z/results/per_case_val.csv",
+ "run_b": "experiments/E12_ds2net_nnunet_recipe/v2_fixed_norm/results/per_case_val.csv",
+ "n_common": 78,
+ "only_in_a": [],
+ "only_in_b": [],
+ "n_boot": 2000,
+ "results": [
+  {
+   "metric": "Dice",
+   "n": 78,
+   "a": 0.7674823649488847,
+   "b": 0.7801645898184278,
+   "diff": 0.012682224869543238,
+   "ci_low": -0.0028419226788833464,
+   "ci_high": 0.029961280030001106,
+   "p_boot": 0.114,
+   "p_wilcoxon": 0.37396852780732825,
+   "better": 40,
+   "worse": 38
+  },
+  {
+   "metric": "IoU",
+   "n": 78,
+   "a": 0.6600935851552233,
+   "b": 0.6698294976381912,
+   "diff": 0.00973591248296804,
+   "ci_low": -0.00472209373799369,
+   "ci_high": 0.025610226131914823,
+   "p_boot": 0.2,
+   "p_wilcoxon": 0.4504986391523984,
+   "better": 40,
+   "worse": 38
+  },
+  {
+   "metric": "Precision",
+   "n": 78,
+   "a": 0.8194610077740462,
+   "b": 0.8041808881997697,
+   "diff": -0.015280119574276347,
+   "ci_low": -0.030667672706780804,
+   "ci_high": 3.8254069518036716e-05,
+   "p_boot": 0.051,
+   "p_wilcoxon": 0.00024414557685251966,
+   "better": 18,
+   "worse": 60
+  },
+  {
+   "metric": "Recall",
+   "n": 78,
+   "a": 0.7592753447810292,
+   "b": 0.7945940558479655,
+   "diff": 0.035318711066936216,
+   "ci_low": 0.017531005230528512,
+   "ci_high": 0.05531333961719973,
+   "p_boot": 0.0,
+   "p_wilcoxon": 3.816756215181013e-07,
+   "better": 62,
+   "worse": 16
+  }
+ ]
+}

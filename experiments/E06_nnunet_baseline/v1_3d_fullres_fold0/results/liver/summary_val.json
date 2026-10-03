@@ -1,0 +1,57 @@
+{
+ "run": "experiments/E06_nnunet_baseline/v1_3d_fullres_fold0/results/liver/per_case_val.csv",
+ "kind": "seg",
+ "n_boot": 2000,
+ "results": [
+  {
+   "group": "all",
+   "metric": "Dice",
+   "n": 78,
+   "mean": 0.9691096437989885,
+   "ci_low": 0.9617971085955969,
+   "ci_high": 0.975025255248716,
+   "sd": 0.03109891969169655,
+   "median": 0.9777132831137054
+  },
+  {
+   "group": "all",
+   "metric": "Precision",
+   "n": 78,
+   "mean": 0.9696553179801644,
+   "ci_low": 0.96084823561817,
+   "ci_high": 0.9768309531226008,
+   "sd": 0.03669434242482161,
+   "median": 0.97969114406675
+  },
+  {
+   "group": "all",
+   "metric": "Recall",
+   "n": 78,
+   "mean": 0.9698611178079016,
+   "ci_low": 0.9609129518683072,
+   "ci_high": 0.9759619267909216,
+   "sd": 0.037675233412299065,
+   "median": 0.977778780237631
+  },
+  {
+   "group": "all",
+   "metric": "tumor_covered",
+   "n": 78,
+   "mean": 0.978786686374612,
+   "ci_low": 0.9733435182857176,
+   "ci_high": 0.983452379724582,
+   "sd": 0.024033805252523036,
+   "median": 0.9871816982664482
+  },
+  {
+   "group": "all",
+   "metric": "global_Dice",
+   "n": 78,
+   "mean": 0.9703239100860339,
+   "ci_low": 0.9653179613682316,
+   "ci_high": 0.9746915325023833,
+   "sd": NaN,
+   "median": NaN
+  }
+ ]
+}

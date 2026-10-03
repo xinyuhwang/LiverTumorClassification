@@ -25,6 +25,8 @@ LIVER = {
     "n_context_slices": 5,             # 5 slices × 4 phases = 20 channels
     "img_size": 224,
     "target_spacing": 1.0,             # mm, all three axes (as in the notebook)
+    "z_spacing": None,                 # mm between slices; None = target_spacing (E12)
+    "samples_per_epoch": None,         # slices drawn per epoch; None = all cached slices
     "slices": "liver",                 # train on slices containing liver
     # liver label = official liver mask ∪ tumor mask. The official mask leaves
     # out >10% of the tumor in ~24% of cases (E01); False = mask as shipped.
@@ -46,7 +48,22 @@ TUMOR = {
     "task": "tumor",
     "n_context_slices": 3,             # 3 slices × 4 phases = 12 channels
     "img_size": 224,
-    "target_spacing": 1.0,
+    "target_spacing": 1.0,             # mm in-plane (and between slices unless z_spacing)
+    # mm between slices. None = target_spacing (notebook: 1 mm, so the context
+    # slices are mostly interpolated). 5.0 = the data's median slice spacing,
+    # as nnU-Net uses (E12 v1).
+    "z_spacing": None,
+    # Slices drawn per epoch. None = all cached slices; set it to keep the
+    # training budget fixed when z_spacing changes the slice count (E12).
+    "samples_per_epoch": None,
+    # Input normalisation. "instance" = PhaseNorm (notebook): per-slice, per-channel
+    # instance norm, which removes absolute enhancement. "fixed" = one learnable
+    # affine for all slices on the HU-windowed input (E12 v2).
+    "phase_norm": "instance",
+    # Training loss. "ds2" = DS²Net's uncertainty-weighted wIoU + wBCE (pos_weight)
+    # + boundary loss (notebook). "dice_ce" = nnU-Net's soft Dice + CE with
+    # deep supervision, no positive weighting (E12 v4).
+    "loss": "ds2",
     # Slices used for training/validation. "tumor" matches the notebook (its
     # mask was tumor-only, so it only ever saw tumor slices); "liver" also
     # includes tumor-free liver slices.

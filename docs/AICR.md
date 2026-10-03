@@ -125,6 +125,28 @@ bash cluster/pull_results.sh $HERALD_STORE/results/runs/ds2net/e01_v1_liver \
      experiments/E01_liver_labels/v1_official_liver_masks/results
 ```
 
+## nnU-Net (E06)
+
+nnU-Net v2 is installed in `~/envs/herald`. Paths are set in `cluster/env.sh`:
+
+| Variable | Location | Contents |
+|---|---|---|
+| `nnUNet_raw` | `$HERALD_STORE/nnunet/raw` | symlinked images, labels, `dataset.json` (dataset ID 501) |
+| `nnUNet_preprocessed` | `$HERALD_SCRATCH/nnunet/preprocessed` | ~44 GB, rebuildable; also holds `splits_final.json`: fold 0 = HERALD split (v1), folds 1–5 = inner CV over train (v2) |
+| `nnUNet_results` | `$HERALD_STORE/nnunet/results` | checkpoints and validation predictions |
+
+```bash
+bash cluster/submit.sh nnunet_prep      # CPU, ~10 min: build dataset + plan/preprocess + integrity check
+bash cluster/submit.sh nnunet_train     # GPU, ~5.5 h for 1,000 epochs (add --c to continue)
+bash cluster/submit.sh nnunet_predict   # GPU, ~10 min: test prediction + val/test scoring
+```
+
+Scores land in `$HERALD_RESULTS/runs/nnunet/e06_v1_3d_fullres_fold0/{tumor,liver}/per_case_{val,test}.csv`.
+
+**5-fold ensemble (E06 v2).** `python nnunet/prepare_dataset.py --cv_folds 5 --splits_only` adds folds 1–5 to `splits_final.json` and links the val images into `imagesVal/` (seconds). Then train each fold with `NNUNET_FOLD=<N> bash cluster/submit.sh nnunet_train` (~5.5 h each). The job stops if the fold isn't in the file, because nnU-Net would otherwise train on a random split without saying so. Finally, `bash cluster/submit.sh nnunet_predict_ensemble` predicts val and test with all five folds and scores them (~1–2 h). See `experiments/E06_nnunet_baseline/v2_5fold_ensemble/run.sh`.
+
+**Other plans (E06 v3).** `NNUNET_PLANS=<plans name>` selects the plans for `nnunet_train` and `nnunet_predict` (default `nnUNetPlans`), and `NNUNET_RUN=<name>` the scores folder for `nnunet_predict`. ResEnc presets reuse the default 3d_fullres preprocessed data, so only `nnUNetv2_plan_experiment -d 501 -pl nnUNetPlannerResEncM` is needed first.
+
 ## Files
 
 | File | Purpose |
@@ -133,5 +155,5 @@ bash cluster/pull_results.sh $HERALD_STORE/results/runs/ds2net/e01_v1_liver \
 | `cluster/setup_env.sh` | Creates the Python environment and checks the GPU |
 | `cluster/ssh_config.example` | `aicr` and `aicr-dtn` SSH host entries |
 | `cluster/submit.sh` | `sbatch` wrapper that adds your account and log path |
-| `cluster/jobs/*.sbatch` | `prepare_data`, `ds2net`, `unet_hybrid`, `stage3_paper` |
+| `cluster/jobs/*.sbatch` | `prepare_data`, `ds2net`, `unet_hybrid`, `stage3_paper`, `nnunet_prep`, `nnunet_train`, `nnunet_predict`, `nnunet_predict_ensemble` |
 | `cluster/pull_results.sh` | Laptop-side copy of run metrics into `experiments/` |

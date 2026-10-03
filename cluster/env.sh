@@ -24,6 +24,12 @@ export HERALD_DATA="$HERALD_STORE/mct_ltdiag"         # prepared per-case NIfTI
 export HERALD_WORK="$HERALD_SCRATCH/work"             # caches, runs, checkpoints
 export HERALD_RESULTS="$HERALD_STORE/results"         # copies of finished runs
 
+# nnU-Net v2 (E06): raw = symlinks + labels (small), preprocessed = large and
+# rebuildable (scratch), results = checkpoints and predictions (keep)
+export nnUNet_raw="$HERALD_STORE/nnunet/raw"
+export nnUNet_preprocessed="$HERALD_SCRATCH/nnunet/preprocessed"
+export nnUNet_results="$HERALD_STORE/nnunet/results"
+
 if [ -n "${SLURM_JOB_ID:-}" ] ||[ "${HERALD_LOAD_MODULES:-0}" = 1 ]; then
     module load miniforge3 2>/dev/null || module load conda 2>/dev/null || true
     module load cuda 2>/dev/null || true

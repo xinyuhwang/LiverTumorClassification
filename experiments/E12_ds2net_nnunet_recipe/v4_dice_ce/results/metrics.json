@@ -1,0 +1,211 @@
+{
+ "stage": 2,
+ "task": "tumor",
+ "best_val_dice": 0.8537335962784,
+ "test_slice_level": {
+  "Dice": 0.8534413110919115,
+  "IoU": 0.8233456379029809,
+  "Precision": 0.9376435076318136,
+  "Recall": 0.8734639534136144,
+  "F1": 0.9029351203338724,
+  "MAE": 0.008444255574254274
+ },
+ "eval_modes": [
+  "oracle",
+  "cascade"
+ ],
+ "primary_mode": "cascade",
+ "roi_liver_run": "e01_v2_liver_union",
+ "val_oracle": {
+  "file": "per_case_val_oracle.csv",
+  "n_cases": 78,
+  "per_case_mean": {
+   "Dice": 0.7527975289814668,
+   "IoU": 0.6442120119987478,
+   "Precision": 0.8645604644040648,
+   "Recall": 0.7142190804192673
+  },
+  "per_case_std": {
+   "Dice": 0.21809527224063693,
+   "IoU": 0.23807539183696866,
+   "Precision": 0.19839287857631785,
+   "Recall": 0.23691089446155156
+  },
+  "per_case_by_type": {
+   "BCLM": {
+    "Dice": 0.7584,
+    "IoU": 0.632,
+    "Precision": 0.8928,
+    "Recall": 0.6811
+   },
+   "CRLM": {
+    "Dice": 0.7067,
+    "IoU": 0.5954,
+    "Precision": 0.8292,
+    "Recall": 0.6627
+   },
+   "HCC": {
+    "Dice": 0.607,
+    "IoU": 0.4902,
+    "Precision": 0.8138,
+    "Recall": 0.5573
+   },
+   "HH": {
+    "Dice": 0.9168,
+    "IoU": 0.8483,
+    "Precision": 0.9442,
+    "Recall": 0.8959
+   },
+   "ICC": {
+    "Dice": 0.774,
+    "IoU": 0.6575,
+    "Precision": 0.8372,
+    "Recall": 0.7807
+   }
+  }
+ },
+ "val_cascade": {
+  "file": "per_case_val.csv",
+  "n_cases": 78,
+  "per_case_mean": {
+   "Dice": 0.7506532991893534,
+   "IoU": 0.6412881212167816,
+   "Precision": 0.8523576940811963,
+   "Recall": 0.7130099684145025
+  },
+  "per_case_std": {
+   "Dice": 0.2176009650609455,
+   "IoU": 0.23792469122360338,
+   "Precision": 0.2068765985837415,
+   "Recall": 0.23335613694308302
+  },
+  "per_case_by_type": {
+   "BCLM": {
+    "Dice": 0.7579,
+    "IoU": 0.6327,
+    "Precision": 0.8741,
+    "Recall": 0.6838
+   },
+   "CRLM": {
+    "Dice": 0.7013,
+    "IoU": 0.5899,
+    "Precision": 0.8238,
+    "Recall": 0.6528
+   },
+   "HCC": {
+    "Dice": 0.5987,
+    "IoU": 0.4772,
+    "Precision": 0.7767,
+    "Recall": 0.5561
+   },
+   "HH": {
+    "Dice": 0.9155,
+    "IoU": 0.846,
+    "Precision": 0.9441,
+    "Recall": 0.8933
+   },
+   "ICC": {
+    "Dice": 0.7786,
+    "IoU": 0.6623,
+    "Precision": 0.8387,
+    "Recall": 0.7848
+   }
+  }
+ },
+ "test_oracle": {
+  "file": "per_case_test_oracle.csv",
+  "n_cases": 78,
+  "per_case_mean": {
+   "Dice": 0.7271908700075681,
+   "IoU": 0.6100833657881066,
+   "Precision": 0.8530497666958278,
+   "Recall": 0.6823239453387758
+  },
+  "per_case_std": {
+   "Dice": 0.21892606334093023,
+   "IoU": 0.23195162122696178,
+   "Precision": 0.18976373054071818,
+   "Recall": 0.23867238220629158
+  },
+  "per_case_by_type": {
+   "BCLM": {
+    "Dice": 0.5779,
+    "IoU": 0.4428,
+    "Precision": 0.7797,
+    "Recall": 0.5679
+   },
+   "CRLM": {
+    "Dice": 0.7622,
+    "IoU": 0.6325,
+    "Precision": 0.8995,
+    "Recall": 0.6844
+   },
+   "HCC": {
+    "Dice": 0.6628,
+    "IoU": 0.548,
+    "Precision": 0.8338,
+    "Recall": 0.5864
+   },
+   "HH": {
+    "Dice": 0.8759,
+    "IoU": 0.7853,
+    "Precision": 0.932,
+    "Recall": 0.8374
+   },
+   "ICC": {
+    "Dice": 0.7889,
+    "IoU": 0.6783,
+    "Precision": 0.8336,
+    "Recall": 0.7674
+   }
+  }
+ },
+ "test_cascade": {
+  "file": "per_case_test.csv",
+  "n_cases": 78,
+  "per_case_mean": {
+   "Dice": 0.712950617831679,
+   "IoU": 0.5980279140206111,
+   "Precision": 0.830460523261946,
+   "Recall": 0.6689407559905126
+  },
+  "per_case_std": {
+   "Dice": 0.2400445669588579,
+   "IoU": 0.24368234591842808,
+   "Precision": 0.2227119973721586,
+   "Recall": 0.25369917230472316
+  },
+  "per_case_by_type": {
+   "BCLM": {
+    "Dice": 0.5677,
+    "IoU": 0.4384,
+    "Precision": 0.7126,
+    "Recall": 0.5597
+   },
+   "CRLM": {
+    "Dice": 0.7582,
+    "IoU": 0.6277,
+    "Precision": 0.8798,
+    "Recall": 0.6866
+   },
+   "HCC": {
+    "Dice": 0.6629,
+    "IoU": 0.55,
+    "Precision": 0.8395,
+    "Recall": 0.5868
+   },
+   "HH": {
+    "Dice": 0.8086,
+    "IoU": 0.7221,
+    "Precision": 0.8641,
+    "Recall": 0.7712
+   },
+   "ICC": {
+    "Dice": 0.7933,
+    "IoU": 0.6826,
+    "Precision": 0.8704,
+    "Recall": 0.7661
+   }
+  }
+ }
+}

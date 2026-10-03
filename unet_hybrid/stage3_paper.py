@@ -349,6 +349,17 @@ def case_accuracy(probs, labels):
                           [int(np.argmax(p)) for p in probs.values()])
 
 
+def write_per_case(out_dir, split, probs, labels, class_names):
+    """per_case_<split>.csv (case_id, true, pred, p_<class>) for common/evaluate.py."""
+    import pandas as pd
+    os.makedirs(out_dir, exist_ok=True)
+    rows = [{"case_id": c, "true": class_names[labels[c]],
+             "pred": class_names[int(np.argmax(p))],
+             **{f"p_{n}": float(v) for n, v in zip(class_names, p)}}
+            for c, p in sorted(probs.items())]
+    pd.DataFrame(rows).to_csv(os.path.join(out_dir, f"per_case_{split}.csv"), index=False)
+
+
 def report(title, probs, labels, class_names):
     y_true = [labels[c] for c in probs]
     y_pred = [int(np.argmax(p)) for p in probs.values()]
@@ -439,7 +450,10 @@ def run_train(args, device, splits, labels, class_names):
                    "test": {c: p.tolist() for c, p in te_probs.items()},
                    "best_val_acc": best_acc, "history": history, **result},
                   f, indent=1)
-    print(f"\nSaved → {probs_path}")
+    out_dir = os.path.join(args.log_dir, f"stage3_paper_{args.backbone}")
+    for split, probs in (("val", va_probs), ("test", te_probs)):
+        write_per_case(out_dir, split, probs, labels, class_names)
+    print(f"\nSaved → {probs_path}, {out_dir}/per_case_{{val,test}}.csv")
 
 
 def run_ensemble(args, class_names):
@@ -465,6 +479,8 @@ def run_ensemble(args, class_names):
                   f"{case_accuracy({c: np.array(r[split][c]) for c in cases}, labels):.4f}")
         out[split] = report(f"Ensemble ({'+'.join(members)}) — {split}",
                             probs, labels, class_names)
+        write_per_case(os.path.join(args.log_dir, "stage3_paper_ensemble_" + "+".join(members)),
+                       split, probs, {c: int(v) for c, v in labels.items()}, class_names)
     path = os.path.join(args.log_dir, "stage3_paper_ensemble.json")
     with open(path, "w") as f:
         json.dump(out, f, indent=1)

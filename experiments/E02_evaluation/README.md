@@ -23,6 +23,8 @@ How do we score every version so that differences between versions are real and 
 | [v2](v2_unet_per_case/) | Per-case test output for `unet_hybrid/train.py` (Stages 1–3) + `--eval_only`; shared `common/metrics.py` | Done |
 | v3 | Compute-cost columns (params, FLOPs, latency per case) in every `metrics.json` | Planned |
 | [v4](v4_unet_val_output/) | Per-case **validation** output for `unet_hybrid/train.py` (Stages 1–3) | Done |
+| v5 | `evaluate.py summary`: **global Dice** (voxel-pooled, with CI) for every segmentation run, and `--size-bins` by GT volume (needs `gt_ml`) | Done (2026-10-01); tests in `tests/test_evaluate.py` |
+| [v6](v6_failures_lesions/) | R1: `fail_rate` (Dice < 0.5) in summary and compare, per-size-group paired tests (`compare --size-bins`), per-lesion detection (`lesion_metrics`) in nnU-Net scoring and DS²Net Stage 2 | Done: nnU-Net lesion recall 0.56 overall, but 0.90 for lesions ≥ 1 cm; 94/309 GT 'lesions' are < 0.1 ml fragments |
 
 ## How every experiment reports results (from now on)
 
