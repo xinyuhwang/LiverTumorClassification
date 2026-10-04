@@ -1,0 +1,52 @@
+{
+ "run_a": "experiments/E03_stage3_classification/v0_baselines/results/ds2net/per_case_val.csv",
+ "run_b": "experiments/E03_stage3_classification/v3_ds2net_fixed_norm/results/per_case_val.csv",
+ "n_common": 78,
+ "only_in_a": [],
+ "only_in_b": [],
+ "n_boot": 1000,
+ "results": [
+  {
+   "group": "all",
+   "metric": "accuracy",
+   "n": 78,
+   "a": 0.6025641025641025,
+   "b": 0.6025641025641025,
+   "diff": 0.0,
+   "ci_low": -0.07692307692307698,
+   "ci_high": 0.07692307692307698,
+   "p_boot": 1.0,
+   "p_mcnemar": 1.0,
+   "better": 5.0,
+   "worse": 5.0
+  },
+  {
+   "group": "all",
+   "metric": "macro_f1",
+   "n": 78,
+   "a": 0.5951226350189198,
+   "b": 0.5970562770562771,
+   "diff": 0.0019336420373572416,
+   "ci_low": -0.07558556343666373,
+   "ci_high": 0.07878960372778653,
+   "p_boot": 0.92,
+   "p_mcnemar": NaN,
+   "better": NaN,
+   "worse": NaN
+  },
+  {
+   "group": "all",
+   "metric": "macro_auc",
+   "n": 78,
+   "a": 0.8392328042328042,
+   "b": 0.8317460317460318,
+   "diff": -0.007486772486772431,
+   "ci_low": -0.039426196332612524,
+   "ci_high": 0.019437804329345203,
+   "p_boot": 0.632,
+   "p_mcnemar": NaN,
+   "better": NaN,
+   "worse": NaN
+  }
+ ]
+}

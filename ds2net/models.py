@@ -457,13 +457,16 @@ class EfficientNet4Phase(nn.Module):
 
     Known issue (kept to match the notebook): patch_means are computed from
     the PhaseNorm-normalised input, where each channel's mean is ≈ its beta,
-    so they carry almost no image information.
+    so they carry almost no image information. phase_norm="fixed" (E03 v3)
+    uses FixedPhaseScale instead, so they, and the phase gate, see the image.
     """
     def __init__(self, n_classes=5, n_channels=4, dropout=0.3,
-                 use_curve=True, curve_embed_dim=32, pretrained=True):
+                 use_curve=True, curve_embed_dim=32, pretrained=True,
+                 phase_norm="instance"):
         super().__init__()
         self.use_curve   = use_curve
-        self.phase_norm  = PhaseNorm(n_channels)
+        norm = {"instance": PhaseNorm, "fixed": FixedPhaseScale}[phase_norm]
+        self.phase_norm  = norm(n_channels)
         self.lirads_attn = LIRADSPhaseAttnCls(n_channels)
         self.backbone    = timm.create_model("efficientnet_b0", pretrained=pretrained,
                                              num_classes=0)
@@ -488,8 +491,12 @@ class EfficientNet4Phase(nn.Module):
             p.requires_grad_(not frozen)
 
     def forward(self, x, bg_means=None):
+        # notebook: patch means after PhaseNorm (≈ constant). With FixedPhaseScale
+        # they come from the windowed input, the same scale as bg_means.
+        raw_means = x.mean(dim=(2, 3))
         x      = self.lirads_attn(self.phase_norm(x))
         pooled = self.cbam(self.backbone.forward_features(x)).mean(dim=(2, 3))
         if self.use_curve and bg_means is not None:
-            pooled = torch.cat([pooled, self.curve(x.mean(dim=(2, 3)), bg_means)], dim=1)
+            means = raw_means if isinstance(self.phase_norm, FixedPhaseScale) else x.mean(dim=(2, 3))
+            pooled = torch.cat([pooled, self.curve(means, bg_means)], dim=1)
         return self.head(pooled)

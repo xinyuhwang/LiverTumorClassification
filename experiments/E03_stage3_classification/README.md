@@ -23,10 +23,27 @@ Not comparable with this experiment: different split, pre-fix code, no per-case 
 
 | Version | Change | Status |
 |---|---|---|
-| [v0](v0_baselines/) | Baselines on the shared split: the paper's Stage 3 (6 backbones + its 3-model ensemble) and DS²Net's 4-phase Stage 3 | Planned: code ready |
-| v1 | Mask-weighted patch pooling + tumor-area slice weighting (O1) | Planned |
-| v2 | ABMIL per-patient aggregation (G1) | Planned |
+| [v0](v0_baselines/) | Baselines on the shared split: the paper's Stage 3 (6 backbones + its 3-model ensemble) and DS²Net's 4-phase Stage 3 | Done: six-model ensemble val 0.667 / AUC 0.894, test 0.692 (paper: 0.69); ViT best single (val 0.705); DS²Net 4-phase 0.603 / test 0.487. All differences n.s. |
+| [v1](v1_mask_pooling/) | Mask-weighted pooling + tumor-area slice weighting (O1), all six backbones + ensemble | Done: ensemble val 0.679 (+0.013, n.s.), test 0.667; 4/6 backbones up on val. Not adopted |
+| [v2](v2_abmil/) | ABMIL per-case aggregation (G1), all six backbones + ensemble; built on v0 | Done: ensemble val 0.641 (−0.026, n.s.), test 0.756. Not adopted (val decides) |
+| [v3](v3_ds2net_fixed_norm/) | DS²Net 4-phase Stage 3 without PhaseNorm (`phase_norm=fixed`) | Done: val 0.603 (±0); ICC→HCC errors 8 → 4 but HCC/BCLM worse. Not adopted |
+| [v4](v4_cv_evaluation/) | Evaluation change: 5-fold CV over 438 train + val patients (out-of-fold), re-scoring v0, v1, v2 | Done: OOF ensembles v0 0.605, v1 0.626, v2 0.628, all pairwise n.s. (v1 and v2 tied). Single backbones: mask pooling better for 5/6, ABMIL worse for several. v1 chosen as default (judgement call) |
+| [v5](v5_four_phase/) | 4-phase input (art, PVP, delay, nc + mask) instead of the PVP triplet; with mask pooling; 5-fold OOF vs v4's cv_v1 | Planned: code ready |
+| [v6](v6_predicted_masks/) | Evaluation: the v1 models scored on nnU-Net's predicted tumor masks instead of ground truth (val + test) | Done: ensemble val 0.679 → 0.615, test 0.667 → 0.718 (both n.s.); AUC lower for every model (val ensemble −0.030, significant) |
 
-## Conclusion
+## Conclusion (v0–v3, 2026-10-03)
 
-—
+| Version | Val accuracy (six-model ensemble) | Test accuracy | Kept |
+|---|---|---|---|
+| v0 paper Stage 3 | 0.667 (AUC 0.894) | 0.692 | baseline |
+| v1 mask pooling (O1) | 0.679 (+0.013, n.s.) | 0.667 | option |
+| v2 ABMIL (G1) | 0.641 (−0.026, n.s.) | 0.756 | option |
+| v3 DS²Net without PhaseNorm | 0.603 (±0) | 0.474 | no |
+
+- **Update after v4 (438 patients):** mask-weighted pooling (v1) helps single backbones (+0.02–0.10 accuracy for 5 of 6; the UNet encoder's +0.10 is clearly significant), but for the six-model ensemble v0, v1 and v2 are statistically tied. v1 is the default as a judgement call; ABMIL hurts single backbones and is not used. The paragraphs below describe the 78-patient view that v4 resolved.
+- **None of the three changes measurably improves classification** on 78 patients. Every difference is within ±0.03 on val and not significant.
+- **The evaluation can't resolve smaller effects:** on 78 patients one decision is 0.013 accuracy, the 95% CI is about ±0.10, and v2 moved −0.03 on val but +0.06 on test.
+- **Ways to get a more decisive signal:**
+  1. Evaluate with cross-validation over all 438 train + val patients (5 folds), so each version is scored on 438 patients instead of 78.
+  2. Test changes expected to matter more: multi-phase input to the paper backbones (v3 showed phases help ICC), and predicted masks (the realistic setting).
+- HH is always 100%; CRLM vs BCLM (both metastases) remains the main confusion.

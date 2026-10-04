@@ -1,0 +1,52 @@
+{
+ "run_a": "experiments/E03_stage3_classification/v0_baselines/results/paper/stage3_paper_ensemble_efficientnet_b3+vit_b16+swin_tiny+swin_base+resnet50+unet/per_case_val.csv",
+ "run_b": "experiments/E03_stage3_classification/v2_abmil/results/stage3_paper_ensemble_efficientnet_b3_v2+vit_b16_v2+swin_tiny_v2+swin_base_v2+resnet50_v2+unet_v2/per_case_val.csv",
+ "n_common": 78,
+ "only_in_a": [],
+ "only_in_b": [],
+ "n_boot": 1000,
+ "results": [
+  {
+   "group": "all",
+   "metric": "accuracy",
+   "n": 78,
+   "a": 0.6666666666666666,
+   "b": 0.6410256410256411,
+   "diff": -0.02564102564102555,
+   "ci_low": -0.08974358974358976,
+   "ci_high": 0.02564102564102566,
+   "p_boot": 0.542,
+   "p_mcnemar": 0.6875,
+   "better": 2.0,
+   "worse": 4.0
+  },
+  {
+   "group": "all",
+   "metric": "macro_f1",
+   "n": 78,
+   "a": 0.6730541871921182,
+   "b": 0.6433059469766922,
+   "diff": -0.02974824021542599,
+   "ci_low": -0.08627716211844981,
+   "ci_high": 0.023127771863065864,
+   "p_boot": 0.322,
+   "p_mcnemar": NaN,
+   "better": NaN,
+   "worse": NaN
+  },
+  {
+   "group": "all",
+   "metric": "macro_auc",
+   "n": 78,
+   "a": 0.8937037037037037,
+   "b": 0.8951058201058203,
+   "diff": 0.0014021164021166266,
+   "ci_low": -0.015945038294570526,
+   "ci_high": 0.017080058835369116,
+   "p_boot": 0.844,
+   "p_mcnemar": NaN,
+   "better": NaN,
+   "worse": NaN
+  }
+ ]
+}

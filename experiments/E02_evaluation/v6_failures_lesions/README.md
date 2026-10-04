@@ -64,5 +64,27 @@ The re-scored per-case CSVs (now with lesion counts) and `per_lesion_{val,test}.
 
 ## Next
 
+- **Fragment review:** [`review_fragments.sh`](review_fragments.sh) draws every GT component < 0.1 ml in the six val cases with the most fragments (PVP slice, liver window; red = component, yellow = other GT tumor, cyan = E06 v3 prediction), plus `fragments.csv` with size, slices spanned and distance to the nearest other tumor (`data_prep/review_lesion_fragments.py`).
+
 - Report lesion metrics with a minimum lesion size (e.g. ≥ 0.1 ml, or ≥ 5 voxels) and check the fragments: are they annotation artefacts or real tiny satellite lesions? A visual check of the top cases (230525a4, 231025c16, 240722e100) would settle it.
 - Small-lesion methods should target detection of 0.1–1 ml lesions (higher in-plane resolution, lesion-level sampling) rather than outlines of large tumors.
+
+## Fragment review (2026-10-03)
+
+Images and table: [`fragment_review/`](fragment_review/), one PNG per case and `fragments.csv`. 43 GT components < 0.1 ml in the six val cases with the most fragments. **Every one lies on a single slice**; median 8 voxels; nnU-Net (E06 v3) overlaps 2 of 43.
+
+**This is a non-expert visual read** on PVP only, one slice per component. It needs a clinician to confirm, ideally looking at all four phases.
+
+| Kind | Examples | What it looks like |
+|---|---|---|
+| **Boundary slivers** | 231025c16 #2–6, 231025c02 #4–6, 240722e100 #2–3, 240112d26 #6, 240620a22 #7 | 1–18 voxel pieces along the edge of a large lesion on its first or last slice, where the drawn outline breaks into dots. Annotation artefacts; harmless for Dice |
+| **Uniform round marks in normal-looking liver** | 230525a4 (16 near-identical ~21-voxel discs, 7–30 mm from the main tumors), 231025c02 #2 | Same shape and size each time, like brush clicks, with no lesion visible on PVP underneath. Either tool artefacts or markers of tiny metastases visible on another phase (230525a4 is BCLM). This case has 44 GT "lesions" and nnU-Net Dice 0.48 |
+| **Outside the liver** | 240112d26 #1–2 (fat between rib and liver), possibly 240620a22 #15–16 (next to bowel gas) | Labels on structures that don't look like liver tumor |
+| **Next to unlabelled lesions** | 240722e100 #5–6 (specks touching clearly visible hypodense lesions that have no label), #4; 231025c02 #7 (a 13-voxel mark inside a lesion nnU-Net segments in full) | Suggests **incomplete annotation**: some real lesions are unlabelled or only marked by a speck |
+
+### What it means
+
+- **Most fragments aren't lesions,** so lesion-level metrics should exclude single-slice components below a size threshold (e.g. < 0.1 ml on one slice), or report them separately.
+- **The ground truth may miss real lesions** (240722e100, 231025c02). Then some nnU-Net "false positives" are correct detections, and small-lesion precision and Dice are underestimated. That bears directly on defining the 0.90 target.
+- **Worth a clinician's look:** 230525a4 (are the 16 marks real metastases?), 240722e100 (unlabelled hypodense lesions), 240112d26 (labels outside the liver).
+- A dataset-wide version (all 516 cases, counts per kind) would show how common each pattern is; the script supports any case list.
