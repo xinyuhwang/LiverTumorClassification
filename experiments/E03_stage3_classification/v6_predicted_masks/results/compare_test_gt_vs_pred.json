@@ -1,0 +1,52 @@
+{
+ "run_a": "experiments/E03_stage3_classification/v1_mask_pooling/results/stage3_paper_ensemble_efficientnet_b3_v1+vit_b16_v1+swin_tiny_v1+swin_base_v1+resnet50_v1+unet_v1/per_case_test.csv",
+ "run_b": "experiments/E03_stage3_classification/v6_predicted_masks/results/stage3_paper_ensemble_efficientnet_b3_v6pred+vit_b16_v6pred+swin_tiny_v6pred+swin_base_v6pred+resnet50_v6pred+unet_v6pred/per_case_test.csv",
+ "n_common": 78,
+ "only_in_a": [],
+ "only_in_b": [],
+ "n_boot": 1000,
+ "results": [
+  {
+   "group": "all",
+   "metric": "accuracy",
+   "n": 78,
+   "a": 0.6666666666666666,
+   "b": 0.717948717948718,
+   "diff": 0.05128205128205132,
+   "ci_low": -0.012820512820512886,
+   "ci_high": 0.1282051282051282,
+   "p_boot": 0.21,
+   "p_mcnemar": 0.2890625,
+   "better": 6.0,
+   "worse": 2.0
+  },
+  {
+   "group": "all",
+   "metric": "macro_f1",
+   "n": 78,
+   "a": 0.6683979398210897,
+   "b": 0.7113570250412355,
+   "diff": 0.0429590852201458,
+   "ci_low": -0.021873116315555826,
+   "ci_high": 0.11189361569312209,
+   "p_boot": 0.226,
+   "p_mcnemar": NaN,
+   "better": NaN,
+   "worse": NaN
+  },
+  {
+   "group": "all",
+   "metric": "macro_auc",
+   "n": 78,
+   "a": 0.9321923193891223,
+   "b": 0.9185074320359202,
+   "diff": -0.013684887353202058,
+   "ci_low": -0.029990576088375027,
+   "ci_high": 0.0015209013442670579,
+   "p_boot": 0.082,
+   "p_mcnemar": NaN,
+   "better": NaN,
+   "worse": NaN
+  }
+ ]
+}

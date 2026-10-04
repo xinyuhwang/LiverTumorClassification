@@ -29,7 +29,7 @@ Not comparable with this experiment: different split, pre-fix code, no per-case 
 | [v3](v3_ds2net_fixed_norm/) | DS²Net 4-phase Stage 3 without PhaseNorm (`phase_norm=fixed`) | Done: val 0.603 (±0); ICC→HCC errors 8 → 4 but HCC/BCLM worse. Not adopted |
 | [v4](v4_cv_evaluation/) | Evaluation change: 5-fold CV over 438 train + val patients (out-of-fold), re-scoring v0, v1, v2 | Done: OOF ensembles v0 0.605, v1 0.626, v2 0.628, all pairwise n.s. (v1 and v2 tied). Single backbones: mask pooling better for 5/6, ABMIL worse for several. v1 chosen as default (judgement call) |
 | [v5](v5_four_phase/) | 4-phase input (art, PVP, delay, nc + mask) instead of the PVP triplet; with mask pooling; 5-fold OOF vs v4's cv_v1 | Planned: code ready |
-| [v6](v6_predicted_masks/) | Evaluation: the v1 models scored on nnU-Net's predicted tumor masks instead of ground truth (val + test) | Planned: code ready |
+| [v6](v6_predicted_masks/) | Evaluation: the v1 models scored on nnU-Net's predicted tumor masks instead of ground truth (val + test) | Done: ensemble val 0.679 → 0.615, test 0.667 → 0.718 (both n.s.); AUC lower for every model (val ensemble −0.030, significant) |
 
 ## Conclusion (v0–v3, 2026-10-03)
 
