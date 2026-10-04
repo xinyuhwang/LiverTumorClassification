@@ -47,6 +47,12 @@ Extensions (E03; off by default, so the paper version above is unchanged)
                    prediction per case
   --tag NAME       suffix for checkpoint / output names (stage3_paper_<backbone>_<tag>);
                    ensemble members are named the same way
+  --cv_folds K     (v4) cross-validated evaluation over train + val: K folds
+                   stratified by type (common.splits.cv_folds); each fold trains
+                   on the other folds minus 1/7 of them for early stopping, and
+                   predicts its held-out cases. "val" outputs are then the
+                   out-of-fold predictions for all train + val cases; "test"
+                   is the average of the K fold models. --ensemble works as usual
 
 Usage
   python stage3_paper.py --mode train --backbone efficientnet_b3
@@ -120,6 +126,8 @@ def parse_args():
                    help="abmil = attention-based MIL over a case's slices (E03 v2)")
     p.add_argument("--bags_per_batch", type=int, default=4, help="cases per batch with --mil abmil")
     p.add_argument("--tag", default="", help="suffix for output names, e.g. v1")
+    p.add_argument("--cv_folds", type=int, default=0,
+                   help="K-fold cross-validated evaluation over train + val (E03 v4)")
     p.add_argument("--num_workers", type=int, default=4)
     p.add_argument("--smoke_test",  action="store_true",
                    help="6 train cases, 2 epochs")
@@ -477,11 +485,16 @@ def report(title, probs, labels, class_names):
     return {"accuracy": acc, "confusion_matrix": cm.tolist()}
 
 
-def run_train(args, device, splits, labels, class_names):
+def run_train(args, device, splits, labels, class_names, save=True, es_ids=None):
+    """Train one model; returns case probabilities {"val": …, "test": …}.
+    Early stopping uses val_ids, or es_ids if given (CV folds: an inner split,
+    so the held-out fold in val_ids never influences training).
+    save=False (CV folds) skips the per-run output files."""
     train_ids, val_ids, test_ids = splits
     tr_crops = load_crops(train_ids, args)
     va_crops = load_crops(val_ids, args)
     te_crops = load_crops(test_ids, args)
+    es_crops = load_crops(es_ids, args) if es_ids is not None else va_crops
 
     # class weights ∝ 1 / frequency (train cases)
     counts = np.bincount([labels[c] for c in tr_crops], minlength=len(class_names))
@@ -531,7 +544,7 @@ def run_train(args, device, splits, labels, class_names):
             losses.append(loss.item())
         scheduler.step()
 
-        vl_acc = case_accuracy(predict_cases(model, va_crops, device), labels)
+        vl_acc = case_accuracy(predict_cases(model, es_crops, device), labels)
         history.append({"epoch": ep, "loss": float(np.mean(losses)),
                         "val_acc": vl_acc})
         print(f"Ep {ep:3d}/{args.epochs} | loss {np.mean(losses):.4f} | "
@@ -550,9 +563,15 @@ def run_train(args, device, splits, labels, class_names):
     model.load_state_dict(torch.load(ckpt, map_location=device, weights_only=True))
     va_probs = predict_cases(model, va_crops, device)
     te_probs = predict_cases(model, te_crops, device)
+    if not save:
+        return {"val": va_probs, "test": te_probs, "best_val_acc": best_acc}
     report(f"{args.name} — validation", va_probs, labels, class_names)
     result = report(f"{args.name} — test", te_probs, labels, class_names)
+    save_outputs(args, labels, class_names, va_probs, te_probs,
+                 {"best_val_acc": best_acc, "history": history, **result})
 
+
+def save_outputs(args, labels, class_names, va_probs, te_probs, extra):
     # per-case probabilities, so ensembles can be formed without re-running models
     probs_path = os.path.join(args.log_dir, f"stage3_paper_{args.name}_probs.json")
     with open(probs_path, "w") as f:
@@ -560,13 +579,37 @@ def run_train(args, device, splits, labels, class_names):
                    "mil": args.mil, "class_names": class_names,
                    "labels": {c: labels[c] for c in {**va_probs, **te_probs}},
                    "val":  {c: p.tolist() for c, p in va_probs.items()},
-                   "test": {c: p.tolist() for c, p in te_probs.items()},
-                   "best_val_acc": best_acc, "history": history, **result},
+                   "test": {c: p.tolist() for c, p in te_probs.items()}, **extra},
                   f, indent=1)
     out_dir = os.path.join(args.log_dir, f"stage3_paper_{args.name}")
     for split, probs in (("val", va_probs), ("test", te_probs)):
         write_per_case(out_dir, split, probs, labels, class_names)
     print(f"\nSaved → {probs_path}, {out_dir}/per_case_{{val,test}}.csv")
+
+
+def run_cv(args, device, splits, labels, labels_df, class_names):
+    """E03 v4: out-of-fold predictions for all train + val cases."""
+    from common.splits import cv_folds
+    train_ids, val_ids, test_ids = splits
+    base, oof, tests, fold_acc = args.name, {}, [], []
+    for k, fold in enumerate(cv_folds(train_ids + val_ids, labels_df, k=args.cv_folds, seed=0)):
+        # early stopping on ~1/7 of this fold's training cases, never on the held-out fold
+        inner = cv_folds(fold["train"], labels_df, k=7, seed=1)[0]
+        args.name = f"{base}_cv{k}"
+        print(f"\n══ fold {k}: train {len(inner['train'])}, early-stop {len(inner['val'])}, "
+              f"held out {len(fold['val'])} ══")
+        r = run_train(args, device, (inner["train"], fold["val"], test_ids),
+                      labels, class_names, save=False, es_ids=inner["val"])
+        held = r["val"]
+        oof.update(held); tests.append(r["test"])
+        fold_acc.append(case_accuracy(held, labels))
+        print(f"  fold {k}: held-out accuracy {fold_acc[-1]:.4f}")
+    args.name = base
+    test = {c: np.mean([t[c] for t in tests], axis=0) for c in tests[0]}
+    report(f"{base} — out-of-fold (train + val)", oof, labels, class_names)
+    result = report(f"{base} — test (mean of {args.cv_folds} fold models)", test, labels, class_names)
+    save_outputs(args, labels, class_names, oof, test,
+                 {"cv_folds": args.cv_folds, "fold_accuracy": fold_acc, **result})
 
 
 def run_ensemble(args, class_names):
@@ -622,12 +665,19 @@ def main():
         run_ensemble(args, class_names)
         return
 
-    if args.smoke_test:
+    if args.smoke_test and args.cv_folds:   # stratified folds need a few cases per class
+        train_ids, val_ids, test_ids = train_ids[:60], val_ids[:10], test_ids[:2]
+        args.cv_folds, args.epochs, args.patience = 2, 2, 2
+        print("SMOKE TEST — CV: 70 cases, 2 folds, 2 epochs")
+    elif args.smoke_test:
         train_ids, val_ids, test_ids = train_ids[:6], val_ids[:2], test_ids[:2]
         args.epochs, args.patience = 2, 2
         args.batch_size = min(args.batch_size, 4)
         print("SMOKE TEST — 6 train cases, 2 epochs")
-    run_train(args, device, (train_ids, val_ids, test_ids), labels, class_names)
+    if args.cv_folds:
+        run_cv(args, device, (train_ids, val_ids, test_ids), labels, labels_df, class_names)
+    else:
+        run_train(args, device, (train_ids, val_ids, test_ids), labels, class_names)
 
 
 if __name__ == "__main__":

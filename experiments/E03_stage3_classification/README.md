@@ -27,6 +27,7 @@ Not comparable with this experiment: different split, pre-fix code, no per-case 
 | [v1](v1_mask_pooling/) | Mask-weighted pooling + tumor-area slice weighting (O1), all six backbones + ensemble | Done: ensemble val 0.679 (+0.013, n.s.), test 0.667; 4/6 backbones up on val. Not adopted |
 | [v2](v2_abmil/) | ABMIL per-case aggregation (G1), all six backbones + ensemble; built on v0 | Done: ensemble val 0.641 (−0.026, n.s.), test 0.756. Not adopted (val decides) |
 | [v3](v3_ds2net_fixed_norm/) | DS²Net 4-phase Stage 3 without PhaseNorm (`phase_norm=fixed`) | Done: val 0.603 (±0); ICC→HCC errors 8 → 4 but HCC/BCLM worse. Not adopted |
+| [v4](v4_cv_evaluation/) | Evaluation change: 5-fold CV over 438 train + val patients (out-of-fold), re-scoring v0, v1, v2 | Planned: code ready |
 
 ## Conclusion (v0–v3, 2026-10-03)
 
