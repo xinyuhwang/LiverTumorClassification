@@ -64,5 +64,7 @@ The re-scored per-case CSVs (now with lesion counts) and `per_lesion_{val,test}.
 
 ## Next
 
+- **Fragment review:** [`review_fragments.sh`](review_fragments.sh) draws every GT component < 0.1 ml in the six val cases with the most fragments (PVP slice, liver window; red = component, yellow = other GT tumor, cyan = E06 v3 prediction), plus `fragments.csv` with size, slices spanned and distance to the nearest other tumor (`data_prep/review_lesion_fragments.py`).
+
 - Report lesion metrics with a minimum lesion size (e.g. ≥ 0.1 ml, or ≥ 5 voxels) and check the fragments: are they annotation artefacts or real tiny satellite lesions? A visual check of the top cases (230525a4, 231025c16, 240722e100) would settle it.
 - Small-lesion methods should target detection of 0.1–1 ml lesions (higher in-plane resolution, lesion-level sampling) rather than outlines of large tumors.

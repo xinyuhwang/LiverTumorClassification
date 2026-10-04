@@ -53,6 +53,14 @@ Extensions (E03; off by default, so the paper version above is unchanged)
                    predicts its held-out cases. "val" outputs are then the
                    out-of-fold predictions for all train + val cases; "test"
                    is the average of the K fold models. --ensemble works as usual
+  --input 4phase   (v5) crops are [art, pvp, delay, nc] at the tumor slice + mask
+                   (5 channels) instead of the PVP triplet + mask; the first
+                   three keep the pretrained RGB filters, nc and mask get their mean
+  --mask_source pred --pred_val_dir D --pred_test_dir D --eval_only --ckpt_name N
+                   (v6) score a trained model on val/test crops built from
+                   predicted tumor masks (label 2 in <D>/<case>.nii.gz) instead of
+                   ground truth: slice choice, crop box and mask channel all
+                   come from the prediction. Training always uses ground truth
 
 Usage
   python stage3_paper.py --mode train --backbone efficientnet_b3
@@ -126,6 +134,15 @@ def parse_args():
                    help="abmil = attention-based MIL over a case's slices (E03 v2)")
     p.add_argument("--bags_per_batch", type=int, default=4, help="cases per batch with --mil abmil")
     p.add_argument("--tag", default="", help="suffix for output names, e.g. v1")
+    p.add_argument("--input", choices=["pvp_triplet", "4phase"], default="pvp_triplet",
+                   help="crop channels (E03 v5: 4phase)")
+    p.add_argument("--mask_source", choices=["gt", "pred"], default="gt",
+                   help="tumor mask for val/test crops (E03 v6: pred)")
+    p.add_argument("--pred_val_dir", default=None, help="predicted label maps for val cases")
+    p.add_argument("--pred_test_dir", default=None, help="predicted label maps for test cases")
+    p.add_argument("--eval_only", action="store_true",
+                   help="skip training; load stage3_paper_<ckpt_name>_best.pth and score val/test")
+    p.add_argument("--ckpt_name", default=None, help="checkpoint to load with --eval_only")
     p.add_argument("--cv_folds", type=int, default=0,
                    help="K-fold cross-validated evaluation over train + val (E03 v4)")
     p.add_argument("--num_workers", type=int, default=4)
@@ -147,15 +164,28 @@ def _crop_square(img, cy, cx, side):
     return out
 
 
-def extract_case_crops(cid, data_dir, max_slices, size, margin_frac):
+FOUR_PHASE_ORDER = ("art", "pvp", "del", "nc")   # first three get the RGB filters
+
+
+def extract_case_crops(cid, data_dir, max_slices, size, margin_frac,
+                       input_mode="pvp_triplet", tumor_path=None):
     """
-    Returns (K, 4, size, size) float16: [PVP s-1, PVP s, PVP s+1, tumor mask s]
-    for the K ≤ max_slices slices with the largest tumor area.
+    Returns (K, C, size, size) float16 for the K ≤ max_slices slices with the
+    largest tumor area:
+      pvp_triplet  C = 4: [PVP s-1, PVP s, PVP s+1, tumor mask s]
+      4phase       C = 5: [art s, PVP s, delay s, nc s, tumor mask s]
+    tumor_path: a predicted label map (tumor = label 2) instead of the GT mask.
     """
     case_dir = os.path.join(data_dir, cid)
-    pvp   = nib.load(os.path.join(case_dir, "pvp.nii.gz")).get_fdata(dtype=np.float32)
-    tumor = nib.load(os.path.join(case_dir, "tumor_mask.nii.gz")).get_fdata() > 0
-    pvp   = (np.clip(pvp, DS.HU_MIN, DS.HU_MAX) - DS.HU_MIN) / (DS.HU_MAX - DS.HU_MIN)
+    win   = lambda v: (np.clip(v, DS.HU_MIN, DS.HU_MAX) - DS.HU_MIN) / (DS.HU_MAX - DS.HU_MIN)
+    pvp   = win(nib.load(os.path.join(case_dir, "pvp.nii.gz")).get_fdata(dtype=np.float32))
+    if tumor_path:
+        tumor = np.asanyarray(nib.load(tumor_path).dataobj) == 2
+    else:
+        tumor = nib.load(os.path.join(case_dir, "tumor_mask.nii.gz")).get_fdata() > 0
+    if input_mode == "4phase":     # prepared phases are on the PVP grid: phase_<i> = PHASE_NAMES[i]
+        vols = {n: win(nib.load(os.path.join(case_dir, f"phase_{i}.nii.gz")).get_fdata(dtype=np.float32))
+                for i, n in enumerate(DS.PHASE_NAMES)}
     D     = pvp.shape[2]
 
     area   = tumor.sum(axis=(0, 1))
@@ -168,37 +198,46 @@ def extract_case_crops(cid, data_dir, max_slices, size, margin_frac):
         side = max(r1 - r0, c1 - c0)
         side = max(32, int(round(side * (1 + 2 * margin_frac))))
         cy, cx = (r0 + r1) // 2, (c0 + c1) // 2
-        chans = [DS._resize_slice(
-                     _crop_square(pvp[:, :, int(np.clip(z, 0, D - 1))], cy, cx, side),
-                     size)
-                 for z in (s - 1, s, s + 1)]
+        if input_mode == "4phase":
+            chans = [DS._resize_slice(_crop_square(vols[n][:, :, s], cy, cx, side), size)
+                     for n in FOUR_PHASE_ORDER]
+        else:
+            chans = [DS._resize_slice(
+                         _crop_square(pvp[:, :, int(np.clip(z, 0, D - 1))], cy, cx, side),
+                         size)
+                     for z in (s - 1, s, s + 1)]
         chans.append(DS._resize_mask(
             _crop_square(tumor[:, :, s].astype(np.float32), cy, cx, side), size))
         crops.append(np.stack(chans))
     if not crops:
-        return np.zeros((0, 4, size, size), dtype=np.float16)
+        return np.zeros((0, 5 if input_mode == "4phase" else 4, size, size), dtype=np.float16)
     return np.stack(crops).astype(np.float16)
 
 
-def load_crops(case_ids, args):
-    """Build (or load cached) crops for each case. Cases with no tumor are skipped."""
+def load_crops(case_ids, args, pred_dir=None):
+    """Build (or load cached) crops for each case. Cases with no tumor are skipped.
+    pred_dir: take the tumor mask from predicted label maps (E03 v6)."""
+    import hashlib
     os.makedirs(args.cache_dir, exist_ok=True)
     out, t0 = {}, time.time()
+    suffix = ("_4ph" if args.input == "4phase" else "") + (
+        f"_pred{hashlib.md5(os.path.abspath(pred_dir).encode()).hexdigest()[:8]}" if pred_dir else "")
     for cid in case_ids:
         path = os.path.join(args.cache_dir,
                             f"{cid}_k{args.max_slices}_s{args.img_size}"
-                            f"_m{args.margin_frac}.npy")
+                            f"_m{args.margin_frac}{suffix}.npy")
         if os.path.exists(path):
             arr = np.load(path)
         else:
             arr = extract_case_crops(cid, args.data_dir, args.max_slices,
-                                     args.img_size, args.margin_frac)
+                                     args.img_size, args.margin_frac, args.input,
+                                     os.path.join(pred_dir, f"{cid}.nii.gz") if pred_dir else None)
             # write-then-rename: parallel jobs never read a half-written file
             tmp = f"{path}.{os.getpid()}.tmp.npy"
             np.save(tmp, arr)
             os.replace(tmp, path)
         if len(arr) == 0:
-            print(f"  WARNING: {cid} has no tumor voxels — skipped")
+            print(f"  WARNING: {cid} has no {'predicted ' if pred_dir else ''}tumor voxels — skipped")
             continue
         out[cid] = arr
     print(f"  Crops ready for {len(out)}/{len(case_ids)} cases "
@@ -245,19 +284,20 @@ class TumorBagDataset(Dataset):
 
 # ── Models ────────────────────────────────────────────────────────────────────
 
-def adapt_conv_4ch(conv, src=slice(0, 3)):
+def adapt_conv_4ch(conv, src=slice(0, 3), n_in=4):
     """
-    Return a copy of `conv` taking 4 input channels: channels 0-2 keep the
-    pretrained filters conv.weight[:, src]; channel 3 (tumor mask) gets their
-    mean.
+    Return a copy of `conv` taking n_in input channels: the first k channels
+    keep the pretrained filters conv.weight[:, src] (k = 3 for RGB); the rest
+    (extra phases, tumor mask) get their mean. n_in = 4 is the paper version.
     """
-    new = nn.Conv2d(4, conv.out_channels, conv.kernel_size, stride=conv.stride,
+    new = nn.Conv2d(n_in, conv.out_channels, conv.kernel_size, stride=conv.stride,
                     padding=conv.padding, dilation=conv.dilation,
                     groups=conv.groups, bias=conv.bias is not None)
     with torch.no_grad():
-        w3 = conv.weight[:, src]
-        new.weight[:, :3] = w3
-        new.weight[:, 3:] = w3.mean(dim=1, keepdim=True)
+        w = conv.weight[:, src]
+        k = w.shape[1]
+        new.weight[:, :k] = w
+        new.weight[:, k:] = w.mean(dim=1, keepdim=True)
         if conv.bias is not None:
             new.bias.copy_(conv.bias)
     return new
@@ -307,25 +347,26 @@ class PaperClassifier(nn.Module):
         pretrained = not args.no_pretrain
         self.backbone_name = backbone
         self.pooling = getattr(args, "pooling", "avg")
+        n_in = 5 if getattr(args, "input", "pvp_triplet") == "4phase" else 4
 
         if backbone == "efficientnet_b3":
             net = tvm.efficientnet_b3(
                 weights=tvm.EfficientNet_B3_Weights.IMAGENET1K_V1 if pretrained else None)
-            net.features[0][0] = adapt_conv_4ch(net.features[0][0])
+            net.features[0][0] = adapt_conv_4ch(net.features[0][0], n_in=n_in)
             self.features = nn.Sequential(net.features, net.avgpool, nn.Flatten(1))
             feat_dim, trainable = 1536, [net.features[-2], net.features[-1]]
 
         elif backbone == "resnet50":
             net = tvm.resnet50(
                 weights=tvm.ResNet50_Weights.IMAGENET1K_V2 if pretrained else None)
-            net.conv1 = adapt_conv_4ch(net.conv1)
+            net.conv1 = adapt_conv_4ch(net.conv1, n_in=n_in)
             self.features = nn.Sequential(*list(net.children())[:-1], nn.Flatten(1))
             feat_dim, trainable = 2048, [net.layer4]
 
         elif backbone == "vit_b16":
             net = timm.create_model("vit_base_patch16_224",
                                     pretrained=pretrained, num_classes=0)
-            net.patch_embed.proj = adapt_conv_4ch(net.patch_embed.proj)
+            net.patch_embed.proj = adapt_conv_4ch(net.patch_embed.proj, n_in=n_in)
             self.features = net
             feat_dim, trainable = net.num_features, list(net.blocks[-2:])
 
@@ -334,7 +375,7 @@ class PaperClassifier(nn.Module):
                     "swin_base": "swin_base_patch4_window7_224"}[backbone]
             net = timm.create_model(name, pretrained=pretrained,
                                     num_classes=0, global_pool="avg")
-            net.patch_embed.proj = adapt_conv_4ch(net.patch_embed.proj)
+            net.patch_embed.proj = adapt_conv_4ch(net.patch_embed.proj, n_in=n_in)
             self.features = net
             feat_dim, trainable = net.num_features, [net.layers[-1]]
 
@@ -352,10 +393,14 @@ class PaperClassifier(nn.Module):
                     f"Stage 2 checkpoint not found: {args.stage2_ckpt}")
             else:
                 print("  SMOKE TEST: Stage 2 checkpoint missing, random encoder")
-            # Stage 2 input is 4 phases x 3 slices; keep the PVP triplet's filters
-            pvp = DS.PHASE_NAMES.index("pvp") * 3
-            unet.enc1[0].block[0] = adapt_conv_4ch(unet.enc1[0].block[0],
-                                                   src=slice(pvp, pvp + 3))
+            # Stage 2 input is 4 phases x 3 slices (phase-major); keep the PVP
+            # triplet's filters, or with 4phase each phase's centre-slice filter
+            if n_in == 5:
+                src = [DS.PHASE_NAMES.index(n) * 3 + 1 for n in FOUR_PHASE_ORDER]
+            else:
+                pvp = DS.PHASE_NAMES.index("pvp") * 3
+                src = slice(pvp, pvp + 3)
+            unet.enc1[0].block[0] = adapt_conv_4ch(unet.enc1[0].block[0], src=src, n_in=n_in)
             self.features = UNetEncoder(unet)
             feat_dim, trainable = self.features.num_features, []   # fully frozen
 
@@ -391,7 +436,7 @@ class PaperClassifier(nn.Module):
         if self.pooling == "avg":
             return self.features(x)
         f = self.spatial(x)
-        w = F.adaptive_avg_pool2d(x[:, 3:4].to(f.dtype), f.shape[-2:])   # tumor share per cell
+        w = F.adaptive_avg_pool2d(x[:, -1:].to(f.dtype), f.shape[-2:])   # tumor share per cell (mask = last channel)
         ws = w.sum(dim=(2, 3))
         pooled = (f * w).sum(dim=(2, 3)) / ws.clamp(min=1e-6)
         return torch.where(ws > 1e-6, pooled, f.mean(dim=(2, 3)))      # empty mask → average
@@ -445,7 +490,7 @@ def predict_cases(model, crops, device, batch=32):
             probs.append(p)
         probs = torch.cat(probs)
         if model.pooling == "mask":            # O1: slices weighted by tumor area
-            area = x[:, 3].sum(dim=(1, 2)).float()
+            area = x[:, -1].sum(dim=(1, 2)).float()
             out[cid] = ((probs * area[:, None]).sum(0) / area.sum().clamp(min=1e-6)).cpu().numpy()
         else:
             out[cid] = probs.mean(0).cpu().numpy()
@@ -457,12 +502,13 @@ def case_accuracy(probs, labels):
                           [int(np.argmax(p)) for p in probs.values()])
 
 
-def write_per_case(out_dir, split, probs, labels, class_names):
-    """per_case_<split>.csv (case_id, true, pred, p_<class>) for common/evaluate.py."""
+def write_per_case(out_dir, split, probs, labels, class_names, missing=()):
+    """per_case_<split>.csv (case_id, true, pred, p_<class>) for common/evaluate.py.
+    Cases in `missing` (no predicted tumor) get pred "none": always wrong."""
     import pandas as pd
     os.makedirs(out_dir, exist_ok=True)
     rows = [{"case_id": c, "true": class_names[labels[c]],
-             "pred": class_names[int(np.argmax(p))],
+             "pred": "none" if c in missing else class_names[int(np.argmax(p))],
              **{f"p_{n}": float(v) for n, v in zip(class_names, p)}}
             for c, p in sorted(probs.items())]
     pd.DataFrame(rows).to_csv(os.path.join(out_dir, f"per_case_{split}.csv"), index=False)
@@ -571,7 +617,7 @@ def run_train(args, device, splits, labels, class_names, save=True, es_ids=None)
                  {"best_val_acc": best_acc, "history": history, **result})
 
 
-def save_outputs(args, labels, class_names, va_probs, te_probs, extra):
+def save_outputs(args, labels, class_names, va_probs, te_probs, extra, missing=()):
     # per-case probabilities, so ensembles can be formed without re-running models
     probs_path = os.path.join(args.log_dir, f"stage3_paper_{args.name}_probs.json")
     with open(probs_path, "w") as f:
@@ -583,8 +629,34 @@ def save_outputs(args, labels, class_names, va_probs, te_probs, extra):
                   f, indent=1)
     out_dir = os.path.join(args.log_dir, f"stage3_paper_{args.name}")
     for split, probs in (("val", va_probs), ("test", te_probs)):
-        write_per_case(out_dir, split, probs, labels, class_names)
+        write_per_case(out_dir, split, probs, labels, class_names, missing)
     print(f"\nSaved → {probs_path}, {out_dir}/per_case_{{val,test}}.csv")
+
+
+def run_eval(args, device, splits, labels, class_names):
+    """E03 v6: score a trained checkpoint on val/test crops, from GT or predicted
+    tumor masks. Cases whose predicted mask is empty count as misclassified."""
+    _, val_ids, test_ids = splits
+    pred = args.mask_source == "pred"
+    va_crops = load_crops(val_ids, args, args.pred_val_dir if pred else None)
+    te_crops = load_crops(test_ids, args, args.pred_test_dir if pred else None)
+    model = PaperClassifier(args.backbone, len(class_names), args).to(device)
+    ckpt = os.path.join(args.ckpt_dir, f"stage3_paper_{args.ckpt_name}_best.pth")
+    model.load_state_dict(torch.load(ckpt, map_location=device, weights_only=True))
+    print(f"  Loaded {ckpt}; masks: {args.mask_source}")
+    va_probs = predict_cases(model, va_crops, device)
+    te_probs = predict_cases(model, te_crops, device)
+    missing = set()
+    for ids, probs in ((val_ids, va_probs), (test_ids, te_probs)):
+        for c in ids:
+            if c not in probs:
+                missing.add(c); probs[c] = np.full(len(class_names), 1 / len(class_names))
+    print(f"  cases without a predicted tumor (counted wrong): {sorted(missing) or 'none'}")
+    report(f"{args.name} — validation", va_probs, labels, class_names)
+    result = report(f"{args.name} — test", te_probs, labels, class_names)
+    save_outputs(args, labels, class_names, va_probs, te_probs,
+                 {"ckpt": ckpt, "mask_source": args.mask_source, "missing": sorted(missing),
+                  **result}, missing)
 
 
 def run_cv(args, device, splits, labels, labels_df, class_names):
@@ -674,7 +746,11 @@ def main():
         args.epochs, args.patience = 2, 2
         args.batch_size = min(args.batch_size, 4)
         print("SMOKE TEST — 6 train cases, 2 epochs")
-    if args.cv_folds:
+    if args.eval_only:
+        if not args.ckpt_name:
+            raise ValueError("--eval_only needs --ckpt_name")
+        run_eval(args, device, (train_ids, val_ids, test_ids), labels, class_names)
+    elif args.cv_folds:
         run_cv(args, device, (train_ids, val_ids, test_ids), labels, labels_df, class_names)
     else:
         run_train(args, device, (train_ids, val_ids, test_ids), labels, class_names)
