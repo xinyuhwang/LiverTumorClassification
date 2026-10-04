@@ -27,7 +27,7 @@ Not comparable with this experiment: different split, pre-fix code, no per-case 
 | [v1](v1_mask_pooling/) | Mask-weighted pooling + tumor-area slice weighting (O1), all six backbones + ensemble | Done: ensemble val 0.679 (+0.013, n.s.), test 0.667; 4/6 backbones up on val. Not adopted |
 | [v2](v2_abmil/) | ABMIL per-case aggregation (G1), all six backbones + ensemble; built on v0 | Done: ensemble val 0.641 (−0.026, n.s.), test 0.756. Not adopted (val decides) |
 | [v3](v3_ds2net_fixed_norm/) | DS²Net 4-phase Stage 3 without PhaseNorm (`phase_norm=fixed`) | Done: val 0.603 (±0); ICC→HCC errors 8 → 4 but HCC/BCLM worse. Not adopted |
-| [v4](v4_cv_evaluation/) | Evaluation change: 5-fold CV over 438 train + val patients (out-of-fold), re-scoring v0, v1, v2 | Planned: code ready |
+| [v4](v4_cv_evaluation/) | Evaluation change: 5-fold CV over 438 train + val patients (out-of-fold), re-scoring v0, v1, v2 | Done: OOF ensembles v0 0.605, v1 0.626, v2 0.628, all pairwise n.s. (v1 and v2 tied). Single backbones: mask pooling better for 5/6, ABMIL worse for several. v1 chosen as default (judgement call) |
 
 ## Conclusion (v0–v3, 2026-10-03)
 
@@ -38,7 +38,8 @@ Not comparable with this experiment: different split, pre-fix code, no per-case 
 | v2 ABMIL (G1) | 0.641 (−0.026, n.s.) | 0.756 | option |
 | v3 DS²Net without PhaseNorm | 0.603 (±0) | 0.474 | no |
 
-- **None of the three changes measurably improves classification.** Every difference is within ±0.03 on val and not significant.
+- **Update after v4 (438 patients):** mask-weighted pooling (v1) helps single backbones (+0.02–0.10 accuracy for 5 of 6; the UNet encoder's +0.10 is clearly significant), but for the six-model ensemble v0, v1 and v2 are statistically tied. v1 is the default as a judgement call; ABMIL hurts single backbones and is not used. The paragraphs below describe the 78-patient view that v4 resolved.
+- **None of the three changes measurably improves classification** on 78 patients. Every difference is within ±0.03 on val and not significant.
 - **The evaluation can't resolve smaller effects:** on 78 patients one decision is 0.013 accuracy, the 95% CI is about ±0.10, and v2 moved −0.03 on val but +0.06 on test.
 - **Ways to get a more decisive signal:**
   1. Evaluate with cross-validation over all 438 train + val patients (5 folds), so each version is scored on 438 patients instead of 78.
